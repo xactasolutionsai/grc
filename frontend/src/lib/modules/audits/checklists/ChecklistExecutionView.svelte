@@ -123,9 +123,9 @@
 	async function handleCommentSave(itemResult: ItemResult) {
 		saving = true;
 		try {
-			const updated = await updateItemResult(itemResult.id, { 
+			const updated = await updateItemResult(itemResult.id, {
 				comments: itemResult.comments,
-				finding_summary: itemResult.finding_summary 
+				finding_summary: itemResult.finding_summary
 			});
 			// Update the item in the execution
 			if (execution && execution.item_results) {
@@ -274,7 +274,7 @@
 							<span>{execution.completed_items} / {execution.total_items} ({execution.progress_percentage}%)</span>
 						</div>
 						<div class="w-full bg-white/20 rounded-full h-4 overflow-hidden">
-							<div 
+							<div
 								class="bg-white h-4 transition-all duration-300 ease-in-out rounded-full"
 								style="width: {execution.progress_percentage}%"
 							></div>
@@ -401,7 +401,7 @@
 										onclick={() => handleResultChange(itemResult, choice.value)}
 										disabled={saving}
 										class="inline-flex items-center justify-center gap-2 px-4 py-3 rounded-lg text-sm font-medium transition-all border-2
-											{itemResult.result === choice.value 
+											{itemResult.result === choice.value
 												? `border-${choice.color}-500 bg-${choice.color}-100 dark:bg-${choice.color}-900/30 text-${choice.color}-800 dark:text-${choice.color}-400`
 												: 'border-surface-300 dark:border-surface-600 bg-white dark:bg-surface-900 text-surface-700 dark:text-surface-300 hover:border-surface-400 dark:hover:border-surface-500'}
 											disabled:opacity-50"
@@ -466,4 +466,3 @@
 		{/if}
 	{/if}
 </div>
-

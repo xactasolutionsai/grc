@@ -41,22 +41,22 @@ Incident Response,Security Operations,unit`;
 
 	async function uploadCSV() {
 		if (!csvFile) return;
-		
+
 		try {
 			uploading = true;
 			uploadError = null;
 			uploadSuccess = null;
-			
+
 			const result = await uploadHierarchyCSV(csvFile);
-			
+
 			uploadSuccess = result.message;
 			if (result.errors && result.errors.length > 0) {
 				uploadError = `Errors: ${result.errors.join(', ')}`;
 			}
-			
+
 			// Refresh the hierarchy
 			refreshTrigger += 1;
-			
+
 		} catch (err: any) {
 			uploadError = err.message;
 		} finally {
@@ -121,7 +121,7 @@ Incident Response,Security Operations,unit`;
 						Refresh
 					</button>
 				</div>
-				
+
 				<HierarchyTree {refreshTrigger} filterTab={activeTab} />
 			</div>
 		{:else if localTab === 'upload'}
@@ -140,8 +140,8 @@ Incident Response,Security Operations,unit`;
 						<div class="flex-1">
 							<h4 class="text-sm font-medium text-blue-800">CSV Format</h4>
 							<p class="text-sm text-blue-700 mt-1">
-								Your CSV should have columns: <code class="bg-blue-100 px-1 rounded">entity_name</code>, 
-								<code class="bg-blue-100 px-1 rounded">parent_name</code>, 
+								Your CSV should have columns: <code class="bg-blue-100 px-1 rounded">entity_name</code>,
+								<code class="bg-blue-100 px-1 rounded">parent_name</code>,
 								<code class="bg-blue-100 px-1 rounded">type</code>
 							</p>
 							<p class="text-sm text-blue-700 mt-1">

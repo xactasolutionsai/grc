@@ -51,7 +51,7 @@
 		{:else}
 			<div class="w-4 h-4"></div>
 		{/if}
-		
+
 		<a
 			href="/audits/universe/{rootNode.id}"
 			class="flex-1 flex items-center space-x-2 py-1 px-2 rounded hover:bg-surface-100 {rootNode.id === currentEntityId ? 'bg-primary-50 border border-primary-200' : ''}"
@@ -72,7 +72,7 @@
 			{/if}
 		</a>
 	</div>
-	
+
 	{#if rootNode.children && rootNode.children.length > 0 && expanded}
 		<div class="space-y-1">
 			{#each rootNode.children as child}

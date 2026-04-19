@@ -8,7 +8,7 @@
 	}
 
 	let { node, level = 0 }: Props = $props();
-	
+
 	let deleting = $state(false);
 	let isExpanded = $state(true); // Start expanded by default
 
@@ -80,7 +80,7 @@
 	};
 </script>
 
-<div 
+<div
 	class="entity-card transition-all duration-200"
 	style="margin-left: {level * 2}rem"
 >
@@ -98,10 +98,10 @@
 							class="flex-shrink-0 w-6 h-6 flex items-center justify-center rounded-md hover:bg-surface-100 dark:hover:bg-surface-700 transition-colors"
 							aria-label={isExpanded ? 'Collapse' : 'Expand'}
 						>
-							<svg 
+							<svg
 								class="w-4 h-4 text-surface-600 dark:text-surface-300 transition-transform duration-200 {isExpanded ? 'rotate-90' : ''}"
-								fill="none" 
-								stroke="currentColor" 
+								fill="none"
+								stroke="currentColor"
 								viewBox="0 0 24 24"
 							>
 								<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
@@ -265,7 +265,7 @@
 			</div>
 		</div>
 	</div>
-	
+
 	<!-- Children (Nested Entities) -->
 	{#if node.children && node.children.length > 0 && isExpanded}
 		<div class="mt-3 space-y-3 pl-8 border-l-2 border-surface-200 dark:border-surface-700">

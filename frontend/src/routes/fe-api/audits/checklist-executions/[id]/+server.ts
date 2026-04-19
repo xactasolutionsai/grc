@@ -16,7 +16,7 @@ function getHeadersWithCookies(request: Request): Record<string, string> {
 export const GET: RequestHandler = async ({ params, fetch, request }) => {
 	try {
 		const apiUrl = `${BASE_API_URL}/audits/checklist-executions/${params.id}/`;
-		
+
 		const response = await fetch(apiUrl, {
 			method: 'GET',
 			headers: getHeadersWithCookies(request)
@@ -39,7 +39,7 @@ export const PATCH: RequestHandler = async ({ params, request, fetch }) => {
 	try {
 		const body = await request.json();
 		const apiUrl = `${BASE_API_URL}/audits/checklist-executions/${params.id}/`;
-		
+
 		const response = await fetch(apiUrl, {
 			method: 'PATCH',
 			headers: getHeadersWithCookies(request),
@@ -62,7 +62,7 @@ export const PATCH: RequestHandler = async ({ params, request, fetch }) => {
 export const DELETE: RequestHandler = async ({ params, fetch, request }) => {
 	try {
 		const apiUrl = `${BASE_API_URL}/audits/checklist-executions/${params.id}/`;
-		
+
 		const response = await fetch(apiUrl, {
 			method: 'DELETE',
 			headers: getHeadersWithCookies(request)
@@ -79,4 +79,3 @@ export const DELETE: RequestHandler = async ({ params, fetch, request }) => {
 		return json({ error: 'Internal server error' }, { status: 500 });
 	}
 };
-

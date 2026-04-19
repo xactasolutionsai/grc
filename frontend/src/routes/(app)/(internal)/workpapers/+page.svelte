@@ -4,7 +4,7 @@
 	import WorkpaperList from '$lib/modules/workpapers/WorkpaperList.svelte';
 	import WorkpaperForm from '$lib/modules/workpapers/WorkpaperForm.svelte';
 	import EnhancedModal from '$lib/components/Modals/EnhancedModal.svelte';
-	
+
 	let showForm = false;
 	let refreshKey = 0;
 
@@ -47,7 +47,7 @@
 							<p class="text-primary-100 mt-1">Manage audit workpapers and evidence with approval workflows</p>
 						</div>
 					</div>
-					<button 
+					<button
 						on:click={showCreateForm}
 						class="inline-flex items-center px-6 py-3 border-2 border-white/30 text-sm font-semibold rounded-xl shadow-lg text-white bg-white/10 hover:bg-white/20 backdrop-blur-sm transition-all gap-2"
 					>
@@ -64,9 +64,9 @@
 	</div>
 
 	<!-- Popup Modal -->
-	<EnhancedModal 
-		bind:open={showForm} 
-		title="Add Workpaper" 
+	<EnhancedModal
+		bind:open={showForm}
+		title="Add Workpaper"
 		maxWidth="4xl"
 		onClose={closeForm}
 	>
@@ -75,4 +75,3 @@
 		{/snippet}
 	</EnhancedModal>
 </div>
-

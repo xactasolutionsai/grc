@@ -66,7 +66,7 @@
 
 			const data = await listChecklists(params);
 			checklists = data.results || data;
-			
+
 			// Calculate summary
 			summary.total = checklists.length;
 			summary.draft = checklists.filter(c => c.status === 'draft').length;
@@ -175,7 +175,7 @@
 					<p class="text-primary-100 mt-1">Manage reusable audit programs and test procedures</p>
 				</div>
 			</div>
-			<button 
+			<button
 				onclick={createNewChecklist}
 				class="inline-flex items-center gap-2 px-6 py-3 border-2 border-white/30 text-sm font-semibold rounded-xl shadow-lg text-white bg-white/10 hover:bg-white/20 backdrop-blur-sm transition-all"
 			>
@@ -351,10 +351,10 @@
 						{#each checklists as checklist}
 							<tr class="hover:bg-surface-50 dark:hover:bg-surface-700/50 transition-colors">
 								<td class="px-6 py-4 text-sm text-surface-900 dark:text-surface-50">
-									<button 
+									<button
 										type="button"
-										class="font-semibold truncate cursor-pointer text-left w-full hover:text-primary-600 dark:hover:text-primary-400 transition-colors" 
-										onclick={() => viewChecklist(checklist.id)} 
+										class="font-semibold truncate cursor-pointer text-left w-full hover:text-primary-600 dark:hover:text-primary-400 transition-colors"
+										onclick={() => viewChecklist(checklist.id)}
 										title="{checklist.name}"
 									>
 										{checklist.name}
@@ -422,7 +422,7 @@
 					</tbody>
 				</table>
 			</div>
-			
+
 			{#if checklists.length === 0}
 				<div class="text-center py-12 px-4">
 					<svg class="mx-auto h-16 w-16 text-surface-400 dark:text-surface-500 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">

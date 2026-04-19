@@ -6,4 +6,3 @@
 </script>
 
 <ChecklistForm {checklistId} />
-

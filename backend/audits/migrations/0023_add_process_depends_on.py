@@ -5,15 +5,20 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('audits', '0022_add_process_identifier'),
+        ("audits", "0022_add_process_identifier"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='entityprocessactivity',
-            name='depends_on',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='dependents', to='audits.entityprocessactivity'),
+            model_name="entityprocessactivity",
+            name="depends_on",
+            field=models.ForeignKey(
+                blank=True,
+                null=True,
+                on_delete=django.db.models.deletion.SET_NULL,
+                related_name="dependents",
+                to="audits.entityprocessactivity",
+            ),
         ),
     ]

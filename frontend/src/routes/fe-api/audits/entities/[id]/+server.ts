@@ -5,20 +5,20 @@ import type { RequestHandler } from './$types';
 export const GET: RequestHandler = async ({ fetch, params }) => {
 	try {
 		const apiUrl = `${BASE_API_URL}/audits/entities/${params.id}/`;
-		
+
 		const response = await fetch(apiUrl, {
 			method: 'GET',
 			headers: {
 				'Content-Type': 'application/json',
 			},
 		});
-		
+
 		if (!response.ok) {
 			error(response.status, 'Failed to fetch entity');
 		}
-		
+
 		const data = await response.json();
-		
+
 		return new Response(JSON.stringify(data), {
 			headers: {
 				'Content-Type': 'application/json'
@@ -34,7 +34,7 @@ export const PATCH: RequestHandler = async ({ fetch, request, params }) => {
 	try {
 		const body = await request.json();
 		const apiUrl = `${BASE_API_URL}/audits/entities/${params.id}/`;
-		
+
 		const response = await fetch(apiUrl, {
 			method: 'PATCH',
 			headers: {
@@ -42,13 +42,13 @@ export const PATCH: RequestHandler = async ({ fetch, request, params }) => {
 			},
 			body: JSON.stringify(body),
 		});
-		
+
 		if (!response.ok) {
 			error(response.status, 'Failed to update entity');
 		}
-		
+
 		const data = await response.json();
-		
+
 		return new Response(JSON.stringify(data), {
 			headers: {
 				'Content-Type': 'application/json'
@@ -64,7 +64,7 @@ export const PUT: RequestHandler = async ({ fetch, request, params }) => {
 	try {
 		const body = await request.json();
 		const apiUrl = `${BASE_API_URL}/audits/entities/${params.id}/`;
-		
+
 		const response = await fetch(apiUrl, {
 			method: 'PUT',
 			headers: {
@@ -72,13 +72,13 @@ export const PUT: RequestHandler = async ({ fetch, request, params }) => {
 			},
 			body: JSON.stringify(body),
 		});
-		
+
 		if (!response.ok) {
 			error(response.status, 'Failed to update entity');
 		}
-		
+
 		const data = await response.json();
-		
+
 		return new Response(JSON.stringify(data), {
 			headers: {
 				'Content-Type': 'application/json'
@@ -93,15 +93,15 @@ export const PUT: RequestHandler = async ({ fetch, request, params }) => {
 export const DELETE: RequestHandler = async ({ fetch, params }) => {
 	try {
 		const apiUrl = `${BASE_API_URL}/audits/entities/${params.id}/`;
-		
+
 		const response = await fetch(apiUrl, {
 			method: 'DELETE',
 		});
-		
+
 		if (!response.ok) {
 			error(response.status, 'Failed to delete entity');
 		}
-		
+
 		return new Response(JSON.stringify({ success: true }), {
 			headers: {
 				'Content-Type': 'application/json'

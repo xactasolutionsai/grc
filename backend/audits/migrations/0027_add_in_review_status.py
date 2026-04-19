@@ -4,15 +4,27 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('audits', '0026_add_audit_plan_enhancements'),
+        ("audits", "0026_add_audit_plan_enhancements"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='auditplan',
-            name='status',
-            field=models.CharField(choices=[('draft', 'Draft'), ('pending_approval', 'Pending Approval'), ('approved', 'Approved'), ('in_review', 'In Review'), ('rejected', 'Rejected'), ('in_progress', 'In Progress'), ('completed', 'Completed'), ('cancelled', 'Cancelled')], default='draft', max_length=20),
+            model_name="auditplan",
+            name="status",
+            field=models.CharField(
+                choices=[
+                    ("draft", "Draft"),
+                    ("pending_approval", "Pending Approval"),
+                    ("approved", "Approved"),
+                    ("in_review", "In Review"),
+                    ("rejected", "Rejected"),
+                    ("in_progress", "In Progress"),
+                    ("completed", "Completed"),
+                    ("cancelled", "Cancelled"),
+                ],
+                default="draft",
+                max_length=20,
+            ),
         ),
     ]

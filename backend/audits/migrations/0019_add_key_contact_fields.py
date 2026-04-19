@@ -6,29 +6,44 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('audits', '0018_add_org_structure_file'),
+        ("audits", "0018_add_org_structure_file"),
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='auditentity',
-            name='contact_type',
-            field=models.CharField(choices=[('owner', 'Owner'), ('key_contact', 'Key Contact')], default='owner', help_text='Type of contact person', max_length=20),
+            model_name="auditentity",
+            name="contact_type",
+            field=models.CharField(
+                choices=[("owner", "Owner"), ("key_contact", "Key Contact")],
+                default="owner",
+                help_text="Type of contact person",
+                max_length=20,
+            ),
         ),
         migrations.AddField(
-            model_name='auditentity',
-            name='key_contact',
-            field=models.ForeignKey(blank=True, help_text='Key contact person for this entity', null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='key_contact_audit_entities', to=settings.AUTH_USER_MODEL),
+            model_name="auditentity",
+            name="key_contact",
+            field=models.ForeignKey(
+                blank=True,
+                help_text="Key contact person for this entity",
+                null=True,
+                on_delete=django.db.models.deletion.SET_NULL,
+                related_name="key_contact_audit_entities",
+                to=settings.AUTH_USER_MODEL,
+            ),
         ),
         migrations.AddIndex(
-            model_name='auditentity',
-            index=models.Index(fields=['key_contact'], name='audits_audi_key_con_9008b2_idx'),
+            model_name="auditentity",
+            index=models.Index(
+                fields=["key_contact"], name="audits_audi_key_con_9008b2_idx"
+            ),
         ),
         migrations.AddIndex(
-            model_name='auditentity',
-            index=models.Index(fields=['contact_type'], name='audits_audi_contact_665a46_idx'),
+            model_name="auditentity",
+            index=models.Index(
+                fields=["contact_type"], name="audits_audi_contact_665a46_idx"
+            ),
         ),
     ]

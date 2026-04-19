@@ -5,27 +5,49 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('audits', '0020_add_objectives_field'),
+        ("audits", "0020_add_objectives_field"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='EntityProcessActivity',
+            name="EntityProcessActivity",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(max_length=255)),
-                ('description', models.TextField(blank=True)),
-                ('created_at', models.DateTimeField(auto_now_add=True)),
-                ('updated_at', models.DateTimeField(auto_now=True)),
-                ('audit_entity', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='process_activities', to='audits.auditentity')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("name", models.CharField(max_length=255)),
+                ("description", models.TextField(blank=True)),
+                ("created_at", models.DateTimeField(auto_now_add=True)),
+                ("updated_at", models.DateTimeField(auto_now=True)),
+                (
+                    "audit_entity",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="process_activities",
+                        to="audits.auditentity",
+                    ),
+                ),
             ],
             options={
-                'verbose_name': 'Entity Process/Activity',
-                'verbose_name_plural': 'Entity Processes/Activities',
-                'ordering': ['name'],
-                'indexes': [models.Index(fields=['audit_entity', 'name'], name='audits_enti_audit_e_50c4b2_idx'), models.Index(fields=['created_at'], name='audits_enti_created_b051e4_idx')],
+                "verbose_name": "Entity Process/Activity",
+                "verbose_name_plural": "Entity Processes/Activities",
+                "ordering": ["name"],
+                "indexes": [
+                    models.Index(
+                        fields=["audit_entity", "name"],
+                        name="audits_enti_audit_e_50c4b2_idx",
+                    ),
+                    models.Index(
+                        fields=["created_at"], name="audits_enti_created_b051e4_idx"
+                    ),
+                ],
             },
         ),
     ]

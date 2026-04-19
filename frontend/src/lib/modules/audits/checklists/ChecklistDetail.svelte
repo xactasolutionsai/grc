@@ -249,7 +249,7 @@
 		<!-- Header Card -->
 		<div class="bg-gradient-to-r from-primary-600 to-primary-700 dark:from-primary-700 dark:to-primary-800 shadow-xl rounded-xl mb-8 p-8">
 			<div class="flex items-center gap-4 mb-4">
-				<button 
+				<button
 					onclick={goBack}
 					class="p-2 bg-white/10 hover:bg-white/20 rounded-lg transition-colors text-white"
 					title="Back to list"
@@ -268,7 +268,7 @@
 				<span class="inline-flex items-center px-4 py-2 rounded-lg text-sm font-semibold {getStatusColor(checklist.status)} shadow-md">
 					{formatStatus(checklist.status)}
 				</span>
-				<button 
+				<button
 					onclick={editChecklist}
 					class="inline-flex items-center gap-2 px-6 py-3 border-2 border-white/30 text-sm font-semibold rounded-xl shadow-lg text-white bg-white/10 hover:bg-white/20 backdrop-blur-sm transition-all"
 				>
@@ -346,7 +346,7 @@
 					<h2 class="text-xl font-bold text-surface-900 dark:text-surface-50">
 						Checklist Items ({checklist.item_count})
 					</h2>
-					<button 
+					<button
 						onclick={openAddItemModal}
 						class="inline-flex items-center gap-2 px-4 py-2 bg-primary-600 hover:bg-primary-700 text-white rounded-lg shadow-md transition-colors font-semibold"
 					>
@@ -374,7 +374,7 @@
 					</svg>
 					<h3 class="text-lg font-semibold text-surface-900 dark:text-surface-50 mb-2">No items yet</h3>
 					<p class="text-surface-600 dark:text-surface-400 mb-4">Add your first checklist item to get started.</p>
-					<button 
+					<button
 						onclick={openAddItemModal}
 						class="inline-flex items-center gap-2 px-4 py-2 bg-primary-600 hover:bg-primary-700 text-white rounded-lg shadow-md transition-colors font-semibold"
 					>
@@ -488,7 +488,7 @@
 </div>
 
 <!-- Add/Edit Item Modal -->
-<EnhancedModal 
+<EnhancedModal
 	bind:open={showAddItemModal}
 	title="{editingItem ? '✏️ Edit' : '➕ Add'} Checklist Item"
 	maxWidth="3xl"

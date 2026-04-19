@@ -20,7 +20,7 @@
 			loading = true;
 			error = null;
 			workpaper = await getWorkpaper(workpaperId);
-			
+
 			// Load approval history
 			try {
 				approvalHistory = await getApprovalHistory(workpaperId);
@@ -152,7 +152,7 @@
 						</div>
 					{/if}
 				{/if}
-				
+
 				{#if workpaper.external_link}
 					<div>
 						<span class="text-sm font-medium text-surface-600 dark:text-surface-400">External Link</span>
@@ -273,4 +273,3 @@
 		{/if}
 	</div>
 {/if}
-

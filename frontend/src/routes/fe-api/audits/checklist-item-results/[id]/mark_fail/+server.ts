@@ -17,7 +17,7 @@ export const POST: RequestHandler = async ({ params, request, fetch }) => {
 	try {
 		const body = await request.json();
 		const apiUrl = `${BASE_API_URL}/audits/checklist-item-results/${params.id}/mark_fail/`;
-		
+
 		const response = await fetch(apiUrl, {
 			method: 'POST',
 			headers: getHeadersWithCookies(request),
@@ -36,4 +36,3 @@ export const POST: RequestHandler = async ({ params, request, fetch }) => {
 		return json({ error: 'Internal server error' }, { status: 500 });
 	}
 };
-

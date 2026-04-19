@@ -45,7 +45,7 @@ Enhanced error messages in `createChecklist` and `updateChecklist` functions to 
 ```javascript
 if (!response.ok) {
     const errorData = await response.json().catch(() => ({}));
-    const errorMessage = errorData.folder 
+    const errorMessage = errorData.folder
         ? `Folder: ${Array.isArray(errorData.folder) ? errorData.folder.join(', ') : errorData.folder}`
         : errorData.detail || 'Failed to create checklist';
     throw new Error(errorMessage);
@@ -64,7 +64,7 @@ if (!response.ok) {
 ## How It Works Now
 
 1. **On Component Mount:**
-   - Form loads folders from `/fe-api/folders/` 
+   - Form loads folders from `/fe-api/folders/`
    - Proxy route forwards request to backend `/api/folders/`
    - Folders populate the dropdown
 
@@ -121,4 +121,3 @@ The folder field is now fully functional:
 - ✅ User experience is smooth
 
 Users can now create and edit checklists with or without folders successfully.
-

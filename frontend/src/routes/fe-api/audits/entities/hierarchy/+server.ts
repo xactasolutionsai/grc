@@ -18,17 +18,17 @@ export const GET: RequestHandler = async ({ fetch, url, request }) => {
 	try {
 		const searchParams = url.searchParams.toString();
 		const apiUrl = `${BASE_API_URL}/audits/entities/hierarchy/${searchParams ? '?' + searchParams : ''}`;
-		
+
 		const response = await fetch(apiUrl, {
 			headers: getHeadersWithCookies(request)
 		});
-		
+
 		if (!response.ok) {
 			error(response.status, 'Failed to fetch hierarchy');
 		}
-		
+
 		const data = await response.json();
-		
+
 		return new Response(JSON.stringify(data), {
 			headers: {
 				'Content-Type': 'application/json'
@@ -39,4 +39,3 @@ export const GET: RequestHandler = async ({ fetch, url, request }) => {
 		error(500, 'Internal server error');
 	}
 };
-

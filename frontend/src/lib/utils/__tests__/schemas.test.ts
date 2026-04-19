@@ -51,14 +51,14 @@ describe('AssetSchema ITAM Fields', () => {
 
 	it('validates asset_type enum correctly', () => {
 		const validTypes = ['hardware', 'software', 'cloud', 'digital'];
-		
+
 		validTypes.forEach(type => {
 			const assetData = {
 				name: 'Test Asset',
 				folder: '123e4567-e89b-12d3-a456-426614174000',
 				asset_type: type
 			};
-			
+
 			const result = AssetSchema.safeParse(assetData);
 			expect(result.success).toBe(true);
 		});
@@ -70,7 +70,7 @@ describe('AssetSchema ITAM Fields', () => {
 			folder: '123e4567-e89b-12d3-a456-426614174000',
 			asset_type: 'invalid_type'
 		};
-		
+
 		const result = AssetSchema.safeParse(assetData);
 		expect(result.success).toBe(false);
 		if (!result.success) {
@@ -86,7 +86,7 @@ describe('AssetSchema ITAM Fields', () => {
 			depreciation_value: 300.25,
 			total_cost_of_ownership: 2000.75
 		};
-		
+
 		const result = AssetSchema.safeParse(assetData);
 		expect(result.success).toBe(true);
 	});
@@ -97,7 +97,7 @@ describe('AssetSchema ITAM Fields', () => {
 			folder: '123e4567-e89b-12d3-a456-426614174000',
 			purchase_cost: -100.00
 		};
-		
+
 		const result = AssetSchema.safeParse(assetData);
 		expect(result.success).toBe(false);
 		if (!result.success) {
@@ -142,7 +142,7 @@ describe('AssetSchema ITAM Fields', () => {
 			incident_records: null,
 			compliance_standards: null
 		};
-		
+
 		const result = AssetSchema.safeParse(assetData);
 		expect(result.success).toBe(true);
 	});
@@ -174,7 +174,7 @@ describe('AssetSchema ITAM Fields', () => {
 			],
 			compliance_standards: ['ISO27001', 'SOC2', 'PCI-DSS']
 		};
-		
+
 		const result = AssetSchema.safeParse(assetData);
 		expect(result.success).toBe(true);
 	});
@@ -184,7 +184,7 @@ describe('AssetSchema ITAM Fields', () => {
 			name: 'Test Asset',
 			folder: '123e4567-e89b-12d3-a456-426614174000'
 		};
-		
+
 		const result = AssetSchema.safeParse(minimalAssetData);
 		expect(result.success).toBe(true);
 	});
@@ -195,7 +195,7 @@ describe('AssetSchema ITAM Fields', () => {
 			folder: '123e4567-e89b-12d3-a456-426614174000',
 			ref_id: 'A'.repeat(101) // Exceeds max length of 100
 		};
-		
+
 		const result = AssetSchema.safeParse(assetData);
 		expect(result.success).toBe(false);
 		if (!result.success) {
@@ -209,7 +209,7 @@ describe('AssetSchema ITAM Fields', () => {
 			folder: '123e4567-e89b-12d3-a456-426614174000',
 			reference_link: 'https://example.com/asset'
 		};
-		
+
 		const result = AssetSchema.safeParse(validUrlData);
 		expect(result.success).toBe(true);
 	});
@@ -220,7 +220,7 @@ describe('AssetSchema ITAM Fields', () => {
 			folder: '123e4567-e89b-12d3-a456-426614174000',
 			reference_link: 'not-a-valid-url'
 		};
-		
+
 		const result = AssetSchema.safeParse(invalidUrlData);
 		expect(result.success).toBe(false);
 		if (!result.success) {
@@ -234,7 +234,7 @@ describe('AssetSchema ITAM Fields', () => {
 			folder: '123e4567-e89b-12d3-a456-426614174000',
 			reference_link: ''
 		};
-		
+
 		const result = AssetSchema.safeParse(assetData);
 		expect(result.success).toBe(true);
 	});

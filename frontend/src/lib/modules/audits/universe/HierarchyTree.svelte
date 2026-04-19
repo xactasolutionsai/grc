@@ -32,7 +32,7 @@
 		try {
 			loading = true;
 			error = null;
-			
+
 			// Build params based on filter tab
 			const params: any = {};
 			if (filterTab === 'my_entities') {
@@ -40,7 +40,7 @@
 			} else if (filterTab === 'my_team') {
 				params.my_team = 'true';
 			}
-			
+
 			hierarchy = await getHierarchy(params);
 		} catch (err: any) {
 			console.error('Error loading hierarchy:', err);
@@ -93,7 +93,7 @@
 {:else if error}
 	<div class="bg-error-50 border border-error-200 rounded-md p-4">
 		<div class="text-error-800">Error: {error}</div>
-		<button 
+		<button
 			onclick={loadHierarchy}
 			class="mt-2 px-4 py-2 bg-error-600 text-white rounded-md hover:bg-error-700"
 		>

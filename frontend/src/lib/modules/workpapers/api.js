@@ -85,11 +85,11 @@ export const uploadFile = async (id, file) => {
     const url = `${API_BASE}/workpapers/${id}/upload_file/`;
     const formData = new FormData();
     formData.append('file', file);
-    
+
     // Create abort controller for timeout (2 minutes for larger files)
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), 120000); // 2 minute timeout
-    
+
     try {
         console.log('[API] Uploading to:', url);
         const response = await fetch(url, {
@@ -97,16 +97,16 @@ export const uploadFile = async (id, file) => {
             body: formData,
             signal: controller.signal
         });
-        
+
         clearTimeout(timeoutId);
         console.log('[API] Upload response received:', response.status);
-        
+
         if (!response.ok) {
             const errorText = await response.text();
             console.error('[API] Upload failed:', errorText);
             throw new Error(`Failed to upload file: ${response.status} ${response.statusText}`);
         }
-        
+
         const result = await response.json();
         console.log('[API] Upload successful');
         return result;
@@ -227,4 +227,3 @@ export const listApprovals = async (params = {}) => {
     if (!response.ok) throw new Error('Failed to fetch approvals');
     return response.json();
 };
-

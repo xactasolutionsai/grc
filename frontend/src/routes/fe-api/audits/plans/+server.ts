@@ -18,17 +18,17 @@ export const GET: RequestHandler = async ({ fetch, url, request }) => {
 	try {
 		const searchParams = url.searchParams.toString();
 		const apiUrl = `${BASE_API_URL}/audits/plans/${searchParams ? '?' + searchParams : ''}`;
-		
+
 		const response = await fetch(apiUrl, {
 			headers: getHeadersWithCookies(request)
 		});
-		
+
 		if (!response.ok) {
 			error(response.status, 'Failed to fetch plans');
 		}
-		
+
 		const data = await response.json();
-		
+
 		return new Response(JSON.stringify(data), {
 			headers: {
 				'Content-Type': 'application/json'
@@ -44,19 +44,19 @@ export const POST: RequestHandler = async ({ fetch, request }) => {
 	try {
 		const body = await request.json();
 		const apiUrl = `${BASE_API_URL}/audits/plans/`;
-		
+
 		const response = await fetch(apiUrl, {
 			method: 'POST',
 			headers: getHeadersWithCookies(request),
 			body: JSON.stringify(body),
 		});
-		
+
 		if (!response.ok) {
 			error(response.status, 'Failed to create plan');
 		}
-		
+
 		const data = await response.json();
-		
+
 		return new Response(JSON.stringify(data), {
 			headers: {
 				'Content-Type': 'application/json'

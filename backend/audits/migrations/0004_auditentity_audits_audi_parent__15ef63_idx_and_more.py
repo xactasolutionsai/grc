@@ -5,39 +5,48 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('audits', '0003_remove_auditentity_audit_evidence_and_more'),
+        ("audits", "0003_remove_auditentity_audit_evidence_and_more"),
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
     ]
 
     operations = [
         migrations.AddIndex(
-            model_name='auditentity',
-            index=models.Index(fields=['parent'], name='audits_audi_parent__15ef63_idx'),
+            model_name="auditentity",
+            index=models.Index(
+                fields=["parent"], name="audits_audi_parent__15ef63_idx"
+            ),
         ),
         migrations.AddIndex(
-            model_name='auditentity',
-            index=models.Index(fields=['owner'], name='audits_audi_owner_i_f861b0_idx'),
+            model_name="auditentity",
+            index=models.Index(fields=["owner"], name="audits_audi_owner_i_f861b0_idx"),
         ),
         migrations.AddIndex(
-            model_name='auditentity',
-            index=models.Index(fields=['entity_type'], name='audits_audi_entity__8b395a_idx'),
+            model_name="auditentity",
+            index=models.Index(
+                fields=["entity_type"], name="audits_audi_entity__8b395a_idx"
+            ),
         ),
         migrations.AddIndex(
-            model_name='auditentity',
-            index=models.Index(fields=['is_active'], name='audits_audi_is_acti_a2f178_idx'),
+            model_name="auditentity",
+            index=models.Index(
+                fields=["is_active"], name="audits_audi_is_acti_a2f178_idx"
+            ),
         ),
         migrations.AddIndex(
-            model_name='auditentity',
-            index=models.Index(fields=['name'], name='audits_audi_name_05985f_idx'),
+            model_name="auditentity",
+            index=models.Index(fields=["name"], name="audits_audi_name_05985f_idx"),
         ),
         migrations.AddIndex(
-            model_name='auditentity',
-            index=models.Index(fields=['last_audited'], name='audits_audi_last_au_941bb9_idx'),
+            model_name="auditentity",
+            index=models.Index(
+                fields=["last_audited"], name="audits_audi_last_au_941bb9_idx"
+            ),
         ),
         migrations.AddIndex(
-            model_name='auditentity',
-            index=models.Index(fields=['created_at'], name='audits_audi_created_7bd802_idx'),
+            model_name="auditentity",
+            index=models.Index(
+                fields=["created_at"], name="audits_audi_created_7bd802_idx"
+            ),
         ),
     ]

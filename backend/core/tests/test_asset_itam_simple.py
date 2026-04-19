@@ -18,14 +18,12 @@ class AssetITAMSimpleTestCase(TestCase):
     def setUp(self):
         """Set up test data."""
         self.user = User.objects.create_user(
-            email="test@example.com",
-            password="testpass123"
+            email="test@example.com", password="testpass123"
         )
-        
+
         # Create a test folder
         self.folder = Folder.objects.create(
-            name="Test Folder",
-            description="Test folder for ITAM tests"
+            name="Test Folder", description="Test folder for ITAM tests"
         )
 
     def test_create_asset_with_itam_fields(self):
@@ -46,9 +44,9 @@ class AssetITAMSimpleTestCase(TestCase):
             license_number="LIC-2024-001",
             license_type="perpetual",
             compliance_status="Compliant",
-            warranty="3 years manufacturer warranty"
+            warranty="3 years manufacturer warranty",
         )
-        
+
         # Verify the asset was created with ITAM fields
         self.assertEqual(asset.asset_type, "hardware")
         self.assertEqual(asset.serial_number, "SN123456789")
@@ -60,14 +58,26 @@ class AssetITAMSimpleTestCase(TestCase):
     def test_create_asset_with_json_fields(self):
         """Test creating an asset with JSON ITAM fields."""
         upgrade_history = [
-            {"version": "1.0", "date": "2024-01-15", "description": "Initial installation"},
-            {"version": "1.1", "date": "2024-02-15", "description": "Security update"}
+            {
+                "version": "1.0",
+                "date": "2024-01-15",
+                "description": "Initial installation",
+            },
+            {"version": "1.1", "date": "2024-02-15", "description": "Security update"},
         ]
         service_history = [
-            {"date": "2024-01-20", "type": "maintenance", "description": "Routine check"},
-            {"date": "2024-02-10", "type": "repair", "description": "Hardware replacement"}
+            {
+                "date": "2024-01-20",
+                "type": "maintenance",
+                "description": "Routine check",
+            },
+            {
+                "date": "2024-02-10",
+                "type": "repair",
+                "description": "Hardware replacement",
+            },
         ]
-        
+
         asset = Asset.objects.create(
             name="Test Software",
             description="Test software for ITAM testing",
@@ -77,9 +87,9 @@ class AssetITAMSimpleTestCase(TestCase):
             service_history=service_history,
             security_config={"encryption": True, "firewall": "enabled"},
             known_vulnerabilities=[{"cve": "CVE-2024-001", "severity": "high"}],
-            compliance_standards=["ISO27001", "SOC2"]
+            compliance_standards=["ISO27001", "SOC2"],
         )
-        
+
         # Verify JSON fields were saved correctly
         self.assertEqual(asset.upgrade_history, upgrade_history)
         self.assertEqual(asset.service_history, service_history)
@@ -89,14 +99,14 @@ class AssetITAMSimpleTestCase(TestCase):
     def test_serializer_validation_negative_costs(self):
         """Test validation of negative cost fields."""
         serializer = AssetWriteSerializer()
-        
+
         # Test negative cost validation
         with self.assertRaises(Exception):
             serializer.validate_purchase_cost(-100.00)
-        
+
         with self.assertRaises(Exception):
             serializer.validate_depreciation_value(-50.00)
-        
+
         with self.assertRaises(Exception):
             serializer.validate_total_cost_of_ownership(-200.00)
 
@@ -104,23 +114,20 @@ class AssetITAMSimpleTestCase(TestCase):
         """Test that asset_type choices work correctly."""
         # Test all asset types
         asset_types = ["hardware", "software", "cloud", "digital"]
-        
+
         for asset_type in asset_types:
             asset = Asset.objects.create(
                 name=f"Test {asset_type.title()} Asset",
                 folder=self.folder,
-                asset_type=asset_type
+                asset_type=asset_type,
             )
             self.assertEqual(asset.asset_type, asset_type)
 
     def test_backward_compatibility(self):
         """Test that existing assets without ITAM fields still work."""
         # Create asset without any ITAM fields
-        asset = Asset.objects.create(
-            name="Legacy Asset",
-            folder=self.folder
-        )
-        
+        asset = Asset.objects.create(name="Legacy Asset", folder=self.folder)
+
         # Verify all ITAM fields are null/empty
         self.assertIsNone(asset.asset_type)
         self.assertIsNone(asset.vendor)
@@ -133,17 +140,13 @@ class AssetITAMSimpleTestCase(TestCase):
         """Test that serial numbers are unique."""
         # Create first asset with serial number
         Asset.objects.create(
-            name="Asset 1",
-            folder=self.folder,
-            serial_number="SN123456"
+            name="Asset 1", folder=self.folder, serial_number="SN123456"
         )
-        
+
         # Try to create second asset with same serial number
         with self.assertRaises(Exception):
             Asset.objects.create(
-                name="Asset 2",
-                folder=self.folder,
-                serial_number="SN123456"
+                name="Asset 2", folder=self.folder, serial_number="SN123456"
             )
 
     def test_decimal_fields_precision(self):
@@ -153,9 +156,9 @@ class AssetITAMSimpleTestCase(TestCase):
             folder=self.folder,
             purchase_cost=Decimal("1234.56"),
             depreciation_value=Decimal("987.65"),
-            total_cost_of_ownership=Decimal("2345.67")
+            total_cost_of_ownership=Decimal("2345.67"),
         )
-        
+
         self.assertEqual(asset.purchase_cost, Decimal("1234.56"))
         self.assertEqual(asset.depreciation_value, Decimal("987.65"))
         self.assertEqual(asset.total_cost_of_ownership, Decimal("2345.67"))
@@ -163,10 +166,8 @@ class AssetITAMSimpleTestCase(TestCase):
     def test_asset_type_display(self):
         """Test that asset_type display works correctly."""
         asset = Asset.objects.create(
-            name="Test Asset",
-            folder=self.folder,
-            asset_type="hardware"
+            name="Test Asset", folder=self.folder, asset_type="hardware"
         )
-        
+
         # Test the display method
         self.assertEqual(asset.get_asset_type_display(), "Hardware")

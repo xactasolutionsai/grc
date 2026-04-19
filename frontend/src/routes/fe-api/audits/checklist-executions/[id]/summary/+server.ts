@@ -16,7 +16,7 @@ function getHeadersWithCookies(request: Request): Record<string, string> {
 export const GET: RequestHandler = async ({ params, fetch, request }) => {
 	try {
 		const apiUrl = `${BASE_API_URL}/audits/checklist-executions/${params.id}/summary/`;
-		
+
 		const response = await fetch(apiUrl, {
 			method: 'GET',
 			headers: getHeadersWithCookies(request)
@@ -34,4 +34,3 @@ export const GET: RequestHandler = async ({ params, fetch, request }) => {
 		return json({ error: 'Internal server error' }, { status: 500 });
 	}
 };
-

@@ -12,7 +12,7 @@ const getAuthHeaders = () => {
 const handleResponse = async (response) => {
     if (!response.ok) {
         const errorData = await response.json().catch(() => ({}));
-        
+
         // Handle validation errors (DRF returns field-specific errors)
         if (errorData && typeof errorData === 'object' && !errorData.detail) {
             const errors = Object.entries(errorData)
@@ -23,7 +23,7 @@ const handleResponse = async (response) => {
                 .join('; ');
             throw new Error(errors || `HTTP ${response.status}: ${response.statusText}`);
         }
-        
+
         throw new Error(errorData.detail || errorData.error || `HTTP ${response.status}: ${response.statusText}`);
     }
     return response.json();
@@ -299,4 +299,3 @@ export const formatEngagementPriority = (priority) => {
     const priorityObj = ENGAGEMENT_PRIORITIES.find(p => p.value === priority);
     return priorityObj ? priorityObj.label : priority;
 };
-

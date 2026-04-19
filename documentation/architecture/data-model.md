@@ -351,47 +351,47 @@ erDiagram
         int    rto
         int    rpo
         int    mtd
-        
+
         # ITAM (IT Asset Management) fields
         # Inventory
         enum   asset_type "hardware/software/cloud/digital"
         text   specifications
         string serial_number
         text   license_key
-        
+
         # Ownership & Location
         string assigned_user
         string department
         string physical_location
         string virtual_location
-        
+
         # Lifecycle
         date   acquisition_date
         text   deployment_details
         text   maintenance_schedule
         json   upgrade_history
         date   end_of_life_date
-        
+
         # Licensing & Compliance
         string license_number
         string license_type
         date   license_expiry_date
         string compliance_status
         json   audit_logs
-        
+
         # Financials
         decimal purchase_cost
         decimal depreciation_value
         decimal total_cost_of_ownership
         string vendor
         text   warranty
-        
+
         # Operations
         json   service_history
         text   preventive_maintenance
         text   sla_details
         text   spare_parts
-        
+
         # Security & Risk
         json   security_config
         json   known_vulnerabilities
@@ -528,7 +528,7 @@ Labels are attached to the root folder. They can be read by everyone, added by a
 ```mermaid
 erDiagram
     ANY_USER_DEFINED_OBJECT   }o--o{ LABEL : has_label
- 
+
     LABEL {
         string  label
     }
@@ -1192,7 +1192,7 @@ A user can be authenticated either locally or with SSO.
 When SSO is activated, all users can use SSO.
 
 When the force_sso global flag is set, all users without keep_local_login:
-- have their password disabled, 
+- have their password disabled,
 - cannot ask for a password reset,
 - cannot have their password changed by an administrator.
 

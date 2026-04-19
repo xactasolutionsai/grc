@@ -124,7 +124,7 @@
 		// console.debug(option);
 		// use configuration item and data specified to show chart
 		chart.setOption(option);
-		
+
 		// Add click event if onSegmentClick is provided
 		if (onSegmentClick) {
 			chart.on('click', (params: any) => {
@@ -134,7 +134,7 @@
 				}
 			});
 		}
-		
+
 		window.addEventListener('resize', function () {
 			chart.resize();
 		});

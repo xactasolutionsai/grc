@@ -17,19 +17,19 @@ export const POST: RequestHandler = async ({ fetch, params, request }) => {
 	try {
 		const body = await request.json();
 		const apiUrl = `${BASE_API_URL}/workpapers/workpapers/${params.id}/reject/`;
-		
+
 		const response = await fetch(apiUrl, {
 			method: 'POST',
 			headers: getHeadersWithCookies(request),
 			body: JSON.stringify(body),
 		});
-		
+
 		if (!response.ok) {
 			error(response.status, 'Failed to reject workpaper');
 		}
-		
+
 		const data = await response.json();
-		
+
 		return new Response(JSON.stringify(data), {
 			headers: {
 				'Content-Type': 'application/json'
@@ -40,4 +40,3 @@ export const POST: RequestHandler = async ({ fetch, params, request }) => {
 		error(500, 'Internal server error');
 	}
 };
-

@@ -46,7 +46,7 @@
 				notes: workpaper.notes || '',
 				is_active: workpaper.is_active !== undefined ? workpaper.is_active : true
 			};
-			
+
 			if (workpaper.tags && Array.isArray(workpaper.tags)) {
 				tagsInput = workpaper.tags.join(', ');
 			}
@@ -98,21 +98,21 @@
 
 			// Clean up form data
 			const formData: any = { ...form };
-			
+
 			// Remove empty optional fields
 			if (!formData.description || formData.description.trim() === '') formData.description = '';
 			if (!formData.external_link || formData.external_link.trim() === '') delete formData.external_link;
 			if (!formData.tags || formData.tags.length === 0) delete formData.tags;
 			if (!formData.metadata) delete formData.metadata;
-			
+
 			uploadProgress = 'Creating workpaper...';
 			const created: any = await createWorkpaper(formData);
-			
+
 			// If there's a file, upload it
 			if (selectedFile && created && created.id) {
 				uploading = true;
 				uploadProgress = 'Uploading file...';
-				
+
 				try {
 					await uploadFile(created.id, selectedFile);
 					uploadProgress = 'File uploaded successfully!';
@@ -124,14 +124,14 @@
 					return; // Don't close modal, keep it open to show error
 				}
 			}
-			
+
 			uploadProgress = 'Complete!';
-			
+
 			// Small delay to show success message
 			await new Promise(resolve => setTimeout(resolve, 500));
-			
+
 			onSaved();
-			
+
 			// Reset form
 			form = {
 				title: '',
@@ -410,4 +410,3 @@
 		background: rgba(0, 0, 0, 0.3);
 	}
 </style>
-

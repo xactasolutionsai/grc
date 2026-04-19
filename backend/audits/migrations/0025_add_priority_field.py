@@ -4,19 +4,28 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('audits', '0024_add_owners_field'),
+        ("audits", "0024_add_owners_field"),
     ]
 
     operations = [
         migrations.RemoveField(
-            model_name='auditentity',
-            name='owners',
+            model_name="auditentity",
+            name="owners",
         ),
         migrations.AddField(
-            model_name='auditentity',
-            name='priority',
-            field=models.CharField(choices=[('low', 'Low'), ('medium', 'Medium'), ('high', 'High'), ('critical', 'Critical')], default='medium', help_text='Priority level for this entity', max_length=10),
+            model_name="auditentity",
+            name="priority",
+            field=models.CharField(
+                choices=[
+                    ("low", "Low"),
+                    ("medium", "Medium"),
+                    ("high", "High"),
+                    ("critical", "Critical"),
+                ],
+                default="medium",
+                help_text="Priority level for this entity",
+                max_length=10,
+            ),
         ),
     ]

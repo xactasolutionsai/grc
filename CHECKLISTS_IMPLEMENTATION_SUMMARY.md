@@ -340,4 +340,3 @@ Checklist (N) → (1) User (created_by)
 ## Summary
 
 The Checklists feature has been successfully implemented as a fully integrated part of the audits module. It provides a robust foundation for managing reusable audit programs while maintaining clean separation between template definition and execution tracking. The implementation follows the existing codebase patterns and is ready for production use.
-

@@ -38,7 +38,7 @@
 		notes: '',
 		is_active: true
 	};
-	
+
 	let saving = false;
 	let error: string | null = null;
 	let entities: any[] = [];
@@ -104,7 +104,7 @@
 		} catch (err: any) {
 			console.error('Error loading entities for parent dropdown:', err);
 		}
-		
+
 		// Load users for owner dropdowns
 		try {
 			const data = await getUsers();
@@ -144,7 +144,7 @@
 	function handleCoordinateChange(lat: string, lng: string) {
 		const latitude = parseFloat(lat);
 		const longitude = parseFloat(lng);
-		
+
 		if (!isNaN(latitude) && !isNaN(longitude)) {
 			form.coordinates = { latitude, longitude };
 		} else {
@@ -160,11 +160,11 @@
 		event.preventDefault();
 		saving = true;
 		error = null;
-		
+
 		try {
 			// Clean up form data - convert empty strings to null or delete
 			const formData: any = { ...form };
-			
+
 			// Convert empty strings to null for optional fields
 			if (!formData.last_audited || formData.last_audited === '') delete formData.last_audited;
 			if (!formData.next_audit_date || formData.next_audit_date === '') delete formData.next_audit_date;
@@ -173,14 +173,14 @@
 			if (!formData.team_member || formData.team_member === '' || formData.team_member === 'null') formData.team_member = null;
 			if (!formData.key_contact || formData.key_contact === '' || formData.key_contact === 'null') formData.key_contact = null;
 			if (!formData.regulatory_relevance || formData.regulatory_relevance === '') delete formData.regulatory_relevance;
-			
+
 			// Convert numeric fields
 			if (formData.inherent_risk_score === '' || formData.inherent_risk_score === null) delete formData.inherent_risk_score;
 			if (formData.residual_risk_score === '' || formData.residual_risk_score === null) delete formData.residual_risk_score;
 			if (formData.control_maturity === '' || formData.control_maturity === null) delete formData.control_maturity;
-			
+
 			// is_active is always included as it has a default value
-			
+
 			console.log('Submitting entity data:', formData);
 			const created = await createEntity(formData);
 			if (orgStructureFile) {
@@ -191,7 +191,7 @@
 				}
 			}
 			onSaved();
-			
+
 			// Reset form
 			form = {
 				name: '',
@@ -447,7 +447,7 @@
 							placeholder="0-10"
 						/>
 					</div>
-					
+
 					<div>
 						<label for="inherent_risk_score" class="block text-sm font-medium text-surface-700 dark:text-surface-300 mb-1.5">
 							Inherent Risk Score
@@ -485,7 +485,7 @@
 							placeholder="0-10"
 						/>
 					</div>
-					
+
 					<div>
 						<label for="control_maturity" class="block text-sm font-medium text-surface-700 dark:text-surface-300 mb-1.5">
 							Control Maturity Level
@@ -554,7 +554,7 @@
 							{/each}
 						</select>
 					</div>
-					
+
 					<div>
 						<label for="priority" class="block text-sm font-medium text-surface-700 dark:text-surface-300 mb-1.5">
 							Priority
@@ -571,7 +571,7 @@
 							{/each}
 						</select>
 					</div>
-					
+
 					<div>
 						<label for="audit_frequency" class="block text-sm font-medium text-surface-700 dark:text-surface-300 mb-1.5">
 							Audit Frequency
@@ -604,7 +604,7 @@
 							class="w-full px-3 py-2 border border-surface-300 dark:border-surface-600 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent bg-white dark:bg-surface-900"
 						/>
 					</div>
-					
+
 					<div>
 						<label for="next_audit_date" class="block text-sm font-medium text-surface-700 dark:text-surface-300 mb-1.5">
 							Next Audit Date
@@ -657,7 +657,7 @@
 							placeholder="e.g., United States"
 						/>
 					</div>
-					
+
 					<div>
 						<label for="region" class="block text-sm font-medium text-surface-700 dark:text-surface-300 mb-1.5">
 							Region/State/Province
@@ -672,7 +672,7 @@
 							placeholder="e.g., California"
 						/>
 					</div>
-					
+
 					<div>
 						<label for="city" class="block text-sm font-medium text-surface-700 dark:text-surface-300 mb-1.5">
 							City
@@ -719,7 +719,7 @@
 							placeholder="e.g., 94105"
 						/>
 					</div>
-					
+
 					<div>
 						<label for="timezone" class="block text-sm font-medium text-surface-700 dark:text-surface-300 mb-1.5">
 							Timezone
@@ -763,7 +763,7 @@
 								placeholder="37.7749"
 							/>
 						</div>
-						
+
 						<div>
 							<label for="longitude" class="block text-xs text-surface-600 dark:text-surface-400 mb-1">
 								Longitude
@@ -783,7 +783,7 @@
 								placeholder="-122.4194"
 							/>
 						</div>
-						
+
 						<div class="flex items-end">
 							<button
 								type="button"

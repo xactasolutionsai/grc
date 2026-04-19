@@ -4,15 +4,18 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('audits', '0019_add_key_contact_fields'),
+        ("audits", "0019_add_key_contact_fields"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='auditentity',
-            name='objectives',
-            field=models.TextField(blank=True, help_text='Key responsibilities and goals of this entity', null=True),
+            model_name="auditentity",
+            name="objectives",
+            field=models.TextField(
+                blank=True,
+                help_text="Key responsibilities and goals of this entity",
+                null=True,
+            ),
         ),
     ]

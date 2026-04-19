@@ -7,33 +7,88 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('audits', '0014_auditengagement'),
+        ("audits", "0014_auditengagement"),
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='EngagementTimelineEvent',
+            name="EngagementTimelineEvent",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('event_type', models.CharField(choices=[('created', 'Created'), ('started', 'Started'), ('fieldwork', 'Fieldwork Phase'), ('review', 'Review Phase'), ('submitted', 'Results Submitted'), ('closed', 'Closed'), ('progress_updated', 'Progress Updated'), ('overdue', 'Overdue')], max_length=20)),
-                ('title', models.CharField(max_length=255)),
-                ('description', models.TextField()),
-                ('created_at', models.DateTimeField(auto_now_add=True)),
-                ('progress_percentage', models.IntegerField(blank=True, null=True, validators=[django.core.validators.MinValueValidator(0), django.core.validators.MaxValueValidator(100)])),
-                ('status', models.CharField(blank=True, max_length=20, null=True)),
-                ('icon', models.CharField(default='circle', max_length=50)),
-                ('color', models.CharField(default='blue', max_length=20)),
-                ('engagement', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='timeline_events', to='audits.auditengagement')),
-                ('user', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, to=settings.AUTH_USER_MODEL)),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "event_type",
+                    models.CharField(
+                        choices=[
+                            ("created", "Created"),
+                            ("started", "Started"),
+                            ("fieldwork", "Fieldwork Phase"),
+                            ("review", "Review Phase"),
+                            ("submitted", "Results Submitted"),
+                            ("closed", "Closed"),
+                            ("progress_updated", "Progress Updated"),
+                            ("overdue", "Overdue"),
+                        ],
+                        max_length=20,
+                    ),
+                ),
+                ("title", models.CharField(max_length=255)),
+                ("description", models.TextField()),
+                ("created_at", models.DateTimeField(auto_now_add=True)),
+                (
+                    "progress_percentage",
+                    models.IntegerField(
+                        blank=True,
+                        null=True,
+                        validators=[
+                            django.core.validators.MinValueValidator(0),
+                            django.core.validators.MaxValueValidator(100),
+                        ],
+                    ),
+                ),
+                ("status", models.CharField(blank=True, max_length=20, null=True)),
+                ("icon", models.CharField(default="circle", max_length=50)),
+                ("color", models.CharField(default="blue", max_length=20)),
+                (
+                    "engagement",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="timeline_events",
+                        to="audits.auditengagement",
+                    ),
+                ),
+                (
+                    "user",
+                    models.ForeignKey(
+                        blank=True,
+                        null=True,
+                        on_delete=django.db.models.deletion.SET_NULL,
+                        to=settings.AUTH_USER_MODEL,
+                    ),
+                ),
             ],
             options={
-                'verbose_name': 'Engagement Timeline Event',
-                'verbose_name_plural': 'Engagement Timeline Events',
-                'ordering': ['created_at'],
-                'indexes': [models.Index(fields=['engagement', 'created_at'], name='audits_enga_engagem_abda08_idx'), models.Index(fields=['event_type'], name='audits_enga_event_t_53b273_idx')],
+                "verbose_name": "Engagement Timeline Event",
+                "verbose_name_plural": "Engagement Timeline Events",
+                "ordering": ["created_at"],
+                "indexes": [
+                    models.Index(
+                        fields=["engagement", "created_at"],
+                        name="audits_enga_engagem_abda08_idx",
+                    ),
+                    models.Index(
+                        fields=["event_type"], name="audits_enga_event_t_53b273_idx"
+                    ),
+                ],
             },
         ),
     ]

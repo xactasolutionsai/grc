@@ -1,49 +1,49 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import * as echarts from 'echarts';
-	
+
 	interface TrendData {
 		month: string;
 		completed: number;
 		planned: number;
 		completion_rate: number;
 	}
-	
+
 	interface Props {
 		data?: TrendData[];
 	}
-	
+
 	let { data = [] }: Props = $props();
 	let chartContainer: HTMLDivElement;
 	let myChart: echarts.ECharts;
-	
+
 	onMount(() => {
 		if (data && data.length > 0) {
 			renderChart();
 		}
-		
+
 		return () => {
 			if (myChart) {
 				myChart.dispose();
 			}
 		};
 	});
-	
+
 	$effect(() => {
 		if (data && chartContainer) {
 			renderChart();
 		}
 	});
-	
+
 	function renderChart() {
 		if (!chartContainer) return;
-		
+
 		if (myChart) {
 			myChart.dispose();
 		}
-		
+
 		myChart = echarts.init(chartContainer);
-		
+
 		const option = {
 			tooltip: {
 				trigger: 'axis',
@@ -113,13 +113,12 @@
 				}
 			]
 		};
-		
+
 		myChart.setOption(option);
-		
+
 		// Responsive
 		window.addEventListener('resize', () => myChart.resize());
 	}
 </script>
 
 <div bind:this={chartContainer} class="w-full h-full"></div>
-

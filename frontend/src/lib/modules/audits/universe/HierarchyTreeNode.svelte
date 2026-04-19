@@ -90,7 +90,7 @@
 					</span>
 				</div>
 			{/if}
-			
+
 			<div class="flex items-center space-x-2">
 				<a
 					href="/audits/universe/{node.id}"

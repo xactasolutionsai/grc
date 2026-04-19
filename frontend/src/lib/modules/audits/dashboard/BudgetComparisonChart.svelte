@@ -21,15 +21,15 @@
 	<div class="space-y-8">
 		<!-- Chart -->
 		<div class="h-[320px] w-full mb-8">
-			<BarChart 
-				name="budget-chart" 
-				labels={data.labels} 
+			<BarChart
+				name="budget-chart"
+				labels={data.labels}
 				values={data.values}
 				height="h-[320px]"
 				width="w-full"
 			/>
 		</div>
-		
+
 		<!-- Detailed Stats -->
 		<div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mt-8">
 			<div class="p-4 bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-900/20 dark:to-blue-800/20 rounded-lg border border-blue-200 dark:border-blue-700">
@@ -107,4 +107,3 @@
 		</div>
 	</div>
 {/if}
-

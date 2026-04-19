@@ -216,7 +216,7 @@ Body: { "comments": "Reason for failure" }
 ## 🐛 Common Issues & Troubleshooting
 
 ### Issue: Execution doesn't appear in engagement detail
-**Solution:** 
+**Solution:**
 - Refresh the page
 - Check that the execution was created for the correct engagement
 - Verify `loadExecutions()` is being called on mount
@@ -313,4 +313,3 @@ poetry run python manage.py create_demo_checklists
 ---
 
 **Happy Testing! 🎉**
-

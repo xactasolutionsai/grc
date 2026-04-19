@@ -6,33 +6,48 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('audits', '0006_alter_auditentity_audit_frequency_and_more'),
+        ("audits", "0006_alter_auditentity_audit_frequency_and_more"),
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
     ]
 
     operations = [
         migrations.RemoveIndex(
-            model_name='auditentity',
-            name='audits_audi_owner_i_f861b0_idx',
+            model_name="auditentity",
+            name="audits_audi_owner_i_f861b0_idx",
         ),
         migrations.RemoveField(
-            model_name='auditentity',
-            name='owner',
+            model_name="auditentity",
+            name="owner",
         ),
         migrations.AddField(
-            model_name='auditentity',
-            name='technical_owner',
-            field=models.ForeignKey(blank=True, help_text='Technical owner responsible for the entity', null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='audit_entities_technical_owned', to=settings.AUTH_USER_MODEL),
+            model_name="auditentity",
+            name="technical_owner",
+            field=models.ForeignKey(
+                blank=True,
+                help_text="Technical owner responsible for the entity",
+                null=True,
+                on_delete=django.db.models.deletion.SET_NULL,
+                related_name="audit_entities_technical_owned",
+                to=settings.AUTH_USER_MODEL,
+            ),
         ),
         migrations.AlterField(
-            model_name='auditentity',
-            name='business_owner',
-            field=models.ForeignKey(blank=True, help_text='Business owner responsible for the entity', null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='audit_entities_business_owned', to=settings.AUTH_USER_MODEL),
+            model_name="auditentity",
+            name="business_owner",
+            field=models.ForeignKey(
+                blank=True,
+                help_text="Business owner responsible for the entity",
+                null=True,
+                on_delete=django.db.models.deletion.SET_NULL,
+                related_name="audit_entities_business_owned",
+                to=settings.AUTH_USER_MODEL,
+            ),
         ),
         migrations.AddIndex(
-            model_name='auditentity',
-            index=models.Index(fields=['technical_owner'], name='audits_audi_technic_babfe4_idx'),
+            model_name="auditentity",
+            index=models.Index(
+                fields=["technical_owner"], name="audits_audi_technic_babfe4_idx"
+            ),
         ),
     ]

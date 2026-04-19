@@ -7,57 +7,215 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('audits', '0013_auditplanapproval_auditplan_approved_at_and_more'),
+        ("audits", "0013_auditplanapproval_auditplan_approved_at_and_more"),
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='AuditEngagement',
+            name="AuditEngagement",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('title', models.CharField(max_length=255)),
-                ('description', models.TextField(blank=True)),
-                ('status', models.CharField(choices=[('draft', 'Draft'), ('in_progress', 'In Progress'), ('fieldwork', 'Fieldwork'), ('review', 'Review'), ('submitted', 'Submitted'), ('closed', 'Closed'), ('cancelled', 'Cancelled')], default='draft', max_length=20)),
-                ('priority', models.CharField(choices=[('low', 'Low'), ('medium', 'Medium'), ('high', 'High'), ('critical', 'Critical')], default='medium', max_length=10)),
-                ('planned_start_date', models.DateField()),
-                ('planned_end_date', models.DateField()),
-                ('actual_start_date', models.DateField(blank=True, null=True)),
-                ('actual_end_date', models.DateField(blank=True, null=True)),
-                ('scope', models.TextField(blank=True)),
-                ('objectives', models.TextField(blank=True)),
-                ('methodology', models.TextField(blank=True)),
-                ('progress_percentage', models.IntegerField(default=0, validators=[django.core.validators.MinValueValidator(0), django.core.validators.MaxValueValidator(100)])),
-                ('fieldwork_notes', models.TextField(blank=True)),
-                ('findings_summary', models.TextField(blank=True)),
-                ('recommendations', models.TextField(blank=True)),
-                ('results_submitted_at', models.DateTimeField(blank=True, null=True)),
-                ('closed_at', models.DateTimeField(blank=True, null=True)),
-                ('closure_notes', models.TextField(blank=True)),
-                ('estimated_hours', models.IntegerField(blank=True, null=True, validators=[django.core.validators.MinValueValidator(0)])),
-                ('actual_hours', models.IntegerField(blank=True, null=True, validators=[django.core.validators.MinValueValidator(0)])),
-                ('budget_allocated', models.DecimalField(blank=True, decimal_places=2, max_digits=10, null=True)),
-                ('actual_cost', models.DecimalField(blank=True, decimal_places=2, max_digits=10, null=True)),
-                ('tags', models.JSONField(blank=True, null=True)),
-                ('attachments', models.JSONField(blank=True, null=True)),
-                ('is_active', models.BooleanField(default=True)),
-                ('created_at', models.DateTimeField(auto_now_add=True)),
-                ('updated_at', models.DateTimeField(auto_now=True)),
-                ('assigned_auditor', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='assigned_engagements', to=settings.AUTH_USER_MODEL)),
-                ('audit_plan', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='engagements', to='audits.auditplan')),
-                ('closed_by', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='closed_engagements', to=settings.AUTH_USER_MODEL)),
-                ('created_by', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='created_engagements', to=settings.AUTH_USER_MODEL)),
-                ('engagement_lead', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='led_engagements', to=settings.AUTH_USER_MODEL)),
-                ('entity', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='engagements', to='audits.auditentity')),
-                ('results_submitted_by', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='submitted_engagements', to=settings.AUTH_USER_MODEL)),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("title", models.CharField(max_length=255)),
+                ("description", models.TextField(blank=True)),
+                (
+                    "status",
+                    models.CharField(
+                        choices=[
+                            ("draft", "Draft"),
+                            ("in_progress", "In Progress"),
+                            ("fieldwork", "Fieldwork"),
+                            ("review", "Review"),
+                            ("submitted", "Submitted"),
+                            ("closed", "Closed"),
+                            ("cancelled", "Cancelled"),
+                        ],
+                        default="draft",
+                        max_length=20,
+                    ),
+                ),
+                (
+                    "priority",
+                    models.CharField(
+                        choices=[
+                            ("low", "Low"),
+                            ("medium", "Medium"),
+                            ("high", "High"),
+                            ("critical", "Critical"),
+                        ],
+                        default="medium",
+                        max_length=10,
+                    ),
+                ),
+                ("planned_start_date", models.DateField()),
+                ("planned_end_date", models.DateField()),
+                ("actual_start_date", models.DateField(blank=True, null=True)),
+                ("actual_end_date", models.DateField(blank=True, null=True)),
+                ("scope", models.TextField(blank=True)),
+                ("objectives", models.TextField(blank=True)),
+                ("methodology", models.TextField(blank=True)),
+                (
+                    "progress_percentage",
+                    models.IntegerField(
+                        default=0,
+                        validators=[
+                            django.core.validators.MinValueValidator(0),
+                            django.core.validators.MaxValueValidator(100),
+                        ],
+                    ),
+                ),
+                ("fieldwork_notes", models.TextField(blank=True)),
+                ("findings_summary", models.TextField(blank=True)),
+                ("recommendations", models.TextField(blank=True)),
+                ("results_submitted_at", models.DateTimeField(blank=True, null=True)),
+                ("closed_at", models.DateTimeField(blank=True, null=True)),
+                ("closure_notes", models.TextField(blank=True)),
+                (
+                    "estimated_hours",
+                    models.IntegerField(
+                        blank=True,
+                        null=True,
+                        validators=[django.core.validators.MinValueValidator(0)],
+                    ),
+                ),
+                (
+                    "actual_hours",
+                    models.IntegerField(
+                        blank=True,
+                        null=True,
+                        validators=[django.core.validators.MinValueValidator(0)],
+                    ),
+                ),
+                (
+                    "budget_allocated",
+                    models.DecimalField(
+                        blank=True, decimal_places=2, max_digits=10, null=True
+                    ),
+                ),
+                (
+                    "actual_cost",
+                    models.DecimalField(
+                        blank=True, decimal_places=2, max_digits=10, null=True
+                    ),
+                ),
+                ("tags", models.JSONField(blank=True, null=True)),
+                ("attachments", models.JSONField(blank=True, null=True)),
+                ("is_active", models.BooleanField(default=True)),
+                ("created_at", models.DateTimeField(auto_now_add=True)),
+                ("updated_at", models.DateTimeField(auto_now=True)),
+                (
+                    "assigned_auditor",
+                    models.ForeignKey(
+                        blank=True,
+                        null=True,
+                        on_delete=django.db.models.deletion.SET_NULL,
+                        related_name="assigned_engagements",
+                        to=settings.AUTH_USER_MODEL,
+                    ),
+                ),
+                (
+                    "audit_plan",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="engagements",
+                        to="audits.auditplan",
+                    ),
+                ),
+                (
+                    "closed_by",
+                    models.ForeignKey(
+                        blank=True,
+                        null=True,
+                        on_delete=django.db.models.deletion.SET_NULL,
+                        related_name="closed_engagements",
+                        to=settings.AUTH_USER_MODEL,
+                    ),
+                ),
+                (
+                    "created_by",
+                    models.ForeignKey(
+                        blank=True,
+                        null=True,
+                        on_delete=django.db.models.deletion.SET_NULL,
+                        related_name="created_engagements",
+                        to=settings.AUTH_USER_MODEL,
+                    ),
+                ),
+                (
+                    "engagement_lead",
+                    models.ForeignKey(
+                        blank=True,
+                        null=True,
+                        on_delete=django.db.models.deletion.SET_NULL,
+                        related_name="led_engagements",
+                        to=settings.AUTH_USER_MODEL,
+                    ),
+                ),
+                (
+                    "entity",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="engagements",
+                        to="audits.auditentity",
+                    ),
+                ),
+                (
+                    "results_submitted_by",
+                    models.ForeignKey(
+                        blank=True,
+                        null=True,
+                        on_delete=django.db.models.deletion.SET_NULL,
+                        related_name="submitted_engagements",
+                        to=settings.AUTH_USER_MODEL,
+                    ),
+                ),
             ],
             options={
-                'verbose_name': 'Audit Engagement',
-                'verbose_name_plural': 'Audit Engagements',
-                'ordering': ['-created_at'],
-                'indexes': [models.Index(fields=['audit_plan'], name='audits_audi_audit_p_fbeeae_idx'), models.Index(fields=['entity'], name='audits_audi_entity__b4c039_idx'), models.Index(fields=['status'], name='audits_audi_status_47de53_idx'), models.Index(fields=['priority'], name='audits_audi_priorit_29f75c_idx'), models.Index(fields=['assigned_auditor'], name='audits_audi_assigne_c7f7b8_idx'), models.Index(fields=['engagement_lead'], name='audits_audi_engagem_8b6c95_idx'), models.Index(fields=['planned_start_date'], name='audits_audi_planned_920f1f_idx'), models.Index(fields=['planned_end_date'], name='audits_audi_planned_8f15da_idx'), models.Index(fields=['created_at'], name='audits_audi_created_2af294_idx')],
+                "verbose_name": "Audit Engagement",
+                "verbose_name_plural": "Audit Engagements",
+                "ordering": ["-created_at"],
+                "indexes": [
+                    models.Index(
+                        fields=["audit_plan"], name="audits_audi_audit_p_fbeeae_idx"
+                    ),
+                    models.Index(
+                        fields=["entity"], name="audits_audi_entity__b4c039_idx"
+                    ),
+                    models.Index(
+                        fields=["status"], name="audits_audi_status_47de53_idx"
+                    ),
+                    models.Index(
+                        fields=["priority"], name="audits_audi_priorit_29f75c_idx"
+                    ),
+                    models.Index(
+                        fields=["assigned_auditor"],
+                        name="audits_audi_assigne_c7f7b8_idx",
+                    ),
+                    models.Index(
+                        fields=["engagement_lead"],
+                        name="audits_audi_engagem_8b6c95_idx",
+                    ),
+                    models.Index(
+                        fields=["planned_start_date"],
+                        name="audits_audi_planned_920f1f_idx",
+                    ),
+                    models.Index(
+                        fields=["planned_end_date"],
+                        name="audits_audi_planned_8f15da_idx",
+                    ),
+                    models.Index(
+                        fields=["created_at"], name="audits_audi_created_2af294_idx"
+                    ),
+                ],
             },
         ),
     ]

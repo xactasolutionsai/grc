@@ -54,4 +54,3 @@ After applying the migration, verify by:
 1. Navigate to Audit Plans page - should load without errors
 2. Create a new audit plan - should see new fields
 3. Check that "Audit Domain" is available as an entity type
-

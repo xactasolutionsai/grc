@@ -295,9 +295,9 @@ await rejectWorkpaper(workpaperId, "Missing transaction details");
 const approvedWorkpapers = await listWorkpapers({ status: 'approved' });
 
 // Get my uploads that are pending review
-const myPendingWorkpapers = await listWorkpapers({ 
-    my_uploads: 'true', 
-    pending_review: 'true' 
+const myPendingWorkpapers = await listWorkpapers({
+    my_uploads: 'true',
+    pending_review: 'true'
 });
 
 // Search by tag
@@ -361,4 +361,3 @@ ATTACHMENT_MAX_SIZE_MB = os.environ.get("ATTACHMENT_MAX_SIZE_MB", 25)
 ## License
 
 Part of the CISO Assistant Community project. See main LICENSE file for details.
-

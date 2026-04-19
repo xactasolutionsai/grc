@@ -19,7 +19,7 @@
 </svelte:head>
 
 <div class="min-h-screen bg-gray-50">
-	<AuditEngagementDetail 
+	<AuditEngagementDetail
 		{engagementId}
 		onEdit={handleEdit}
 		onClose={handleClose}

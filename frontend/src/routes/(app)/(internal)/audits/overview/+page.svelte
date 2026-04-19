@@ -13,9 +13,9 @@
 	import BudgetComparisonChart from '$lib/modules/audits/dashboard/BudgetComparisonChart.svelte';
 	import AlertsPanel from '$lib/modules/audits/dashboard/AlertsPanel.svelte';
 	import CompletionTrendChart from '$lib/modules/audits/dashboard/CompletionTrendChart.svelte';
-	import { 
-		transformStatusData, 
-		transformPriorityData, 
+	import {
+		transformStatusData,
+		transformPriorityData,
 		transformAuditTypeData,
 		transformChecklistExecutionData,
 		transformChecklistResultsData,
@@ -32,12 +32,12 @@
 
 	// Tab state management
 	let activeTab = $derived(page.url.searchParams.get('tab') || 'overview');
-	
+
 	function handleTabChange(tabValue: string): void {
 		page.url.searchParams.set('tab', tabValue);
 		goto(page.url);
 	}
-	
+
 	// Click handlers for drill-down navigation
 	function handleStatusClick(statusLabel: string): void {
 		const statusMap: Record<string, string> = {
@@ -54,7 +54,7 @@
 			goto(`/audits/engagements?status=${statusValue}`);
 		}
 	}
-	
+
 	function handlePriorityClick(priorityLabel: string): void {
 		const priorityMap: Record<string, string> = {
 			'Low': 'low',
@@ -70,7 +70,7 @@
 
 	// Transform data for charts
 	let statusChartData = $derived(
-		data.dashboardMetrics?.status_distribution 
+		data.dashboardMetrics?.status_distribution
 			? transformStatusData(data.dashboardMetrics.status_distribution)
 			: null
 	);
@@ -188,8 +188,8 @@
 									</h3>
 									{#if statusChartData}
 										<div class="h-[400px] w-full">
-											<DonutChart 
-												name="status-chart" 
+											<DonutChart
+												name="status-chart"
 												values={statusChartData}
 												height="h-[400px]"
 												width="w-full"
@@ -214,8 +214,8 @@
 									</h3>
 									{#if priorityChartData}
 										<div class="h-[400px] w-full">
-											<DonutChart 
-												name="priority-chart" 
+											<DonutChart
+												name="priority-chart"
 												values={priorityChartData}
 												height="h-[400px]"
 												width="w-full"
@@ -246,9 +246,9 @@
 									</h3>
 									{#if auditTypeChartData}
 										<div class="h-[350px] w-full">
-											<BarChart 
-												name="audit-type-chart" 
-												labels={auditTypeChartData.labels} 
+											<BarChart
+												name="audit-type-chart"
+												labels={auditTypeChartData.labels}
 												values={auditTypeChartData.values}
 												height="h-[350px]"
 												width="w-full"
@@ -301,7 +301,7 @@
 										</div>
 									{/if}
 								</div>
-								
+
 								<!-- Completion Trend -->
 								<div class="card bg-white dark:bg-surface-800 p-6 shadow-lg rounded-xl border border-surface-200 dark:border-surface-700">
 									<h3 class="text-lg font-semibold text-surface-900 dark:text-surface-50 mb-4 flex items-center gap-2">
@@ -361,7 +361,7 @@
 									</p>
 									{#if data.dashboardMetrics.entity_risk_data.length > 0}
 										<div class="h-[450px] w-full">
-											<TreemapChart 
+											<TreemapChart
 												name="entity-risk-treemap"
 												tree={data.dashboardMetrics.entity_risk_data}
 												height="h-[450px]"
@@ -392,8 +392,8 @@
 										</h3>
 										{#if checklistExecutionData}
 											<div class="h-[350px] w-full">
-												<DonutChart 
-													name="checklist-execution-chart" 
+												<DonutChart
+													name="checklist-execution-chart"
 													values={checklistExecutionData}
 													height="h-[350px]"
 													width="w-full"
@@ -417,8 +417,8 @@
 										</h3>
 										{#if checklistResultsData}
 											<div class="h-[350px] w-full">
-												<DonutChart 
-													name="checklist-results-chart" 
+												<DonutChart
+													name="checklist-results-chart"
 													values={checklistResultsData}
 													height="h-[350px]"
 													width="w-full"

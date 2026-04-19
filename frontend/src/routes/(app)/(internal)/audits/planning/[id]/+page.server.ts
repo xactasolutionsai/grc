@@ -16,7 +16,7 @@ export const load = (async ({ fetch, locals, params }) => {
 	} catch (error) {
 		console.error('Error fetching plan title:', error);
 	}
-	
+
 	// Fallback if plan fetch fails
 	return {
 		user: locals.user,

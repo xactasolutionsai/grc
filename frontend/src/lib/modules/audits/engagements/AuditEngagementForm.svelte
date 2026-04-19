@@ -1,8 +1,8 @@
 <script>
 	import { onMount } from 'svelte';
-	import { 
-		createEngagement, 
-		updateEngagement, 
+	import {
+		createEngagement,
+		updateEngagement,
 		getEngagement,
 		ENGAGEMENT_STATUSES,
 		ENGAGEMENT_PRIORITIES,
@@ -39,7 +39,7 @@
 		tags: [],
 		is_active: true
 	};
-	
+
 	let saving = false;
 	let loading = false;
 	let error = null;
@@ -57,7 +57,7 @@
 
 	async function loadEngagement() {
 		if (formLoaded) return; // Prevent multiple loads
-		
+
 		loading = true;
 		try {
 			const engagement = await getEngagement(engagementId);
@@ -137,12 +137,12 @@
 
 	function handleChange(event) {
 		const { name, value, type, checked } = event.target;
-		
+
 		// List of fields that are integer IDs (not UUID strings)
 		const integerIdFields = ['audit_plan', 'entity'];
 		// User IDs are UUIDs (strings), not integers
 		const stringIdFields = ['assigned_auditor', 'engagement_lead'];
-		
+
 		let processedValue;
 		if (type === 'checkbox') {
 			processedValue = checked;
@@ -157,7 +157,7 @@
 		} else {
 			processedValue = value;
 		}
-		
+
 		// Auto-select entity when audit plan changes
 		if (name === 'audit_plan') {
 			if (processedValue) {
@@ -180,7 +180,7 @@
 				return;
 			}
 		}
-		
+
 		form = {
 			...form,
 			[name]: processedValue
@@ -198,11 +198,11 @@
 		event.preventDefault();
 		saving = true;
 		error = null;
-		
+
 		try {
 			// Clean up form data
 			const formData = { ...form };
-			
+
 			// Remove empty string values and convert them to null for optional fields
 			// But keep numeric zeros and boolean false values
 			Object.keys(formData).forEach(key => {
@@ -218,16 +218,16 @@
 					delete formData[key];
 				}
 			});
-			
+
 			// Note: User IDs (assigned_auditor, engagement_lead) are UUIDs (strings), not integers
 			// They should be sent as-is without conversion
-			
+
 			if (engagementId) {
 				await updateEngagement(engagementId, formData);
 			} else {
 				await createEngagement(formData);
 			}
-			
+
 			onSaved();
 		} catch (err) {
 			console.error('Error saving engagement:', err);
@@ -765,4 +765,3 @@
 		</form>
 	{/if}
 </div>
-

@@ -32,18 +32,18 @@
 		if (params.has('priority')) filterPriority = params.get('priority') || '';
 		if (params.has('country')) filterCountry = params.get('country') || '';
 		if (params.has('region')) filterRegion = params.get('region') || '';
-		
+
 		mounted = true;
 		loadEntities();
-		
+
 		// Listen for entity deletion events from child components
 		const handleEntityDeletedEvent = (event: Event) => {
 			const customEvent = event as CustomEvent;
 			handleEntityDeleted(customEvent);
 		};
-		
+
 		window.addEventListener('entityDeleted', handleEntityDeletedEvent);
-		
+
 		return () => {
 			window.removeEventListener('entityDeleted', handleEntityDeletedEvent);
 		};
@@ -64,7 +64,7 @@
 		filterCriticality;
 		filterCountry;
 		filterRegion;
-		
+
 		// Load entities when filters change (but skip the initial mount)
 		if (mounted) {
 			loadEntities();
@@ -140,14 +140,14 @@
 			if (filterCriticality) params.criticality = filterCriticality;
 			if (filterCountry) params.country = filterCountry;
 			if (filterRegion) params.region = filterRegion;
-			
+
 			// Handle filter tabs
 			if (activeTab === 'my_entities') {
 				params.my_entities = 'true';
 			} else if (activeTab === 'my_team') {
 				params.my_team = 'true';
 			}
-			
+
 			const data = await listEntities(params);
 			entities = data.results || data;
 		} catch (err: any) {
@@ -177,7 +177,7 @@
 	}
 
 </script>
-	
+
 	{#if loading}
 		<div class="flex justify-center items-center py-12">
 			<div class="flex flex-col items-center gap-3">
@@ -278,7 +278,7 @@
 								class="w-full pl-10 pr-4 py-2.5 border border-surface-300 dark:border-surface-600 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent bg-white dark:bg-surface-800 text-surface-900 dark:text-surface-50 placeholder-surface-400"
 							/>
 						</div>
-						
+
 						<!-- Type Filter -->
 						<div class="sm:w-52">
 							<select
@@ -298,7 +298,7 @@
 								<option value="audit_domain">🎯 Audit Domain</option>
 							</select>
 						</div>
-						
+
 						<!-- Status Filter -->
 						<div class="sm:w-36">
 							<select
@@ -310,7 +310,7 @@
 								<option value="inactive">⏸️ Inactive</option>
 							</select>
 						</div>
-						
+
 					<div class="sm:w-36">
 						<select
 							bind:value={filterPriority}
@@ -323,7 +323,7 @@
 							<option value="critical">🔴 Critical</option>
 						</select>
 					</div>
-					
+
 					<div class="sm:w-36">
 						<select
 							bind:value={filterCriticality}
@@ -336,7 +336,7 @@
 						</select>
 					</div>
 				</div>
-					
+
 					<!-- Second Row: Geographical Filters -->
 					<div class="flex flex-col sm:flex-row gap-3">
 						<!-- Country Filter -->
@@ -362,7 +362,7 @@
 								<option value="Switzerland">🇨🇭 Switzerland</option>
 							</select>
 						</div>
-						
+
 						<!-- Region Filter -->
 						<div class="flex-1">
 							<div class="relative">
@@ -378,7 +378,7 @@
 								/>
 							</div>
 						</div>
-						
+
 						<!-- Clear Filters Button -->
 						<div class="sm:w-36">
 						<button
@@ -402,7 +402,7 @@
 					</div>
 				</div>
 			</div>
-			
+
 			<!-- Entities List -->
 			<div class="p-6">
 				{#if treeEntities.length > 0}

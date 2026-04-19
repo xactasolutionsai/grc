@@ -1,10 +1,10 @@
 <script>
 	import { onMount } from 'svelte';
 	import { goto } from '$app/navigation';
-	import { 
-		getEngagement, 
-		startEngagement, 
-		submitResults, 
+	import {
+		getEngagement,
+		startEngagement,
+		submitResults,
 		closeEngagement,
 		updateProgress,
 		deleteEngagement,
@@ -388,7 +388,7 @@
 				<span class="text-sm font-bold text-primary-600 dark:text-primary-400">{engagement.progress_percentage}%</span>
 			</div>
 			<div class="w-full bg-surface-200 dark:bg-surface-700 rounded-full h-3">
-				<div 
+				<div
 					class="h-3 rounded-full {getProgressColor(engagement.progress_percentage)} transition-all duration-300"
 					style="width: {engagement.progress_percentage}%"
 				></div>
@@ -471,7 +471,7 @@
 								<span class="text-sm text-gray-500">{timeline.progress_percentage}% Complete</span>
 							</div>
 						</div>
-						
+
 						<div class="flow-root">
 							<ul class="-mb-8">
 								{#each timeline.events as event, index}
@@ -718,7 +718,7 @@
 												'⚪ Not Started'}
 											</span>
 										</div>
-										
+
 										<!-- Progress Bar -->
 										<div class="mb-2">
 											<div class="flex justify-between text-xs text-surface-600 dark:text-surface-400 mb-1">
@@ -726,7 +726,7 @@
 												<span>{execution.progress_percentage}%</span>
 											</div>
 											<div class="w-full bg-surface-200 dark:bg-surface-700 rounded-full h-2 overflow-hidden">
-												<div 
+												<div
 													class="bg-primary-600 h-2 transition-all duration-300 rounded-full"
 													style="width: {execution.progress_percentage}%"
 												></div>
@@ -759,7 +759,7 @@
 					</div>
 				</div>
 
-				
+
 			</div>
 
 			<!-- Right Column -->
@@ -1122,4 +1122,3 @@
 		</div>
 	</div>
 </EnhancedModal>
-

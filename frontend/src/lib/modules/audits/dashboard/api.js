@@ -180,22 +180,21 @@ export function transformBudgetData(budgetStats) {
 export function getCoverageColor(current, dueSoon, overdue, neverAudited) {
 	const total = current + dueSoon + overdue + neverAudited;
 	if (total === 0) return '#f1f5f9'; // Very light gray for empty
-	
+
 	if (overdue > 0 || neverAudited > 0) {
 		// Red if any overdue or never audited
 		const severity = (overdue + neverAudited) / total;
 		if (severity > 0.5) return '#ef4444'; // Strong red
 		return '#f87171'; // Light red
 	}
-	
+
 	if (dueSoon > 0) {
 		// Yellow if due soon
 		const urgency = dueSoon / total;
 		if (urgency > 0.5) return '#f59e0b'; // Strong yellow
 		return '#fbbf24'; // Light yellow
 	}
-	
+
 	// Green if all current
 	return '#10b981';
 }
-

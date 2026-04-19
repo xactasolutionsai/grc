@@ -5,7 +5,7 @@ export const load: PageServerLoad = async ({ fetch }) => {
 	try {
 		// Load audit entities via fe-api proxy
 		const entitiesResponse = await fetch('/fe-api/audits/entities/');
-		
+
 		if (!entitiesResponse.ok) {
 			console.warn('Failed to load audit entities:', entitiesResponse.status, entitiesResponse.statusText);
 			return {
@@ -13,7 +13,7 @@ export const load: PageServerLoad = async ({ fetch }) => {
 				title: m.auditUniverse()
 			};
 		}
-		
+
 		const entities = await entitiesResponse.json();
 		return {
 			entities: entities.results || entities,

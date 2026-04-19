@@ -4,23 +4,28 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('audits', '0021_add_entity_process_activity'),
+        ("audits", "0021_add_entity_process_activity"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='entityprocessactivity',
-            name='identifier',
+            model_name="entityprocessactivity",
+            name="identifier",
             field=models.CharField(blank=True, max_length=50),
         ),
         migrations.AddIndex(
-            model_name='entityprocessactivity',
-            index=models.Index(fields=['audit_entity', 'identifier'], name='audits_enti_audit_e_98f4e9_idx'),
+            model_name="entityprocessactivity",
+            index=models.Index(
+                fields=["audit_entity", "identifier"],
+                name="audits_enti_audit_e_98f4e9_idx",
+            ),
         ),
         migrations.AddConstraint(
-            model_name='entityprocessactivity',
-            constraint=models.UniqueConstraint(fields=('audit_entity', 'identifier'), name='uniq_entity_process_identifier'),
+            model_name="entityprocessactivity",
+            constraint=models.UniqueConstraint(
+                fields=("audit_entity", "identifier"),
+                name="uniq_entity_process_identifier",
+            ),
         ),
     ]

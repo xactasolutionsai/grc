@@ -14,18 +14,18 @@ function getHeadersWithCookies(request: Request): Record<string, string> {
 export const DELETE: RequestHandler = async ({ fetch, params, request }) => {
 	try {
 		const apiUrl = `${BASE_API_URL}/workpapers/workpapers/${params.id}/delete_file/`;
-		
+
 		const response = await fetch(apiUrl, {
 			method: 'DELETE',
 			headers: getHeadersWithCookies(request),
 		});
-		
+
 		if (!response.ok) {
 			error(response.status, 'Failed to delete file');
 		}
-		
+
 		const data = await response.json();
-		
+
 		return new Response(JSON.stringify(data), {
 			headers: {
 				'Content-Type': 'application/json'
@@ -36,4 +36,3 @@ export const DELETE: RequestHandler = async ({ fetch, params, request }) => {
 		error(500, 'Internal server error');
 	}
 };
-

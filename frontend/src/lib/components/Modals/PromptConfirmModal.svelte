@@ -41,7 +41,7 @@
 	}: Props = $props();
 
 	let form: any = null;
-	
+
 	if (_form) {
 		const formResult = superForm(_form, {
 			dataType: 'json',

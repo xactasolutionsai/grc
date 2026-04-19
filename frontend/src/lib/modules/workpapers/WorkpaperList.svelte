@@ -31,7 +31,7 @@
 	// Debounced search - only trigger after user stops typing
 	$: {
 		searchQuery;
-		
+
 		if (mounted) {
 			if (searchTimeout) clearTimeout(searchTimeout);
 			searchTimeout = setTimeout(() => {
@@ -45,7 +45,7 @@
 		filterType;
 		filterStatus;
 		activeTab;
-		
+
 		if (mounted) {
 			loadWorkpapers();
 		}
@@ -55,12 +55,12 @@
 		try {
 			loading = true;
 			error = null;
-			
+
 			const params: Record<string, any> = {};
 			if (searchQuery) params.search = searchQuery;
 			if (filterType) params.workpaper_type = filterType;
 			if (filterStatus) params.status = filterStatus;
-			
+
 			// Handle filter tabs
 			if (activeTab === 'my_uploads') {
 				params.my_uploads = 'true';
@@ -69,7 +69,7 @@
 			} else if (activeTab === 'approved') {
 				params.status = 'approved';
 			}
-			
+
 			const data: any = await listWorkpapers(params);
 			workpapers = data.results || data;
 		} catch (err: any) {
@@ -211,7 +211,7 @@
 							class="w-full pl-10 pr-4 py-2.5 border border-surface-300 dark:border-surface-600 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent bg-white dark:bg-surface-800 text-surface-900 dark:text-surface-50 placeholder-surface-400"
 						/>
 					</div>
-					
+
 					<!-- Type Filter -->
 					<div class="sm:w-52">
 						<select
@@ -227,7 +227,7 @@
 							<option value="other">📎 Other</option>
 						</select>
 					</div>
-					
+
 					<!-- Status Filter -->
 					<div class="sm:w-36">
 						<select
@@ -240,7 +240,7 @@
 							<option value="approved">✅ Approved</option>
 						</select>
 					</div>
-					
+
 					<!-- Clear Filters Button -->
 					<div class="sm:w-36">
 						<button
@@ -260,7 +260,7 @@
 				</div>
 			</div>
 		</div>
-		
+
 		<!-- Workpapers List -->
 		<div class="p-6 relative">
 			<!-- Loading overlay (non-blocking) -->
@@ -385,4 +385,3 @@
 		</div>
 	</div>
 {/if}
-

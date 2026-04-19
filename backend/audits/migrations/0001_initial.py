@@ -6,7 +6,6 @@ import django.db.models.deletion
 
 
 class Migration(migrations.Migration):
-
     initial = True
 
     dependencies = [
@@ -15,25 +14,62 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
-            name='AuditEntity',
+            name="AuditEntity",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(max_length=255)),
-                ('entity_type', models.CharField(choices=[('business_unit', 'Business Unit'), ('process', 'Process'), ('system', 'System'), ('vendor', 'Vendor'), ('compliance_domain', 'Compliance Domain')], max_length=50)),
-                ('description', models.TextField(blank=True)),
-                ('risk_score', models.FloatField(default=0.0)),
-                ('regulatory_relevance', models.JSONField(blank=True, null=True)),
-                ('last_audited', models.DateField(blank=True, null=True)),
-                ('is_active', models.BooleanField(default=True)),
-                ('created_at', models.DateTimeField(auto_now_add=True)),
-                ('updated_at', models.DateTimeField(auto_now=True)),
-                ('owner', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, to=settings.AUTH_USER_MODEL)),
-                ('parent', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='children', to='audits.auditentity')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("name", models.CharField(max_length=255)),
+                (
+                    "entity_type",
+                    models.CharField(
+                        choices=[
+                            ("business_unit", "Business Unit"),
+                            ("process", "Process"),
+                            ("system", "System"),
+                            ("vendor", "Vendor"),
+                            ("compliance_domain", "Compliance Domain"),
+                        ],
+                        max_length=50,
+                    ),
+                ),
+                ("description", models.TextField(blank=True)),
+                ("risk_score", models.FloatField(default=0.0)),
+                ("regulatory_relevance", models.JSONField(blank=True, null=True)),
+                ("last_audited", models.DateField(blank=True, null=True)),
+                ("is_active", models.BooleanField(default=True)),
+                ("created_at", models.DateTimeField(auto_now_add=True)),
+                ("updated_at", models.DateTimeField(auto_now=True)),
+                (
+                    "owner",
+                    models.ForeignKey(
+                        blank=True,
+                        null=True,
+                        on_delete=django.db.models.deletion.SET_NULL,
+                        to=settings.AUTH_USER_MODEL,
+                    ),
+                ),
+                (
+                    "parent",
+                    models.ForeignKey(
+                        blank=True,
+                        null=True,
+                        on_delete=django.db.models.deletion.SET_NULL,
+                        related_name="children",
+                        to="audits.auditentity",
+                    ),
+                ),
             ],
             options={
-                'verbose_name': 'Audit Entity',
-                'verbose_name_plural': 'Audit Entities',
-                'ordering': ['name'],
+                "verbose_name": "Audit Entity",
+                "verbose_name_plural": "Audit Entities",
+                "ordering": ["name"],
             },
         ),
     ]

@@ -4,26 +4,25 @@ from django.db import migrations
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('audits', '0002_auditentity_audit_evidence_and_more'),
+        ("audits", "0002_auditentity_audit_evidence_and_more"),
     ]
 
     operations = [
         migrations.RemoveField(
-            model_name='auditentity',
-            name='audit_evidence',
+            model_name="auditentity",
+            name="audit_evidence",
         ),
         migrations.RemoveField(
-            model_name='auditentity',
-            name='audit_findings',
+            model_name="auditentity",
+            name="audit_findings",
         ),
         migrations.RemoveField(
-            model_name='auditentity',
-            name='audit_scope_criteria',
+            model_name="auditentity",
+            name="audit_scope_criteria",
         ),
         migrations.RemoveField(
-            model_name='auditentity',
-            name='auditor_opinion_conclusion',
+            model_name="auditentity",
+            name="auditor_opinion_conclusion",
         ),
     ]

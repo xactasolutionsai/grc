@@ -6,16 +6,16 @@ const API_BASE = '/fe-api/audits';
 // List audit plans with optional filtering
 export async function listPlans(params = {}) {
 	const searchParams = new URLSearchParams();
-	
+
 	// Add query parameters
 	Object.entries(params).forEach(([key, value]) => {
 		if (value !== null && value !== undefined && value !== '') {
 			searchParams.append(key, value);
 		}
 	});
-	
+
 	const url = `${API_BASE}/plans${searchParams.toString() ? '?' + searchParams.toString() : ''}`;
-	
+
 	const response = await fetch(url, {
 		method: 'GET',
 		headers: {
@@ -23,11 +23,11 @@ export async function listPlans(params = {}) {
 		},
 		credentials: 'include'
 	});
-	
+
 	if (!response.ok) {
 		throw new Error(`Failed to load audit plans: ${response.status}`);
 	}
-	
+
 	return await response.json();
 }
 
@@ -40,11 +40,11 @@ export async function getPlan(id) {
 		},
 		credentials: 'include'
 	});
-	
+
 	if (!response.ok) {
 		throw new Error(`Failed to load audit plan: ${response.status}`);
 	}
-	
+
 	return await response.json();
 }
 
@@ -58,12 +58,12 @@ export async function createPlan(data) {
 		credentials: 'include',
 		body: JSON.stringify(data)
 	});
-	
+
 	if (!response.ok) {
 		const errorData = await response.json();
 		throw new Error(errorData.detail || `Failed to create audit plan: ${response.status}`);
 	}
-	
+
 	return await response.json();
 }
 
@@ -77,12 +77,12 @@ export async function updatePlan(id, data) {
 		credentials: 'include',
 		body: JSON.stringify(data)
 	});
-	
+
 	if (!response.ok) {
 		const errorData = await response.json();
 		throw new Error(errorData.detail || `Failed to update audit plan: ${response.status}`);
 	}
-	
+
 	return await response.json();
 }
 
@@ -95,7 +95,7 @@ export async function deletePlan(id) {
 		},
 		credentials: 'include'
 	});
-	
+
 	if (!response.ok) {
 		throw new Error(`Failed to delete audit plan: ${response.status}`);
 	}

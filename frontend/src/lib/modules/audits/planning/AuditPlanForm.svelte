@@ -90,7 +90,7 @@
 
 	onMount(async () => {
 		await Promise.all([loadEntities(), loadUsers()]);
-		
+
 		if (planId) {
 			await loadPlan();
 		} else if (entityId) {
@@ -126,7 +126,7 @@
 		try {
 			loading = true;
 			const plan = await getPlan(planId);
-			
+
 			form = {
 				id: plan.id,
 				entity: plan.entity,
@@ -169,7 +169,7 @@
 
 	function updateTeamMember(index: number, field: string, value: any) {
 		const updatedTeam = [...form.audit_team];
-		
+
 		if (field === 'user_id') {
 			const userId = parseInt(value);
 			const user = users.find(u => u.id === userId);
@@ -195,7 +195,7 @@
 				[field]: value
 			};
 		}
-		
+
 		form.audit_team = updatedTeam;
 	}
 
@@ -252,7 +252,7 @@
 					invalidMembers.push({ index: idx, member });
 				}
 			});
-			
+
 			if (invalidMembers.length > 0) {
 				error = 'All team members must have a user selected';
 				return;

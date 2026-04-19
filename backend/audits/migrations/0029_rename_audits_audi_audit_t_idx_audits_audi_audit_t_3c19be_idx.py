@@ -4,15 +4,14 @@ from django.db import migrations
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('audits', '0028_add_audit_type_field'),
+        ("audits", "0028_add_audit_type_field"),
     ]
 
     operations = [
         migrations.RenameIndex(
-            model_name='auditengagement',
-            new_name='audits_audi_audit_t_3c19be_idx',
-            old_name='audits_audi_audit_t_idx',
+            model_name="auditengagement",
+            new_name="audits_audi_audit_t_3c19be_idx",
+            old_name="audits_audi_audit_t_idx",
         ),
     ]

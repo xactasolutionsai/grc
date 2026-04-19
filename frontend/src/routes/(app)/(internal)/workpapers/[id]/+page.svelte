@@ -29,7 +29,7 @@
 <div class="min-h-screen bg-gradient-to-br from-surface-50 to-surface-100 dark:from-surface-950 dark:to-surface-900">
 	<div class="p-6">
 		<div class="mb-6">
-			<button 
+			<button
 				onclick={goBack}
 				class="inline-flex items-center gap-2 text-surface-600 dark:text-surface-400 hover:text-surface-900 dark:hover:text-surface-50 transition-colors"
 			>
@@ -43,4 +43,3 @@
 		<WorkpaperCard {workpaperId} onUpdate={handleUpdate} />
 	</div>
 </div>
-

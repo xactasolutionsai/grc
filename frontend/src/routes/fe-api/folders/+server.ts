@@ -17,7 +17,7 @@ export const GET: RequestHandler = async ({ url, fetch, request }) => {
 	try {
 		const searchParams = url.searchParams.toString();
 		const apiUrl = `${BASE_API_URL}/folders/${searchParams ? '?' + searchParams : ''}`;
-		
+
 		const response = await fetch(apiUrl, {
 			method: 'GET',
 			headers: getHeadersWithCookies(request)
@@ -35,4 +35,3 @@ export const GET: RequestHandler = async ({ url, fetch, request }) => {
 		return json({ error: 'Internal server error' }, { status: 500 });
 	}
 };
-

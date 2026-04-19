@@ -30,7 +30,7 @@
 
 <div class="p-6">
 	<h1 class="text-3xl font-bold text-gray-900 mb-6">Audit Universe</h1>
-	
+
 	{#if loading}
 		<div class="flex justify-center items-center py-8">
 			<div class="text-gray-600">Loading audit universe…</div>
@@ -96,7 +96,7 @@
 					{/each}
 				</tbody>
 			</table>
-			
+
 			{#if entities.length === 0}
 				<div class="text-center py-8 text-gray-500">
 					No audit entities found. Create your first entity to get started.

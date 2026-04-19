@@ -49,7 +49,7 @@
 				const data = await response.json();
 				const results = data.results || data;
 				// Ensure we only map valid folders with proper IDs
-				availableFolders = Array.isArray(results) 
+				availableFolders = Array.isArray(results)
 					? results
 						.filter((f: any) => f && f.id && f.name)
 						.map((f: any) => ({
@@ -133,7 +133,7 @@
 	function handleChange(event: Event) {
 		const target = event.target as HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement;
 		const { name, type } = target;
-		
+
 		let value: any;
 		if (type === 'checkbox') {
 			value = (target as HTMLInputElement).checked;

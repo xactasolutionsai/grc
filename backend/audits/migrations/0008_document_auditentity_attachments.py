@@ -7,31 +7,57 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('audits', '0007_remove_auditentity_audits_audi_owner_i_f861b0_idx_and_more'),
+        ("audits", "0007_remove_auditentity_audits_audi_owner_i_f861b0_idx_and_more"),
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='Document',
+            name="Document",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(help_text='Document name', max_length=255)),
-                ('file', models.FileField(help_text='Uploaded file', upload_to='audit_attachments/', validators=[core.validators.validate_file_size, core.validators.validate_file_name])),
-                ('uploaded_at', models.DateTimeField(auto_now_add=True)),
-                ('uploaded_by', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='uploaded_documents', to=settings.AUTH_USER_MODEL)),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("name", models.CharField(help_text="Document name", max_length=255)),
+                (
+                    "file",
+                    models.FileField(
+                        help_text="Uploaded file",
+                        upload_to="audit_attachments/",
+                        validators=[
+                            core.validators.validate_file_size,
+                            core.validators.validate_file_name,
+                        ],
+                    ),
+                ),
+                ("uploaded_at", models.DateTimeField(auto_now_add=True)),
+                (
+                    "uploaded_by",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="uploaded_documents",
+                        to=settings.AUTH_USER_MODEL,
+                    ),
+                ),
             ],
             options={
-                'verbose_name': 'Document',
-                'verbose_name_plural': 'Documents',
-                'ordering': ['-uploaded_at'],
+                "verbose_name": "Document",
+                "verbose_name_plural": "Documents",
+                "ordering": ["-uploaded_at"],
             },
         ),
         migrations.AddField(
-            model_name='auditentity',
-            name='attachments',
-            field=models.ManyToManyField(blank=True, related_name='audit_entities', to='audits.document'),
+            model_name="auditentity",
+            name="attachments",
+            field=models.ManyToManyField(
+                blank=True, related_name="audit_entities", to="audits.document"
+            ),
         ),
     ]

@@ -6,82 +6,128 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('audits', '0004_auditentity_audits_audi_parent__15ef63_idx_and_more'),
+        ("audits", "0004_auditentity_audits_audi_parent__15ef63_idx_and_more"),
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='auditentity',
-            name='audit_frequency',
-            field=models.CharField(blank=True, choices=[('Annual', 'Annual'), ('Biennial', 'Biennial'), ('Triennial', 'Triennial'), ('Ad Hoc', 'Ad Hoc'), ('Continuous', 'Continuous'), ('As Needed', 'As Needed')], max_length=20, null=True),
+            model_name="auditentity",
+            name="audit_frequency",
+            field=models.CharField(
+                blank=True,
+                choices=[
+                    ("Annual", "Annual"),
+                    ("Biennial", "Biennial"),
+                    ("Triennial", "Triennial"),
+                    ("Ad Hoc", "Ad Hoc"),
+                    ("Continuous", "Continuous"),
+                    ("As Needed", "As Needed"),
+                ],
+                max_length=20,
+                null=True,
+            ),
         ),
         migrations.AddField(
-            model_name='auditentity',
-            name='business_owner',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='audit_entities_business_owned', to=settings.AUTH_USER_MODEL),
+            model_name="auditentity",
+            name="business_owner",
+            field=models.ForeignKey(
+                blank=True,
+                null=True,
+                on_delete=django.db.models.deletion.SET_NULL,
+                related_name="audit_entities_business_owned",
+                to=settings.AUTH_USER_MODEL,
+            ),
         ),
         migrations.AddField(
-            model_name='auditentity',
-            name='control_maturity',
-            field=models.IntegerField(blank=True, help_text='Control maturity level (0-5)', null=True),
+            model_name="auditentity",
+            name="control_maturity",
+            field=models.IntegerField(
+                blank=True, help_text="Control maturity level (0-5)", null=True
+            ),
         ),
         migrations.AddField(
-            model_name='auditentity',
-            name='criticality',
-            field=models.CharField(blank=True, choices=[('High', 'High'), ('Medium', 'Medium'), ('Low', 'Low')], max_length=10, null=True),
+            model_name="auditentity",
+            name="criticality",
+            field=models.CharField(
+                blank=True,
+                choices=[("High", "High"), ("Medium", "Medium"), ("Low", "Low")],
+                max_length=10,
+                null=True,
+            ),
         ),
         migrations.AddField(
-            model_name='auditentity',
-            name='inherent_risk_score',
-            field=models.FloatField(blank=True, help_text='Inherent risk score (0-10)', null=True),
+            model_name="auditentity",
+            name="inherent_risk_score",
+            field=models.FloatField(
+                blank=True, help_text="Inherent risk score (0-10)", null=True
+            ),
         ),
         migrations.AddField(
-            model_name='auditentity',
-            name='location',
-            field=models.CharField(blank=True, help_text='Jurisdiction/region', max_length=255),
+            model_name="auditentity",
+            name="location",
+            field=models.CharField(
+                blank=True, help_text="Jurisdiction/region", max_length=255
+            ),
         ),
         migrations.AddField(
-            model_name='auditentity',
-            name='next_audit_date',
+            model_name="auditentity",
+            name="next_audit_date",
             field=models.DateField(blank=True, null=True),
         ),
         migrations.AddField(
-            model_name='auditentity',
-            name='notes',
-            field=models.TextField(blank=True, help_text='Additional notes and observations'),
+            model_name="auditentity",
+            name="notes",
+            field=models.TextField(
+                blank=True, help_text="Additional notes and observations"
+            ),
         ),
         migrations.AddField(
-            model_name='auditentity',
-            name='residual_risk_score',
-            field=models.FloatField(blank=True, help_text='Residual risk score (0-10)', null=True),
+            model_name="auditentity",
+            name="residual_risk_score",
+            field=models.FloatField(
+                blank=True, help_text="Residual risk score (0-10)", null=True
+            ),
         ),
         migrations.AlterField(
-            model_name='auditentity',
-            name='owner',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='audit_entities_owned', to=settings.AUTH_USER_MODEL),
+            model_name="auditentity",
+            name="owner",
+            field=models.ForeignKey(
+                blank=True,
+                null=True,
+                on_delete=django.db.models.deletion.SET_NULL,
+                related_name="audit_entities_owned",
+                to=settings.AUTH_USER_MODEL,
+            ),
         ),
         migrations.AlterField(
-            model_name='auditentity',
-            name='risk_score',
-            field=models.FloatField(default=0.0, help_text='Overall risk score (0-10)'),
+            model_name="auditentity",
+            name="risk_score",
+            field=models.FloatField(default=0.0, help_text="Overall risk score (0-10)"),
         ),
         migrations.AddIndex(
-            model_name='auditentity',
-            index=models.Index(fields=['business_owner'], name='audits_audi_busines_f0e879_idx'),
+            model_name="auditentity",
+            index=models.Index(
+                fields=["business_owner"], name="audits_audi_busines_f0e879_idx"
+            ),
         ),
         migrations.AddIndex(
-            model_name='auditentity',
-            index=models.Index(fields=['next_audit_date'], name='audits_audi_next_au_595a5d_idx'),
+            model_name="auditentity",
+            index=models.Index(
+                fields=["next_audit_date"], name="audits_audi_next_au_595a5d_idx"
+            ),
         ),
         migrations.AddIndex(
-            model_name='auditentity',
-            index=models.Index(fields=['criticality'], name='audits_audi_critica_57fb4d_idx'),
+            model_name="auditentity",
+            index=models.Index(
+                fields=["criticality"], name="audits_audi_critica_57fb4d_idx"
+            ),
         ),
         migrations.AddIndex(
-            model_name='auditentity',
-            index=models.Index(fields=['audit_frequency'], name='audits_audi_audit_f_b77faf_idx'),
+            model_name="auditentity",
+            index=models.Index(
+                fields=["audit_frequency"], name="audits_audi_audit_f_b77faf_idx"
+            ),
         ),
     ]

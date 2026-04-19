@@ -7,4 +7,3 @@ export const load = (async ({ fetch, locals, params }) => {
 		executionId: params.id
 	};
 }) satisfies PageServerLoad;
-

@@ -1,23 +1,23 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
-	
+
 	interface Alert {
 		overdue_engagements: Array<any>;
 		never_audited_entities: Array<any>;
 		budget_overruns: Array<any>;
 		upcoming_deadlines: Array<any>;
 	}
-	
+
 	interface Props {
 		alerts?: Alert;
 	}
-	
+
 	let { alerts }: Props = $props();
-	
+
 	function navigateToEngagement(id: number) {
 		goto(`/audits/engagements/${id}`);
 	}
-	
+
 	function navigateToEntity(id: number) {
 		goto(`/audits/universe`);
 	}
@@ -125,4 +125,3 @@
 		{/if}
 	</div>
 </div>
-

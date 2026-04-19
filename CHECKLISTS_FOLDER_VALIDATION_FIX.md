@@ -34,7 +34,7 @@ const response = await fetch('/fe-api/folders/?content_type=DO&content_type=GL')
 ### 2. Validate Folder Data
 Added validation to ensure only valid folders are displayed:
 ```typescript
-availableFolders = Array.isArray(results) 
+availableFolders = Array.isArray(results)
     ? results
         .filter((f: any) => f && f.id && f.name)  // Only folders with valid ID and name
         .map((f: any) => ({
@@ -134,7 +134,7 @@ If you still see folders with invalid IDs:
 
 1. **Check your database:**
    ```sql
-   SELECT id, name, content_type FROM iam_folder 
+   SELECT id, name, content_type FROM iam_folder
    WHERE content_type IN ('DO', 'GL');
    ```
 
@@ -174,4 +174,3 @@ The folder validation issue is now fixed by:
 5. ✅ Supporting both folder and root-level checklists
 
 You should now only see valid, existing folders in the dropdown!
-

@@ -109,7 +109,7 @@
 
 	async function loadPlans() {
 		const params: any = {};
-		
+
 		if (searchQuery) params.search = searchQuery;
 		if (filterStatus) params.status = filterStatus;
 		if (filterEntity) params.entity = filterEntity;

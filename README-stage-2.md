@@ -15,7 +15,7 @@ Stage 2 introduces **Audit Planning** functionality that allows you to plan and 
 
 ### 📅 Calendar Integration
 - **Automatic Calendar Events**: Audit plans automatically appear in the calendar view
-- **Color-coded by Status**: 
+- **Color-coded by Status**:
   - `planned` → Tertiary (blue)
   - `in_progress` → Warning (yellow)
   - `completed` → Success (green)
@@ -50,7 +50,7 @@ class AuditPlan(models.Model):
 
 ### Status Choices
 - `planned` - Planned
-- `in_progress` - In Progress  
+- `in_progress` - In Progress
 - `completed` - Completed
 - `cancelled` - Cancelled
 

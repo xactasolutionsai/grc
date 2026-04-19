@@ -297,7 +297,7 @@ describe('AssetForm ITAM Fields', () => {
 		await waitFor(() => {
 			const assetTypeSelect = screen.getByLabelText('Asset Type');
 			expect(assetTypeSelect).toBeInTheDocument();
-			
+
 			// Check that it's a select element
 			expect(assetTypeSelect.tagName).toBe('SELECT');
 		});
@@ -316,11 +316,11 @@ describe('AssetForm ITAM Fields', () => {
 			const acquisitionDateInput = screen.getByLabelText('Acquisition Date');
 			const endOfLifeDateInput = screen.getByLabelText('End of Life Date');
 			const licenseExpiryDateInput = screen.getByLabelText('License Expiry Date');
-			
+
 			expect(acquisitionDateInput).toBeInTheDocument();
 			expect(endOfLifeDateInput).toBeInTheDocument();
 			expect(licenseExpiryDateInput).toBeInTheDocument();
-			
+
 			// Check that they are date inputs
 			expect(acquisitionDateInput).toHaveAttribute('type', 'date');
 			expect(endOfLifeDateInput).toHaveAttribute('type', 'date');
@@ -341,11 +341,11 @@ describe('AssetForm ITAM Fields', () => {
 			const purchaseCostInput = screen.getByLabelText('Purchase Cost');
 			const depreciationValueInput = screen.getByLabelText('Depreciation Value');
 			const totalCostInput = screen.getByLabelText('Total Cost of Ownership');
-			
+
 			expect(purchaseCostInput).toBeInTheDocument();
 			expect(depreciationValueInput).toBeInTheDocument();
 			expect(totalCostInput).toBeInTheDocument();
-			
+
 			// Check that they are number inputs
 			expect(purchaseCostInput).toHaveAttribute('type', 'number');
 			expect(depreciationValueInput).toHaveAttribute('type', 'number');
@@ -366,11 +366,11 @@ describe('AssetForm ITAM Fields', () => {
 			const specificationsTextarea = screen.getByLabelText('Specifications');
 			const deploymentDetailsTextarea = screen.getByLabelText('Deployment Details');
 			const maintenanceScheduleTextarea = screen.getByLabelText('Maintenance Schedule');
-			
+
 			expect(specificationsTextarea).toBeInTheDocument();
 			expect(deploymentDetailsTextarea).toBeInTheDocument();
 			expect(maintenanceScheduleTextarea).toBeInTheDocument();
-			
+
 			// Check that they are textarea elements
 			expect(specificationsTextarea.tagName).toBe('TEXTAREA');
 			expect(deploymentDetailsTextarea.tagName).toBe('TEXTAREA');
@@ -395,7 +395,7 @@ describe('AssetForm ITAM Fields', () => {
 
 	it('handles form data binding', async () => {
 		const formDataCache = {};
-		
+
 		render(AssetForm, {
 			props: {
 				form: mockForm,
@@ -408,11 +408,11 @@ describe('AssetForm ITAM Fields', () => {
 		await waitFor(() => {
 			const serialNumberInput = screen.getByLabelText('Serial Number');
 			const vendorInput = screen.getByLabelText('Vendor');
-			
+
 			// Test that inputs can be interacted with
 			fireEvent.input(serialNumberInput, { target: { value: 'SN123456789' } });
 			fireEvent.input(vendorInput, { target: { value: 'Dell Technologies' } });
-			
+
 			expect(serialNumberInput).toHaveValue('SN123456789');
 			expect(vendorInput).toHaveValue('Dell Technologies');
 		});

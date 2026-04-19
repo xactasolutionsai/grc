@@ -5,58 +5,75 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('audits', '0015_engagementtimelineevent'),
+        ("audits", "0015_engagementtimelineevent"),
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='auditentity',
-            name='address',
-            field=models.TextField(blank=True, help_text='Physical address of the entity'),
+            model_name="auditentity",
+            name="address",
+            field=models.TextField(
+                blank=True, help_text="Physical address of the entity"
+            ),
         ),
         migrations.AddField(
-            model_name='auditentity',
-            name='city',
-            field=models.CharField(blank=True, help_text='City where the entity is located', max_length=100),
+            model_name="auditentity",
+            name="city",
+            field=models.CharField(
+                blank=True, help_text="City where the entity is located", max_length=100
+            ),
         ),
         migrations.AddField(
-            model_name='auditentity',
-            name='coordinates',
-            field=models.JSONField(blank=True, help_text='Latitude and longitude coordinates', null=True),
+            model_name="auditentity",
+            name="coordinates",
+            field=models.JSONField(
+                blank=True, help_text="Latitude and longitude coordinates", null=True
+            ),
         ),
         migrations.AddField(
-            model_name='auditentity',
-            name='country',
-            field=models.CharField(blank=True, help_text='Country where the entity is located', max_length=100),
+            model_name="auditentity",
+            name="country",
+            field=models.CharField(
+                blank=True,
+                help_text="Country where the entity is located",
+                max_length=100,
+            ),
         ),
         migrations.AddField(
-            model_name='auditentity',
-            name='postal_code',
-            field=models.CharField(blank=True, help_text='Postal/ZIP code', max_length=20),
+            model_name="auditentity",
+            name="postal_code",
+            field=models.CharField(
+                blank=True, help_text="Postal/ZIP code", max_length=20
+            ),
         ),
         migrations.AddField(
-            model_name='auditentity',
-            name='region',
-            field=models.CharField(blank=True, help_text='Region/State/Province', max_length=100),
+            model_name="auditentity",
+            name="region",
+            field=models.CharField(
+                blank=True, help_text="Region/State/Province", max_length=100
+            ),
         ),
         migrations.AddField(
-            model_name='auditentity',
-            name='timezone',
-            field=models.CharField(blank=True, help_text='Timezone (e.g., America/New_York)', max_length=50),
+            model_name="auditentity",
+            name="timezone",
+            field=models.CharField(
+                blank=True, help_text="Timezone (e.g., America/New_York)", max_length=50
+            ),
         ),
         migrations.AddIndex(
-            model_name='auditentity',
-            index=models.Index(fields=['country'], name='audits_audi_country_8f6364_idx'),
+            model_name="auditentity",
+            index=models.Index(
+                fields=["country"], name="audits_audi_country_8f6364_idx"
+            ),
         ),
         migrations.AddIndex(
-            model_name='auditentity',
-            index=models.Index(fields=['region'], name='audits_audi_region_5d09e5_idx'),
+            model_name="auditentity",
+            index=models.Index(fields=["region"], name="audits_audi_region_5d09e5_idx"),
         ),
         migrations.AddIndex(
-            model_name='auditentity',
-            index=models.Index(fields=['city'], name='audits_audi_city_83641c_idx'),
+            model_name="auditentity",
+            index=models.Index(fields=["city"], name="audits_audi_city_83641c_idx"),
         ),
     ]

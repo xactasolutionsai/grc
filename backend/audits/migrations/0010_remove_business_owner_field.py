@@ -4,18 +4,17 @@ from django.db import migrations
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('audits', '0009_add_enhanced_audit_fields'),
+        ("audits", "0009_add_enhanced_audit_fields"),
     ]
 
     operations = [
         migrations.RemoveIndex(
-            model_name='auditentity',
-            name='audits_audi_busines_f0e879_idx',
+            model_name="auditentity",
+            name="audits_audi_busines_f0e879_idx",
         ),
         migrations.RemoveField(
-            model_name='auditentity',
-            name='business_owner',
+            model_name="auditentity",
+            name="business_owner",
         ),
     ]

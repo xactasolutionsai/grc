@@ -16,7 +16,7 @@ function getHeadersWithCookies(request: Request): Record<string, string> {
 export const POST: RequestHandler = async ({ params, fetch, request }) => {
 	try {
 		const apiUrl = `${BASE_API_URL}/audits/checklists/${params.id}/duplicate/`;
-		
+
 		const response = await fetch(apiUrl, {
 			method: 'POST',
 			headers: getHeadersWithCookies(request)
@@ -34,4 +34,3 @@ export const POST: RequestHandler = async ({ params, fetch, request }) => {
 		return json({ error: 'Internal server error' }, { status: 500 });
 	}
 };
-

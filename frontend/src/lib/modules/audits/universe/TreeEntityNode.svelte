@@ -9,7 +9,7 @@
 	}
 
 	let { node, level = 0 }: Props = $props();
-	
+
 	// Type assertion for contentProps
 	const contentProps = node.contentProps as any;
 </script>
@@ -25,7 +25,7 @@
 			onDeleted={contentProps.onDeleted}
 		/>
 	</div>
-	
+
 	<!-- Children -->
 	{#if node.children && node.children.length > 0}
 		<div class="space-y-1">

@@ -18,17 +18,17 @@ export const GET: RequestHandler = async ({ fetch, params, request }) => {
 	try {
 		const { id } = params;
 		const apiUrl = `${BASE_API_URL}/audits/plans/${id}/`;
-		
+
 		const response = await fetch(apiUrl, {
 			headers: getHeadersWithCookies(request)
 		});
-		
+
 		if (!response.ok) {
 			error(response.status, 'Failed to fetch plan');
 		}
-		
+
 		const data = await response.json();
-		
+
 		return new Response(JSON.stringify(data), {
 			headers: {
 				'Content-Type': 'application/json'
@@ -45,19 +45,19 @@ export const PUT: RequestHandler = async ({ fetch, params, request }) => {
 		const { id } = params;
 		const body = await request.json();
 		const apiUrl = `${BASE_API_URL}/audits/plans/${id}/`;
-		
+
 		const response = await fetch(apiUrl, {
 			method: 'PUT',
 			headers: getHeadersWithCookies(request),
 			body: JSON.stringify(body),
 		});
-		
+
 		if (!response.ok) {
 			error(response.status, 'Failed to update plan');
 		}
-		
+
 		const data = await response.json();
-		
+
 		return new Response(JSON.stringify(data), {
 			headers: {
 				'Content-Type': 'application/json'
@@ -73,16 +73,16 @@ export const DELETE: RequestHandler = async ({ fetch, params, request }) => {
 	try {
 		const { id } = params;
 		const apiUrl = `${BASE_API_URL}/audits/plans/${id}/`;
-		
+
 		const response = await fetch(apiUrl, {
 			method: 'DELETE',
 			headers: getHeadersWithCookies(request)
 		});
-		
+
 		if (!response.ok) {
 			error(response.status, 'Failed to delete plan');
 		}
-		
+
 		return new Response(JSON.stringify({ success: true }), {
 			headers: {
 				'Content-Type': 'application/json'

@@ -5,16 +5,20 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('audits', '0023_add_process_depends_on'),
+        ("audits", "0023_add_process_depends_on"),
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='auditentity',
-            name='owners',
-            field=models.ManyToManyField(blank=True, help_text='Users assigned as owners of this entity', related_name='assigned_entities', to=settings.AUTH_USER_MODEL),
+            model_name="auditentity",
+            name="owners",
+            field=models.ManyToManyField(
+                blank=True,
+                help_text="Users assigned as owners of this entity",
+                related_name="assigned_entities",
+                to=settings.AUTH_USER_MODEL,
+            ),
         ),
     ]

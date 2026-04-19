@@ -6,4 +6,3 @@ export const load = (async ({ locals }) => {
 		title: 'Create New Checklist'
 	};
 }) satisfies PageServerLoad;
-

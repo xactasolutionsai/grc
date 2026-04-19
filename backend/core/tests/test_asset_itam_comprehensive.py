@@ -25,27 +25,23 @@ class AssetITAMComprehensiveTestCase(TestCase):
     def setUp(self):
         """Set up test data."""
         self.user = User.objects.create_user(
-            email="test@example.com",
-            password="testpass123"
+            email="test@example.com", password="testpass123"
         )
         self.client = APIClient()
         self.client.force_authenticate(user=self.user)
-        
+
         # Create a test folder
         self.folder = Folder.objects.create(
-            name="Test Folder",
-            description="Test folder for ITAM tests"
+            name="Test Folder", description="Test folder for ITAM tests"
         )
-        
+
         # Give user permission to access the folder
         analyst_role, created = Role.objects.get_or_create(
-            name="Analyst",
-            defaults={"description": "Analyst role for testing"}
+            name="Analyst", defaults={"description": "Analyst role for testing"}
         )
-        
+
         role_assignment = RoleAssignment.objects.create(
-            user=self.user,
-            role=analyst_role
+            user=self.user, role=analyst_role
         )
         role_assignment.perimeter_folders.add(self.folder)
 
@@ -91,11 +87,11 @@ class AssetITAMComprehensiveTestCase(TestCase):
             "security_config": {"encryption": True, "firewall": "enabled"},
             "known_vulnerabilities": [{"cve": "CVE-2024-001", "severity": "high"}],
             "incident_records": [{"date": "2024-01-15", "severity": "medium"}],
-            "compliance_standards": ["ISO27001", "SOC2"]
+            "compliance_standards": ["ISO27001", "SOC2"],
         }
-        
+
         asset = Asset.objects.create(**asset_data)
-        
+
         # Verify all fields were saved correctly
         self.assertEqual(asset.asset_type, "hardware")
         self.assertEqual(asset.serial_number, "SN123456789")
@@ -103,28 +99,32 @@ class AssetITAMComprehensiveTestCase(TestCase):
         self.assertEqual(asset.department, "IT Department")
         self.assertEqual(asset.purchase_cost, Decimal("1500.00"))
         self.assertEqual(asset.vendor, "Dell Technologies")
-        self.assertEqual(asset.upgrade_history, [{"version": "1.0", "date": "2024-01-15"}])
-        self.assertEqual(asset.security_config, {"encryption": True, "firewall": "enabled"})
+        self.assertEqual(
+            asset.upgrade_history, [{"version": "1.0", "date": "2024-01-15"}]
+        )
+        self.assertEqual(
+            asset.security_config, {"encryption": True, "firewall": "enabled"}
+        )
 
     def test_asset_serializer_validation(self):
         """Test AssetWriteSerializer validation for ITAM fields."""
         serializer = AssetWriteSerializer()
-        
+
         # Test negative cost validation
         with self.assertRaises(Exception):
             serializer.validate_purchase_cost(-100.00)
-        
+
         with self.assertRaises(Exception):
             serializer.validate_depreciation_value(-50.00)
-        
+
         with self.assertRaises(Exception):
             serializer.validate_total_cost_of_ownership(-200.00)
-        
+
         # Test future acquisition date validation
         future_date = date.today() + timedelta(days=1)
         with self.assertRaises(Exception):
             serializer.validate_acquisition_date(future_date)
-        
+
         # Test past end of life date validation
         past_date = date.today() - timedelta(days=1)
         with self.assertRaises(Exception):
@@ -151,14 +151,14 @@ class AssetITAMComprehensiveTestCase(TestCase):
             "license_type": "perpetual",
             "license_expiry_date": "2025-01-15",
             "compliance_status": "Compliant",
-            "warranty": "3 years manufacturer warranty"
+            "warranty": "3 years manufacturer warranty",
         }
-        
-        response = self.client.post(url, data, format='json')
+
+        response = self.client.post(url, data, format="json")
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
-        
+
         # Verify the asset was created with ITAM fields
-        asset = Asset.objects.get(id=response.data['id'])
+        asset = Asset.objects.get(id=response.data["id"])
         self.assertEqual(asset.asset_type, "hardware")
         self.assertEqual(asset.serial_number, "SN123456789")
         self.assertEqual(asset.assigned_user, "john.doe@example.com")
@@ -170,14 +170,26 @@ class AssetITAMComprehensiveTestCase(TestCase):
         """Test creating an asset via API with JSON ITAM fields."""
         url = reverse("assets-list")
         upgrade_history = [
-            {"version": "1.0", "date": "2024-01-15", "description": "Initial installation"},
-            {"version": "1.1", "date": "2024-02-15", "description": "Security update"}
+            {
+                "version": "1.0",
+                "date": "2024-01-15",
+                "description": "Initial installation",
+            },
+            {"version": "1.1", "date": "2024-02-15", "description": "Security update"},
         ]
         service_history = [
-            {"date": "2024-01-20", "type": "maintenance", "description": "Routine check"},
-            {"date": "2024-02-10", "type": "repair", "description": "Hardware replacement"}
+            {
+                "date": "2024-01-20",
+                "type": "maintenance",
+                "description": "Routine check",
+            },
+            {
+                "date": "2024-02-10",
+                "type": "repair",
+                "description": "Hardware replacement",
+            },
         ]
-        
+
         data = {
             "name": "Test Software",
             "description": "Test software for ITAM testing",
@@ -187,14 +199,14 @@ class AssetITAMComprehensiveTestCase(TestCase):
             "service_history": service_history,
             "security_config": {"encryption": True, "firewall": "enabled"},
             "known_vulnerabilities": [{"cve": "CVE-2024-001", "severity": "high"}],
-            "compliance_standards": ["ISO27001", "SOC2"]
+            "compliance_standards": ["ISO27001", "SOC2"],
         }
-        
-        response = self.client.post(url, data, format='json')
+
+        response = self.client.post(url, data, format="json")
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
-        
+
         # Verify JSON fields were saved correctly
-        asset = Asset.objects.get(id=response.data['id'])
+        asset = Asset.objects.get(id=response.data["id"])
         self.assertEqual(asset.upgrade_history, upgrade_history)
         self.assertEqual(asset.service_history, service_history)
         self.assertEqual(asset.security_config["encryption"], True)
@@ -208,10 +220,10 @@ class AssetITAMComprehensiveTestCase(TestCase):
             "folder": self.folder.id,
             "purchase_cost": "-100.00",  # Negative cost should fail
             "depreciation_value": "-50.00",  # Negative depreciation should fail
-            "total_cost_of_ownership": "-200.00"  # Negative TCO should fail
+            "total_cost_of_ownership": "-200.00",  # Negative TCO should fail
         }
-        
-        response = self.client.post(url, data, format='json')
+
+        response = self.client.post(url, data, format="json")
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
         self.assertIn("Purchase cost cannot be negative", str(response.data))
 
@@ -222,10 +234,10 @@ class AssetITAMComprehensiveTestCase(TestCase):
         data = {
             "name": "Test Asset",
             "folder": self.folder.id,
-            "acquisition_date": future_date
+            "acquisition_date": future_date,
         }
-        
-        response = self.client.post(url, data, format='json')
+
+        response = self.client.post(url, data, format="json")
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
         self.assertIn("Acquisition date cannot be in the future", str(response.data))
 
@@ -234,39 +246,39 @@ class AssetITAMComprehensiveTestCase(TestCase):
         url = reverse("assets-list")
         acquisition_date = "2024-01-15"
         end_of_life_date = "2024-01-10"  # Before acquisition date
-        
+
         data = {
             "name": "Test Asset",
             "folder": self.folder.id,
             "acquisition_date": acquisition_date,
-            "end_of_life_date": end_of_life_date
+            "end_of_life_date": end_of_life_date,
         }
-        
-        response = self.client.post(url, data, format='json')
+
+        response = self.client.post(url, data, format="json")
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
-        self.assertIn("End of life date must be after acquisition date", str(response.data))
+        self.assertIn(
+            "End of life date must be after acquisition date", str(response.data)
+        )
 
     def test_asset_api_update_with_itam_fields(self):
         """Test updating an asset via API with ITAM fields."""
         # Create an asset first
         asset = Asset.objects.create(
-            name="Original Asset",
-            folder=self.folder,
-            asset_type="hardware"
+            name="Original Asset", folder=self.folder, asset_type="hardware"
         )
-        
+
         url = reverse("assets-detail", kwargs={"pk": asset.pk})
         data = {
             "name": "Updated Asset",
             "asset_type": "software",
             "vendor": "Microsoft",
             "purchase_cost": "500.00",
-            "department": "Engineering"
+            "department": "Engineering",
         }
-        
-        response = self.client.patch(url, data, format='json')
+
+        response = self.client.patch(url, data, format="json")
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        
+
         # Verify updates
         asset.refresh_from_db()
         self.assertEqual(asset.asset_type, "software")
@@ -282,29 +294,29 @@ class AssetITAMComprehensiveTestCase(TestCase):
             folder=self.folder,
             asset_type="hardware",
             vendor="Dell Technologies",
-            department="IT"
+            department="IT",
         )
         Asset.objects.create(
             name="Software Asset",
             folder=self.folder,
             asset_type="software",
             vendor="Microsoft",
-            department="Engineering"
+            department="Engineering",
         )
-        
+
         # Test filtering by asset_type
         url = reverse("assets-list")
         response = self.client.get(url, {"asset_type": "hardware"})
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(len(response.data["results"]), 1)
         self.assertEqual(response.data["results"][0]["asset_type"], "hardware")
-        
+
         # Test filtering by vendor
         response = self.client.get(url, {"vendor": "Dell"})
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(len(response.data["results"]), 1)
         self.assertIn("Dell", response.data["results"][0]["vendor"])
-        
+
         # Test filtering by department
         response = self.client.get(url, {"department": "IT"})
         self.assertEqual(response.status_code, status.HTTP_200_OK)
@@ -318,20 +330,20 @@ class AssetITAMComprehensiveTestCase(TestCase):
             folder=self.folder,
             vendor="Microsoft",
             department="IT",
-            serial_number="SN123456"
+            serial_number="SN123456",
         )
-        
+
         url = reverse("assets-list")
         # Search by vendor
         response = self.client.get(url, {"search": "Microsoft"})
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(len(response.data["results"]), 1)
-        
+
         # Search by department
         response = self.client.get(url, {"search": "IT"})
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(len(response.data["results"]), 1)
-        
+
         # Search by serial number
         response = self.client.get(url, {"search": "SN123456"})
         self.assertEqual(response.status_code, status.HTTP_200_OK)
@@ -344,12 +356,12 @@ class AssetITAMComprehensiveTestCase(TestCase):
             folder=self.folder,
             asset_type="hardware",
             vendor="Dell Technologies",
-            purchase_cost=Decimal("1500.00")
+            purchase_cost=Decimal("1500.00"),
         )
-        
+
         serializer = AssetReadSerializer(asset)
         data = serializer.data
-        
+
         # Verify ITAM fields are included in read serializer
         self.assertIn("asset_type", data)
         self.assertIn("vendor", data)
@@ -360,19 +372,19 @@ class AssetITAMComprehensiveTestCase(TestCase):
     def test_asset_import_export_serializer_itam_fields(self):
         """Test AssetImportExportSerializer includes ITAM fields."""
         from core.serializers import AssetImportExportSerializer
-        
+
         asset = Asset.objects.create(
             name="Test Asset",
             folder=self.folder,
             asset_type="hardware",
             vendor="Dell Technologies",
             purchase_cost=Decimal("1500.00"),
-            serial_number="SN123456789"
+            serial_number="SN123456789",
         )
-        
+
         serializer = AssetImportExportSerializer(asset)
         data = serializer.data
-        
+
         # Verify ITAM fields are included in import/export serializer
         self.assertIn("asset_type", data)
         self.assertIn("vendor", data)
@@ -388,9 +400,9 @@ class AssetITAMComprehensiveTestCase(TestCase):
             name="Test Asset",
             folder=self.folder,
             asset_type="hardware",
-            serial_number="SN123456789"
+            serial_number="SN123456789",
         )
-        
+
         # Test that the model can be converted to string
         str_repr = str(asset)
         self.assertIn("Test Asset", str_repr)
@@ -398,11 +410,9 @@ class AssetITAMComprehensiveTestCase(TestCase):
     def test_asset_model_choices_display(self):
         """Test Asset model choices display methods."""
         asset = Asset.objects.create(
-            name="Test Asset",
-            folder=self.folder,
-            asset_type="hardware"
+            name="Test Asset", folder=self.folder, asset_type="hardware"
         )
-        
+
         # Test the display method
         self.assertEqual(asset.get_asset_type_display(), "Hardware")
 
@@ -413,9 +423,9 @@ class AssetITAMComprehensiveTestCase(TestCase):
             folder=self.folder,
             purchase_cost=Decimal("1234.56"),
             depreciation_value=Decimal("987.65"),
-            total_cost_of_ownership=Decimal("2345.67")
+            total_cost_of_ownership=Decimal("2345.67"),
         )
-        
+
         self.assertEqual(asset.purchase_cost, Decimal("1234.56"))
         self.assertEqual(asset.depreciation_value, Decimal("987.65"))
         self.assertEqual(asset.total_cost_of_ownership, Decimal("2345.67"))
@@ -427,15 +437,11 @@ class AssetITAMComprehensiveTestCase(TestCase):
             "service_history": [{"date": "2024-01-20", "type": "maintenance"}],
             "security_config": {"encryption": True, "firewall": "enabled"},
             "known_vulnerabilities": [{"cve": "CVE-2024-001", "severity": "high"}],
-            "compliance_standards": ["ISO27001", "SOC2"]
+            "compliance_standards": ["ISO27001", "SOC2"],
         }
-        
-        asset = Asset.objects.create(
-            name="Test Asset",
-            folder=self.folder,
-            **json_data
-        )
-        
+
+        asset = Asset.objects.create(name="Test Asset", folder=self.folder, **json_data)
+
         # Verify JSON fields were saved and can be retrieved
         for field_name, expected_value in json_data.items():
             actual_value = getattr(asset, field_name)

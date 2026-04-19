@@ -2,13 +2,13 @@
 	import { onMount } from 'svelte';
 	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
-	import { 
-		listEngagements, 
+	import {
+		listEngagements,
 		getEngagementSummary,
 		getMyEngagements,
 		getMyTeamEngagements,
-		startEngagement, 
-		submitResults, 
+		startEngagement,
+		submitResults,
 		closeEngagement,
 		updateProgress,
 		deleteEngagement,
@@ -44,7 +44,7 @@
 	let actionLoading = false;
 	let deleteConfirmId = null;
 	let deleting = false;
-	
+
 	// Summary dashboard data
 	let summary = {
 		total: 0,
@@ -55,7 +55,7 @@
 		completed_this_month: 0
 	};
 	let summaryLoading = true;
-	
+
 	// Filter tabs
 	let activeTab = 'all'; // 'all', 'my_engagements', 'my_team'
 
@@ -70,17 +70,17 @@
 		if (params.has('status')) statusFilter = params.get('status') || '';
 		if (params.has('priority')) priorityFilter = params.get('priority') || '';
 		if (params.has('audit_type')) auditTypeFilter = params.get('audit_type') || '';
-		
+
 		await Promise.all([loadSummary(), loadEngagements()]);
 	});
 
 	// Watch for search/filter changes to reload data from backend
-	$: if (searchQuery !== undefined || statusFilter !== undefined || priorityFilter !== undefined || 
-		auditTypeFilter !== undefined || auditPlanFilter !== undefined || entityFilter !== undefined || 
+	$: if (searchQuery !== undefined || statusFilter !== undefined || priorityFilter !== undefined ||
+		auditTypeFilter !== undefined || auditPlanFilter !== undefined || entityFilter !== undefined ||
 		auditorFilter !== undefined || leadFilter !== undefined || showOverdueOnly !== undefined) {
 		loadEngagements();
 	}
-	
+
 	// Watch for tab changes
 	$: if (activeTab !== undefined) {
 		loadEngagements();
@@ -101,7 +101,7 @@
 	async function loadEngagements() {
 		loading = true;
 		error = null;
-		
+
 		try {
 			const params = {
 				page: currentPage,
@@ -118,7 +118,7 @@
 			if (auditorFilter) params.assigned_auditor = auditorFilter;
 			if (leadFilter) params.engagement_lead = leadFilter;
 			if (showOverdueOnly) params.overdue = 'true';
-			
+
 			// Handle filter tabs
 			if (activeTab === 'my_engagements') {
 				params.my_engagements = 'true';
@@ -266,7 +266,7 @@
 		leadFilter = '';
 		showOverdueOnly = false;
 	}
-	
+
 	function handleTabChange(tab) {
 		activeTab = tab;
 		currentPage = 1; // Reset to first page when changing tabs
@@ -288,7 +288,7 @@
 					<p class="text-primary-100 mt-1">Manage and track audit engagement activities</p>
 				</div>
 			</div>
-			<button 
+			<button
 				on:click={onCreate}
 				class="inline-flex items-center gap-2 px-6 py-3 border-2 border-white/30 text-sm font-semibold rounded-xl shadow-lg text-white bg-white/10 hover:bg-white/20 backdrop-blur-sm transition-all"
 			>
@@ -659,7 +659,7 @@
 								<td class="px-6 py-4">
 									<div class="flex items-center gap-2">
 										<div class="flex-1 bg-surface-200 dark:bg-surface-700 rounded-full h-2">
-											<div 
+											<div
 												class="h-2 rounded-full {getProgressColor(engagement.progress_percentage)}"
 												style="width: {engagement.progress_percentage}%"
 											></div>
@@ -737,7 +737,7 @@
 					</tbody>
 				</table>
 			</div>
-			
+
 			{#if engagements.length === 0}
 				<div class="text-center py-12 px-4">
 					<svg class="mx-auto h-16 w-16 text-surface-400 dark:text-surface-500 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -828,4 +828,3 @@
 		</div>
 	{/if}
 </div>
-

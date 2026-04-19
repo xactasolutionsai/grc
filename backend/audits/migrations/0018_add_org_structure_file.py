@@ -4,15 +4,19 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('audits', '0017_extend_entity_types_for_org_units'),
+        ("audits", "0017_extend_entity_types_for_org_units"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='auditentity',
-            name='org_structure',
-            field=models.FileField(blank=True, help_text='Organizational structure file (PDF or image)', null=True, upload_to='org_structures/'),
+            model_name="auditentity",
+            name="org_structure",
+            field=models.FileField(
+                blank=True,
+                help_text="Organizational structure file (PDF or image)",
+                null=True,
+                upload_to="org_structures/",
+            ),
         ),
     ]

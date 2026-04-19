@@ -17,7 +17,7 @@ function getHeadersWithCookies(request: Request): Record<string, string> {
 export const GET: RequestHandler = async ({ params, fetch, request }) => {
     try {
         const apiUrl = `${BASE_API_URL}/audits/engagements/${params.id}/timeline/`;
-        
+
         const response = await fetch(apiUrl, {
             method: 'GET',
             headers: getHeadersWithCookies(request)

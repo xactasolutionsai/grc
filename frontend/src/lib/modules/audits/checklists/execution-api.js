@@ -104,4 +104,3 @@ export const markItemFail = async (id, comments = '') => {
 	if (!response.ok) throw new Error('Failed to mark as fail');
 	return response.json();
 };
-

@@ -275,47 +275,47 @@ export const AssetSchema = z.object({
 	security_exceptions: z.string().uuid().optional().array().optional(),
 	ref_id: z.string().max(100).optional(),
 	observation: z.string().optional().nullable(),
-	
+
 	// ITAM (IT Asset Management) fields
 	// Inventory
 	asset_type: z.enum(['hardware', 'software', 'cloud', 'digital']).optional(),
 	specifications: z.string().optional().nullable(),
 	serial_number: z.string().optional().nullable(),
 	license_key: z.string().optional().nullable(),
-	
+
 	// Ownership & Location
 	assigned_user: z.string().optional().nullable(),
 	department: z.string().optional().nullable(),
 	physical_location: z.string().optional().nullable(),
 	virtual_location: z.string().optional().nullable(),
-	
+
 	// Lifecycle
 	acquisition_date: z.string().optional().nullable(),
 	deployment_details: z.string().optional().nullable(),
 	maintenance_schedule: z.string().optional().nullable(),
 	upgrade_history: jsonSchema.optional().nullable(),
 	end_of_life_date: z.string().optional().nullable(),
-	
+
 	// Licensing & Compliance
 	license_number: z.string().optional().nullable(),
 	license_type: z.string().optional().nullable(),
 	license_expiry_date: z.string().optional().nullable(),
 	compliance_status: z.string().optional().nullable(),
 	audit_logs: jsonSchema.optional().nullable(),
-	
+
 	// Financials
 	purchase_cost: z.number().nonnegative().optional().nullable(),
 	depreciation_value: z.number().nonnegative().optional().nullable(),
 	total_cost_of_ownership: z.number().nonnegative().optional().nullable(),
 	vendor: z.string().optional().nullable(),
 	warranty: z.string().optional().nullable(),
-	
+
 	// Operations
 	service_history: jsonSchema.optional().nullable(),
 	preventive_maintenance: z.string().optional().nullable(),
 	sla_details: z.string().optional().nullable(),
 	spare_parts: z.string().optional().nullable(),
-	
+
 	// Security & Risk
 	security_config: jsonSchema.optional().nullable(),
 	known_vulnerabilities: jsonSchema.optional().nullable(),

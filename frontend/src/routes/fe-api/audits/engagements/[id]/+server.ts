@@ -17,7 +17,7 @@ function getHeadersWithCookies(request: Request): Record<string, string> {
 export const GET: RequestHandler = async ({ params, fetch, request }) => {
 	try {
 		const apiUrl = `${BASE_API_URL}/audits/engagements/${params.id}/`;
-		
+
 		const response = await fetch(apiUrl, {
 			method: 'GET',
 			headers: getHeadersWithCookies(request)
@@ -40,7 +40,7 @@ export const PUT: RequestHandler = async ({ params, request, fetch }) => {
 	try {
 		const body = await request.json();
 		const apiUrl = `${BASE_API_URL}/audits/engagements/${params.id}/`;
-		
+
 		const response = await fetch(apiUrl, {
 			method: 'PUT',
 			headers: getHeadersWithCookies(request),
@@ -87,7 +87,7 @@ export const PATCH: RequestHandler = async ({ params, request, fetch }) => {
 export const DELETE: RequestHandler = async ({ params, fetch, request }) => {
 	try {
 		const apiUrl = `${BASE_API_URL}/audits/engagements/${params.id}/`;
-		
+
 		const response = await fetch(apiUrl, {
 			method: 'DELETE',
 			headers: getHeadersWithCookies(request)

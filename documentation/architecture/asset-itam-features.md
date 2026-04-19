@@ -85,7 +85,7 @@ asset = Asset.objects.create(
     name="Production Server",
     description="Main production web server",
     folder=folder,
-    
+
     # ITAM fields
     asset_type="hardware",
     specifications="Dell PowerEdge R750, 64GB RAM, 2TB SSD",

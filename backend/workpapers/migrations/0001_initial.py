@@ -7,7 +7,6 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     initial = True
 
     dependencies = [
@@ -16,91 +15,309 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
-            name='Workpaper',
+            name="Workpaper",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('title', models.CharField(help_text='Title of the workpaper', max_length=255)),
-                ('description', models.TextField(blank=True, help_text='Detailed description of the workpaper')),
-                ('workpaper_type', models.CharField(choices=[('excel', 'Excel Spreadsheet'), ('word', 'Word Document'), ('pdf', 'PDF Document'), ('image', 'Image'), ('link', 'External Link'), ('other', 'Other')], default='other', help_text='Type of workpaper', max_length=20)),
-                ('file', models.FileField(blank=True, help_text='Upload file (Excel, Word, PDF, images, etc.)', null=True, upload_to='workpapers/%Y/%m/%d/', validators=[django.core.validators.FileExtensionValidator(allowed_extensions=['xlsx', 'xls', 'doc', 'docx', 'pdf', 'jpg', 'jpeg', 'png', 'gif', 'txt', 'csv'])])),
-                ('file_size', models.BigIntegerField(blank=True, help_text='File size in bytes', null=True)),
-                ('external_link', models.URLField(blank=True, help_text='External link as alternative to file upload', max_length=500)),
-                ('tags', models.JSONField(blank=True, help_text='Tags for categorization (JSON array)', null=True)),
-                ('metadata', models.JSONField(blank=True, help_text='Additional metadata about the file', null=True)),
-                ('status', models.CharField(choices=[('collected', 'Collected'), ('reviewed', 'Reviewed'), ('approved', 'Approved')], default='collected', help_text='Current workflow status', max_length=20)),
-                ('reviewed_at', models.DateTimeField(blank=True, help_text='Timestamp of review', null=True)),
-                ('approved_at', models.DateTimeField(blank=True, help_text='Timestamp of approval', null=True)),
-                ('rejection_reason', models.TextField(blank=True, help_text='Reason for rejection (if applicable)')),
-                ('version', models.IntegerField(default=1, help_text='Version number of this workpaper')),
-                ('is_active', models.BooleanField(default=True, help_text='Whether this workpaper is active')),
-                ('created_at', models.DateTimeField(auto_now_add=True)),
-                ('updated_at', models.DateTimeField(auto_now=True)),
-                ('approver', models.ForeignKey(blank=True, help_text='User who approved this workpaper', null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='approved_workpapers', to=settings.AUTH_USER_MODEL)),
-                ('reviewer', models.ForeignKey(blank=True, help_text='User who reviewed this workpaper', null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='reviewed_workpapers', to=settings.AUTH_USER_MODEL)),
-                ('uploaded_by', models.ForeignKey(help_text='User who uploaded this workpaper', null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='uploaded_workpapers', to=settings.AUTH_USER_MODEL)),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "title",
+                    models.CharField(
+                        help_text="Title of the workpaper", max_length=255
+                    ),
+                ),
+                (
+                    "description",
+                    models.TextField(
+                        blank=True, help_text="Detailed description of the workpaper"
+                    ),
+                ),
+                (
+                    "workpaper_type",
+                    models.CharField(
+                        choices=[
+                            ("excel", "Excel Spreadsheet"),
+                            ("word", "Word Document"),
+                            ("pdf", "PDF Document"),
+                            ("image", "Image"),
+                            ("link", "External Link"),
+                            ("other", "Other"),
+                        ],
+                        default="other",
+                        help_text="Type of workpaper",
+                        max_length=20,
+                    ),
+                ),
+                (
+                    "file",
+                    models.FileField(
+                        blank=True,
+                        help_text="Upload file (Excel, Word, PDF, images, etc.)",
+                        null=True,
+                        upload_to="workpapers/%Y/%m/%d/",
+                        validators=[
+                            django.core.validators.FileExtensionValidator(
+                                allowed_extensions=[
+                                    "xlsx",
+                                    "xls",
+                                    "doc",
+                                    "docx",
+                                    "pdf",
+                                    "jpg",
+                                    "jpeg",
+                                    "png",
+                                    "gif",
+                                    "txt",
+                                    "csv",
+                                ]
+                            )
+                        ],
+                    ),
+                ),
+                (
+                    "file_size",
+                    models.BigIntegerField(
+                        blank=True, help_text="File size in bytes", null=True
+                    ),
+                ),
+                (
+                    "external_link",
+                    models.URLField(
+                        blank=True,
+                        help_text="External link as alternative to file upload",
+                        max_length=500,
+                    ),
+                ),
+                (
+                    "tags",
+                    models.JSONField(
+                        blank=True,
+                        help_text="Tags for categorization (JSON array)",
+                        null=True,
+                    ),
+                ),
+                (
+                    "metadata",
+                    models.JSONField(
+                        blank=True,
+                        help_text="Additional metadata about the file",
+                        null=True,
+                    ),
+                ),
+                (
+                    "status",
+                    models.CharField(
+                        choices=[
+                            ("collected", "Collected"),
+                            ("reviewed", "Reviewed"),
+                            ("approved", "Approved"),
+                        ],
+                        default="collected",
+                        help_text="Current workflow status",
+                        max_length=20,
+                    ),
+                ),
+                (
+                    "reviewed_at",
+                    models.DateTimeField(
+                        blank=True, help_text="Timestamp of review", null=True
+                    ),
+                ),
+                (
+                    "approved_at",
+                    models.DateTimeField(
+                        blank=True, help_text="Timestamp of approval", null=True
+                    ),
+                ),
+                (
+                    "rejection_reason",
+                    models.TextField(
+                        blank=True, help_text="Reason for rejection (if applicable)"
+                    ),
+                ),
+                (
+                    "version",
+                    models.IntegerField(
+                        default=1, help_text="Version number of this workpaper"
+                    ),
+                ),
+                (
+                    "is_active",
+                    models.BooleanField(
+                        default=True, help_text="Whether this workpaper is active"
+                    ),
+                ),
+                ("created_at", models.DateTimeField(auto_now_add=True)),
+                ("updated_at", models.DateTimeField(auto_now=True)),
+                (
+                    "approver",
+                    models.ForeignKey(
+                        blank=True,
+                        help_text="User who approved this workpaper",
+                        null=True,
+                        on_delete=django.db.models.deletion.SET_NULL,
+                        related_name="approved_workpapers",
+                        to=settings.AUTH_USER_MODEL,
+                    ),
+                ),
+                (
+                    "reviewer",
+                    models.ForeignKey(
+                        blank=True,
+                        help_text="User who reviewed this workpaper",
+                        null=True,
+                        on_delete=django.db.models.deletion.SET_NULL,
+                        related_name="reviewed_workpapers",
+                        to=settings.AUTH_USER_MODEL,
+                    ),
+                ),
+                (
+                    "uploaded_by",
+                    models.ForeignKey(
+                        help_text="User who uploaded this workpaper",
+                        null=True,
+                        on_delete=django.db.models.deletion.SET_NULL,
+                        related_name="uploaded_workpapers",
+                        to=settings.AUTH_USER_MODEL,
+                    ),
+                ),
             ],
             options={
-                'verbose_name': 'Workpaper',
-                'verbose_name_plural': 'Workpapers',
-                'ordering': ['-created_at'],
+                "verbose_name": "Workpaper",
+                "verbose_name_plural": "Workpapers",
+                "ordering": ["-created_at"],
             },
         ),
         migrations.CreateModel(
-            name='WorkpaperApproval',
+            name="WorkpaperApproval",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('action', models.CharField(choices=[('submit_for_review', 'Submitted for Review'), ('reviewed', 'Reviewed'), ('approved', 'Approved'), ('rejected', 'Rejected')], help_text='Action performed', max_length=30)),
-                ('comments', models.TextField(blank=True, help_text='Comments or notes about the action')),
-                ('previous_status', models.CharField(help_text='Status before the action', max_length=20)),
-                ('new_status', models.CharField(help_text='Status after the action', max_length=20)),
-                ('created_at', models.DateTimeField(auto_now_add=True)),
-                ('action_by', models.ForeignKey(help_text='User who performed the action', null=True, on_delete=django.db.models.deletion.SET_NULL, to=settings.AUTH_USER_MODEL)),
-                ('workpaper', models.ForeignKey(help_text='Associated workpaper', on_delete=django.db.models.deletion.CASCADE, related_name='approval_history', to='workpapers.workpaper')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "action",
+                    models.CharField(
+                        choices=[
+                            ("submit_for_review", "Submitted for Review"),
+                            ("reviewed", "Reviewed"),
+                            ("approved", "Approved"),
+                            ("rejected", "Rejected"),
+                        ],
+                        help_text="Action performed",
+                        max_length=30,
+                    ),
+                ),
+                (
+                    "comments",
+                    models.TextField(
+                        blank=True, help_text="Comments or notes about the action"
+                    ),
+                ),
+                (
+                    "previous_status",
+                    models.CharField(
+                        help_text="Status before the action", max_length=20
+                    ),
+                ),
+                (
+                    "new_status",
+                    models.CharField(
+                        help_text="Status after the action", max_length=20
+                    ),
+                ),
+                ("created_at", models.DateTimeField(auto_now_add=True)),
+                (
+                    "action_by",
+                    models.ForeignKey(
+                        help_text="User who performed the action",
+                        null=True,
+                        on_delete=django.db.models.deletion.SET_NULL,
+                        to=settings.AUTH_USER_MODEL,
+                    ),
+                ),
+                (
+                    "workpaper",
+                    models.ForeignKey(
+                        help_text="Associated workpaper",
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="approval_history",
+                        to="workpapers.workpaper",
+                    ),
+                ),
             ],
             options={
-                'verbose_name': 'Workpaper Approval History',
-                'verbose_name_plural': 'Workpaper Approval History',
-                'ordering': ['created_at'],
+                "verbose_name": "Workpaper Approval History",
+                "verbose_name_plural": "Workpaper Approval History",
+                "ordering": ["created_at"],
             },
         ),
         migrations.AddIndex(
-            model_name='workpaper',
-            index=models.Index(fields=['status'], name='workpapers__status_e7952c_idx'),
+            model_name="workpaper",
+            index=models.Index(fields=["status"], name="workpapers__status_e7952c_idx"),
         ),
         migrations.AddIndex(
-            model_name='workpaper',
-            index=models.Index(fields=['workpaper_type'], name='workpapers__workpap_bf0702_idx'),
+            model_name="workpaper",
+            index=models.Index(
+                fields=["workpaper_type"], name="workpapers__workpap_bf0702_idx"
+            ),
         ),
         migrations.AddIndex(
-            model_name='workpaper',
-            index=models.Index(fields=['uploaded_by'], name='workpapers__uploade_17dfa6_idx'),
+            model_name="workpaper",
+            index=models.Index(
+                fields=["uploaded_by"], name="workpapers__uploade_17dfa6_idx"
+            ),
         ),
         migrations.AddIndex(
-            model_name='workpaper',
-            index=models.Index(fields=['reviewer'], name='workpapers__reviewe_860058_idx'),
+            model_name="workpaper",
+            index=models.Index(
+                fields=["reviewer"], name="workpapers__reviewe_860058_idx"
+            ),
         ),
         migrations.AddIndex(
-            model_name='workpaper',
-            index=models.Index(fields=['approver'], name='workpapers__approve_ed486d_idx'),
+            model_name="workpaper",
+            index=models.Index(
+                fields=["approver"], name="workpapers__approve_ed486d_idx"
+            ),
         ),
         migrations.AddIndex(
-            model_name='workpaper',
-            index=models.Index(fields=['created_at'], name='workpapers__created_87096d_idx'),
+            model_name="workpaper",
+            index=models.Index(
+                fields=["created_at"], name="workpapers__created_87096d_idx"
+            ),
         ),
         migrations.AddIndex(
-            model_name='workpaper',
-            index=models.Index(fields=['-created_at'], name='workpapers__created_e928aa_idx'),
+            model_name="workpaper",
+            index=models.Index(
+                fields=["-created_at"], name="workpapers__created_e928aa_idx"
+            ),
         ),
         migrations.AddIndex(
-            model_name='workpaperapproval',
-            index=models.Index(fields=['workpaper', 'created_at'], name='workpapers__workpap_dd1a04_idx'),
+            model_name="workpaperapproval",
+            index=models.Index(
+                fields=["workpaper", "created_at"],
+                name="workpapers__workpap_dd1a04_idx",
+            ),
         ),
         migrations.AddIndex(
-            model_name='workpaperapproval',
-            index=models.Index(fields=['action'], name='workpapers__action_1f6467_idx'),
+            model_name="workpaperapproval",
+            index=models.Index(fields=["action"], name="workpapers__action_1f6467_idx"),
         ),
         migrations.AddIndex(
-            model_name='workpaperapproval',
-            index=models.Index(fields=['action_by'], name='workpapers__action__c8caed_idx'),
+            model_name="workpaperapproval",
+            index=models.Index(
+                fields=["action_by"], name="workpapers__action__c8caed_idx"
+            ),
         ),
     ]

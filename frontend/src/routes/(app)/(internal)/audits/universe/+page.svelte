@@ -2,7 +2,7 @@
 	import AuditUniverseList from '$lib/modules/audits/universe/AuditUniverseList.svelte';
 	import AuditEntityForm from '$lib/modules/audits/universe/AuditEntityForm.svelte';
 	import EnhancedModal from '$lib/components/Modals/EnhancedModal.svelte';
-	
+
 	let showForm = false;
 	let refreshKey = 0;
 
@@ -57,9 +57,9 @@
 	</div>
 
 	<!-- Popup Modal -->
-	<EnhancedModal 
-		bind:open={showForm} 
-		title="Add Audit Entity" 
+	<EnhancedModal
+		bind:open={showForm}
+		title="Add Audit Entity"
 		maxWidth="4xl"
 		onClose={closeForm}
 	>

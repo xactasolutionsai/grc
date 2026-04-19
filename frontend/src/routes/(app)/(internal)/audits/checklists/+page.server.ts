@@ -6,4 +6,3 @@ export const load = (async ({ fetch, locals }) => {
 		title: 'Audit Checklists'
 	};
 }) satisfies PageServerLoad;
-

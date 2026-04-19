@@ -4,15 +4,24 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('audits', '0010_remove_business_owner_field'),
+        ("audits", "0010_remove_business_owner_field"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='auditentity',
-            name='audit_frequency',
-            field=models.CharField(choices=[('annual', 'Annual'), ('semiannual', 'Semi-annual'), ('quarterly', 'Quarterly'), ('monthly', 'Monthly'), ('ad-hoc', 'Ad-hoc')], default='annual', max_length=20),
+            model_name="auditentity",
+            name="audit_frequency",
+            field=models.CharField(
+                choices=[
+                    ("annual", "Annual"),
+                    ("semiannual", "Semi-annual"),
+                    ("quarterly", "Quarterly"),
+                    ("monthly", "Monthly"),
+                    ("ad-hoc", "Ad-hoc"),
+                ],
+                default="annual",
+                max_length=20,
+            ),
         ),
     ]

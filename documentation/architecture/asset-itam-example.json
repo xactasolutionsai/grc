@@ -4,13 +4,13 @@
   "business_value": "Critical - Core business operations depend on this system",
   "type": "PR",
   "reference_link": "https://internal-wiki.company.com/servers/db-prod-01",
-  
+
   "asset_class": "Database Servers",
   "ref_id": "DB-PROD-01",
   "owner": ["admin@company.com"],
   "filtering_labels": ["production", "database", "critical"],
   "observation": "Regular monitoring and maintenance required due to high business criticality",
-  
+
   "security_objectives": {
     "objectives": {
       "confidentiality": {
@@ -27,7 +27,7 @@
       }
     }
   },
-  
+
   "disaster_recovery_objectives": {
     "objectives": {
       "rto": {
@@ -41,11 +41,11 @@
       }
     }
   },
-  
+
   "parent_assets": [],
   "ebios_rm_studies": [],
   "security_exceptions": [],
-  
+
   "_itam_fields": {
     "inventory": {
       "asset_type": "hardware",
@@ -53,14 +53,14 @@
       "serial_number": "DL123456789",
       "license_key": "WIN-SRV-2022-STD-XXXX-XXXX-XXXX"
     },
-    
+
     "ownership_location": {
       "assigned_user": "john.doe@company.com",
       "department": "IT Infrastructure",
       "physical_location": "Data Center A, Rack 15, Unit 42",
       "virtual_location": "VMware vSphere Cluster 1"
     },
-    
+
     "lifecycle": {
       "acquisition_date": "2023-03-15",
       "deployment_details": "Deployed in production environment after 2 weeks of testing. Configured with high availability clustering.",
@@ -84,7 +84,7 @@
       ],
       "end_of_life_date": "2026-03-15"
     },
-    
+
     "licensing_compliance": {
       "license_number": "LIC-DB-2023-001",
       "license_type": "Enterprise",
@@ -111,7 +111,7 @@
         }
       ]
     },
-    
+
     "financials": {
       "purchase_cost": 15000.00,
       "depreciation_value": 3000.00,
@@ -119,7 +119,7 @@
       "vendor": "Dell Technologies",
       "warranty": "3 years ProSupport Plus with 4-hour on-site response"
     },
-    
+
     "operations": {
       "service_history": [
         {
@@ -148,7 +148,7 @@
       "sla_details": "99.9% uptime SLA, 4-hour response time for critical issues, 24/7 monitoring via NOC",
       "spare_parts": "2x cooling fans, 1x power supply unit, 2x 1TB NVMe drives, 1x network card"
     },
-    
+
     "security_risk": {
       "security_config": {
         "encryption": true,

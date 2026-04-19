@@ -10,7 +10,7 @@
 	}
 
 	let { entity, formatEntityType, formatDate, formatDateTime, onDeleted }: Props = $props();
-	
+
 	let showDeleteConfirm = false;
 	let deleting = $state(false);
 
@@ -49,46 +49,46 @@
 			</div>
 		{/if}
 	</div>
-	
+
 	<!-- Type Column -->
 	<div class="col-span-2">
 		<span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
 			{formatEntityType(entity.entity_type)}
 		</span>
 	</div>
-	
+
 	<!-- Owner Column -->
 	<div class="col-span-2 text-sm text-gray-900 truncate">
 		{entity.owner_username || '—'}
 	</div>
-	
+
 	<!-- Risk Score Column -->
 	<div class="col-span-1 text-sm text-gray-900 text-center">
 		{entity.risk_score}
 	</div>
-	
+
 	<!-- Last Audited Column -->
 	<div class="col-span-2 text-sm text-gray-900">
 		{formatDate(entity.last_audited)}
 	</div>
-	
+
 	<!-- Status Column -->
 	<div class="col-span-1 text-center">
 		<span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium {entity.is_active ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}">
 			{entity.is_active ? 'Active' : 'Inactive'}
 		</span>
 	</div>
-	
+
 	<!-- Created At Column -->
 	<div class="col-span-2 text-sm text-gray-500">
 		{formatDateTime(entity.created_at)}
 	</div>
-	
+
 	<!-- Updated At Column -->
 	<div class="col-span-2 text-sm text-gray-500">
 		{formatDateTime(entity.updated_at)}
 	</div>
-	
+
 	<!-- Actions Column -->
 	<div class="col-span-1 flex justify-center">
 		<button

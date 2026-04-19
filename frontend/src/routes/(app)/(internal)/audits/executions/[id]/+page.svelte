@@ -5,4 +5,3 @@
 </script>
 
 <ChecklistExecutionView executionId={data.executionId} />
-

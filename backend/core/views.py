@@ -632,27 +632,39 @@ class AssetFilter(GenericFilterSet):
         method="filter_exclude_children",
         label="Exclude children",
     )
-    
+
     # ITAM filters
     asset_type = df.ChoiceFilter(choices=Asset.AssetType.choices)
-    vendor = df.CharFilter(lookup_expr='icontains')
-    department = df.CharFilter(lookup_expr='icontains')
-    assigned_user = df.CharFilter(lookup_expr='icontains')
-    physical_location = df.CharFilter(lookup_expr='icontains')
-    virtual_location = df.CharFilter(lookup_expr='icontains')
+    vendor = df.CharFilter(lookup_expr="icontains")
+    department = df.CharFilter(lookup_expr="icontains")
+    assigned_user = df.CharFilter(lookup_expr="icontains")
+    physical_location = df.CharFilter(lookup_expr="icontains")
+    virtual_location = df.CharFilter(lookup_expr="icontains")
     license_expiry_date = df.DateFilter()
-    license_expiry_date__gte = df.DateFilter(field_name='license_expiry_date', lookup_expr='gte')
-    license_expiry_date__lte = df.DateFilter(field_name='license_expiry_date', lookup_expr='lte')
+    license_expiry_date__gte = df.DateFilter(
+        field_name="license_expiry_date", lookup_expr="gte"
+    )
+    license_expiry_date__lte = df.DateFilter(
+        field_name="license_expiry_date", lookup_expr="lte"
+    )
     acquisition_date = df.DateFilter()
-    acquisition_date__gte = df.DateFilter(field_name='acquisition_date', lookup_expr='gte')
-    acquisition_date__lte = df.DateFilter(field_name='acquisition_date', lookup_expr='lte')
+    acquisition_date__gte = df.DateFilter(
+        field_name="acquisition_date", lookup_expr="gte"
+    )
+    acquisition_date__lte = df.DateFilter(
+        field_name="acquisition_date", lookup_expr="lte"
+    )
     end_of_life_date = df.DateFilter()
-    end_of_life_date__gte = df.DateFilter(field_name='end_of_life_date', lookup_expr='gte')
-    end_of_life_date__lte = df.DateFilter(field_name='end_of_life_date', lookup_expr='lte')
-    purchase_cost__gte = df.NumberFilter(field_name='purchase_cost', lookup_expr='gte')
-    purchase_cost__lte = df.NumberFilter(field_name='purchase_cost', lookup_expr='lte')
-    compliance_status = df.CharFilter(lookup_expr='icontains')
-    serial_number = df.CharFilter(lookup_expr='icontains')
+    end_of_life_date__gte = df.DateFilter(
+        field_name="end_of_life_date", lookup_expr="gte"
+    )
+    end_of_life_date__lte = df.DateFilter(
+        field_name="end_of_life_date", lookup_expr="lte"
+    )
+    purchase_cost__gte = df.NumberFilter(field_name="purchase_cost", lookup_expr="gte")
+    purchase_cost__lte = df.NumberFilter(field_name="purchase_cost", lookup_expr="lte")
+    compliance_status = df.CharFilter(lookup_expr="icontains")
+    serial_number = df.CharFilter(lookup_expr="icontains")
 
     def filter_exclude_children(self, queryset, name, value):
         descendants = value.get_descendants()
@@ -703,8 +715,8 @@ class AssetViewSet(BaseModelViewSet):
     model = Asset
     filterset_class = AssetFilter
     search_fields = [
-        "name", 
-        "description", 
+        "name",
+        "description",
         "ref_id",
         # ITAM search fields
         "asset_type",
@@ -717,7 +729,7 @@ class AssetViewSet(BaseModelViewSet):
         "vendor",
         "compliance_status",
         "license_number",
-        "license_type"
+        "license_type",
     ]
 
     def get_queryset(self) -> models.query.QuerySet:

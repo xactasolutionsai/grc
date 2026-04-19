@@ -28,7 +28,7 @@ export const createChecklist = async (data) => {
 	});
 	if (!response.ok) {
 		const errorData = await response.json().catch(() => ({}));
-		const errorMessage = errorData.folder 
+		const errorMessage = errorData.folder
 			? `Folder: ${Array.isArray(errorData.folder) ? errorData.folder.join(', ') : errorData.folder}`
 			: errorData.detail || 'Failed to create checklist';
 		throw new Error(errorMessage);
@@ -46,7 +46,7 @@ export const updateChecklist = async (id, data) => {
 	});
 	if (!response.ok) {
 		const errorData = await response.json().catch(() => ({}));
-		const errorMessage = errorData.folder 
+		const errorMessage = errorData.folder
 			? `Folder: ${Array.isArray(errorData.folder) ? errorData.folder.join(', ') : errorData.folder}`
 			: errorData.detail || 'Failed to update checklist';
 		throw new Error(errorMessage);
@@ -152,4 +152,3 @@ export const reorderChecklistItem = async (id, order) => {
 	if (!response.ok) throw new Error('Failed to reorder checklist item');
 	return response.json();
 };
-

@@ -17,7 +17,7 @@ export const GET: RequestHandler = async ({ url, fetch, request }) => {
 	try {
 		const searchParams = url.searchParams.toString();
 		const apiUrl = `${BASE_API_URL}/audits/checklist-items/${searchParams ? '?' + searchParams : ''}`;
-		
+
 		const response = await fetch(apiUrl, {
 			method: 'GET',
 			headers: getHeadersWithCookies(request)
@@ -40,7 +40,7 @@ export const POST: RequestHandler = async ({ request, fetch }) => {
 	try {
 		const body = await request.json();
 		const apiUrl = `${BASE_API_URL}/audits/checklist-items/`;
-		
+
 		const response = await fetch(apiUrl, {
 			method: 'POST',
 			headers: getHeadersWithCookies(request),
@@ -59,4 +59,3 @@ export const POST: RequestHandler = async ({ request, fetch }) => {
 		return json({ error: 'Internal server error' }, { status: 500 });
 	}
 };
-

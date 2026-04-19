@@ -13,7 +13,7 @@
 		last_audited: '',
 		is_active: true
 	};
-	
+
 	let saving = false;
 	let error = null;
 
@@ -37,17 +37,17 @@
 		event.preventDefault();
 		saving = true;
 		error = null;
-		
+
 		try {
 			// Clean up form data
 			const formData = { ...form };
 			if (!formData.last_audited) delete formData.last_audited;
 			if (!formData.owner) delete formData.owner;
 			if (!formData.regulatory_relevance) delete formData.regulatory_relevance;
-			
+
 			await createEntity(formData);
 			onSaved();
-			
+
 			// Reset form
 			form = {
 				name: '',
@@ -70,7 +70,7 @@
 
 <div class="max-w-2xl mx-auto p-6">
 	<h2 class="text-2xl font-bold text-gray-900 mb-6">Create Audit Entity</h2>
-	
+
 	{#if error}
 		<div class="bg-red-50 border border-red-200 rounded-md p-4 mb-6">
 			<div class="text-red-800">Error: {error}</div>

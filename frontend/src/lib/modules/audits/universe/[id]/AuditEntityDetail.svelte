@@ -49,7 +49,7 @@
 
 	onMount(async () => {
 		loadEntity();
-		
+
 		// Load users for owner dropdowns
 		try {
 			const data = await getUsers();
@@ -68,13 +68,13 @@
 		try {
 			loading = true;
 			error = null;
-			
+
 			// Fetch both entity details and related entities in parallel
 			const [entityData, relatedData] = await Promise.all([
 				getEntity(entityId),
 				getRelatedEntities(entityId)
 			]);
-			
+
 			entity = entityData;
 			// Update page title and breadcrumbs when entity is loaded
 			$pageTitle = entity?.name || '';
@@ -285,9 +285,9 @@
 		if (!entity?.id || !processForm.name.trim()) return;
 		processSaving = true;
 		try {
-			await createProcess(entity.id, { 
-				name: processForm.name.trim(), 
-				description: processForm.description || '', 
+			await createProcess(entity.id, {
+				name: processForm.name.trim(),
+				description: processForm.description || '',
 				identifier: (processForm.identifier || '').trim(),
 				depends_on_id: processForm.depends_on_id
 			});
@@ -363,7 +363,7 @@
         </svg>
         <div class="flex-1">
             <div class="text-error-800 dark:text-error-200 font-medium mb-3">Error: {error}</div>
-		<button 
+		<button
 			onclick={loadEntity}
                     class="px-4 py-2 bg-error-600 hover:bg-error-700 text-white rounded-lg shadow-sm transition-colors flex items-center gap-2"
 		>
@@ -544,7 +544,7 @@
 
 						<!-- Add button -->
 						<div class="mb-4">
-							<button 
+							<button
                                     class="px-5 py-2.5 bg-primary-600 hover:bg-primary-700 text-white rounded-lg shadow-sm transition-all font-medium flex items-center gap-2"
 								onclick={openProcessModal}
 							>
@@ -1004,7 +1004,7 @@
 							<dd class="mt-1">
 								<div class="flex items-center">
 									<div class="flex-1 bg-gray-200 rounded-full h-2 mr-3">
-										<div 
+										<div
 											class="bg-blue-600 h-2 rounded-full transition-all duration-300"
 											style="width: {((entity.risk_score || 0) / 10) * 100}%"
 										></div>
@@ -1015,7 +1015,7 @@
 								</div>
 							</dd>
 						</div>
-						
+
 						<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
 							<div>
 								<dt class="text-sm font-medium text-surface-500">Inherent Risk</dt>
@@ -1023,7 +1023,7 @@
 									{#if entity.inherent_risk_score !== null}
 										<div class="flex items-center">
 											<div class="flex-1 bg-gray-200 rounded-full h-2 mr-3">
-												<div 
+												<div
 													class="bg-red-500 h-2 rounded-full transition-all duration-300"
 													style="width: {((entity.inherent_risk_score) / 10) * 100}%"
 												></div>
@@ -1037,14 +1037,14 @@
 									{/if}
 								</dd>
 							</div>
-							
+
 							<div>
 								<dt class="text-sm font-medium text-surface-500">Residual Risk</dt>
 								<dd class="mt-1">
 									{#if entity.residual_risk_score !== null}
 										<div class="flex items-center">
 											<div class="flex-1 bg-gray-200 rounded-full h-2 mr-3">
-												<div 
+												<div
 													class="bg-orange-500 h-2 rounded-full transition-all duration-300"
 													style="width: {((entity.residual_risk_score) / 10) * 100}%"
 												></div>
@@ -1059,14 +1059,14 @@
 								</dd>
 							</div>
 						</div>
-						
+
 						<div>
 							<dt class="text-sm font-medium text-surface-500">Control Maturity</dt>
 							<dd class="mt-1">
 								{#if entity.control_maturity !== null}
 									<div class="flex items-center">
 										<div class="flex-1 bg-gray-200 rounded-full h-2 mr-3">
-											<div 
+											<div
 												class="bg-green-500 h-2 rounded-full transition-all duration-300"
 												style="width: {((entity.control_maturity) / 5) * 100}%"
 											></div>
@@ -1088,7 +1088,7 @@
 								{/if}
 							</dd>
 						</div>
-						
+
 						{#if entity.inherent_risk_score !== null && entity.residual_risk_score !== null}
 							<div class="pt-4 border-t border-surface-200">
 								<dt class="text-sm font-medium text-surface-500">Risk Reduction</dt>
@@ -1401,7 +1401,7 @@
 							placeholder="Enter entity name"
 						/>
 					</div>
-					
+
 					<div>
                         <label for="edit-type"
                                class="block text-sm font-medium text-surface-700 dark:text-surface-300 mb-1.5">Entity
@@ -1424,7 +1424,7 @@
                             <option value="audit_domain">🎯 Audit Domain</option>
 						</select>
 					</div>
-					
+
 					<div>
                         <label for="edit-description"
                                class="block text-sm font-medium text-surface-700 dark:text-surface-300 mb-1.5">Description</label>
@@ -1449,7 +1449,7 @@
 					</div>
                 </div>
             </FormSection>
-					
+
 					<!-- Contact Information Section -->
             <FormSection title="Contact Information" collapsible={true} defaultOpen={true}>
                 <div class="space-y-4">
@@ -1501,7 +1501,7 @@
 						{/if}
 					</div>
             </FormSection>
-					
+
             <!-- Risk Assessment Section -->
             <FormSection title="Risk Assessment" collapsible={true} defaultOpen={false}>
                 <div class="space-y-4">
@@ -1521,7 +1521,7 @@
 								placeholder="0-10"
 							/>
 						</div>
-						
+
 						<div>
                             <label for="edit-inherent-risk-score"
                                    class="block text-sm font-medium text-surface-700 dark:text-surface-300 mb-1.5">Inherent
@@ -1538,7 +1538,7 @@
 							/>
 						</div>
 					</div>
-					
+
 					<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
 						<div>
                             <label for="edit-residual-risk-score"
@@ -1555,7 +1555,7 @@
 								placeholder="0-10"
 							/>
 						</div>
-						
+
 						<div>
                             <label for="edit-control-maturity"
                                    class="block text-sm font-medium text-surface-700 dark:text-surface-300 mb-1.5">Control
@@ -1586,7 +1586,7 @@
 					</div>
 						</div>
             </FormSection>
-						
+
             <!-- Audit Planning Section -->
             <FormSection title="Audit Planning" collapsible={true} defaultOpen={false}>
                 <div class="space-y-4">
@@ -1604,7 +1604,7 @@
 								<option value="Low">Low</option>
 							</select>
 						</div>
-						
+
 						<div>
                             <label for="edit-priority"
                                    class="block text-sm font-medium text-surface-700 dark:text-surface-300 mb-1.5">Priority</label>
@@ -1619,7 +1619,7 @@
 								<option value="critical">Critical</option>
 							</select>
 						</div>
-						
+
 						<div>
                             <label for="edit-audit-frequency"
                                    class="block text-sm font-medium text-surface-700 dark:text-surface-300 mb-1.5">Audit
@@ -1637,7 +1637,7 @@
 							</select>
 						</div>
 					</div>
-					
+
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
                             <label for="edit-last-audited"
@@ -1697,7 +1697,7 @@
 									placeholder="e.g., United States"
 								/>
 							</div>
-							
+
 							<div>
                             <label for="edit-region"
                                    class="block text-sm font-medium text-surface-700 dark:text-surface-300 mb-1.5">Region/State</label>
@@ -1709,7 +1709,7 @@
 									placeholder="e.g., California"
 								/>
 							</div>
-							
+
 							<div>
                             <label for="edit-city"
                                    class="block text-sm font-medium text-surface-700 dark:text-surface-300 mb-1.5">City</label>
@@ -1748,7 +1748,7 @@
 									placeholder="e.g., 94105"
 								/>
 							</div>
-							
+
 							<div>
                             <label for="edit-timezone"
                                    class="block text-sm font-medium text-surface-700 dark:text-surface-300 mb-1.5">Timezone</label>
@@ -1806,7 +1806,7 @@
                                         placeholder="37.7749"
 									/>
 								</div>
-								
+
 								<div>
                                 <label for="edit-longitude"
                                        class="block text-xs text-surface-600 dark:text-surface-400 mb-1">Longitude</label>
@@ -1839,7 +1839,7 @@
 						</div>
 					</div>
             </FormSection>
-					
+
             <!-- Additional Information Section -->
             <FormSection title="Additional Information" collapsible={true} defaultOpen={false}>
                 <div class="space-y-4">
@@ -1854,7 +1854,7 @@
 							placeholder="Enter additional notes and observations"
 						></textarea>
 					</div>
-					
+
                     <div class="flex items-center gap-3 p-3 bg-surface-50 dark:bg-surface-800/50 rounded-lg">
 						<input
 							id="edit-active"
@@ -1869,7 +1869,7 @@
 					</div>
                 </div>
             </FormSection>
-					
+
             <!-- Form Actions -->
             <div class="flex justify-end gap-3 pt-4 sticky bottom-0 bg-white dark:bg-surface-900 border-t border-surface-200 dark:border-surface-700 -mx-6 px-6 py-4">
 						<button
@@ -1926,7 +1926,7 @@
                         class="w-full px-3 py-2 border border-surface-300 dark:border-surface-600 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent bg-white dark:bg-surface-900"
 							/>
 						</div>
-						
+
 						<div>
                 <label for="process-name"
                        class="block text-sm font-medium text-surface-700 dark:text-surface-300 mb-1.5">
@@ -1941,7 +1941,7 @@
                         class="w-full px-3 py-2 border border-surface-300 dark:border-surface-600 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent bg-white dark:bg-surface-900"
 							/>
 						</div>
-						
+
 						<div>
                 <label for="process-description"
                        class="block text-sm font-medium text-surface-700 dark:text-surface-300 mb-1.5">Description</label>
@@ -1953,7 +1953,7 @@
                         class="w-full px-3 py-2 border border-surface-300 dark:border-surface-600 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent bg-white dark:bg-surface-900"
 							></textarea>
 						</div>
-						
+
 						<div>
                 <label for="process-depends-on"
                        class="block text-sm font-medium text-surface-700 dark:text-surface-300 mb-1.5">Depends
@@ -1974,7 +1974,7 @@
 							</select>
 						</div>
 					</div>
-					
+
         <div class="flex justify-end gap-3 pt-6 mt-6 border-t border-surface-200 dark:border-surface-700">
 						<button
 							type="button"

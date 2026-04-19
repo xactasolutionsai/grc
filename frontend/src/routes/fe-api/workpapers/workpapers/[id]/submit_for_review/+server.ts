@@ -16,19 +16,19 @@ function getHeadersWithCookies(request: Request): Record<string, string> {
 export const POST: RequestHandler = async ({ fetch, params, request }) => {
 	try {
 		const apiUrl = `${BASE_API_URL}/workpapers/workpapers/${params.id}/submit_for_review/`;
-		
+
 		const response = await fetch(apiUrl, {
 			method: 'POST',
 			headers: getHeadersWithCookies(request),
 			body: JSON.stringify({}),
 		});
-		
+
 		if (!response.ok) {
 			error(response.status, 'Failed to submit for review');
 		}
-		
+
 		const data = await response.json();
-		
+
 		return new Response(JSON.stringify(data), {
 			headers: {
 				'Content-Type': 'application/json'
@@ -39,4 +39,3 @@ export const POST: RequestHandler = async ({ fetch, params, request }) => {
 		error(500, 'Internal server error');
 	}
 };
-

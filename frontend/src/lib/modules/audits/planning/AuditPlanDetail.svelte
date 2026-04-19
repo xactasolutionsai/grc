@@ -61,7 +61,7 @@
 
 	function openEditModal() {
 		if (!plan) return;
-		
+
 		editForm = {
 			entity: plan.entity,
 			title: plan.title,
