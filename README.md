@@ -145,6 +145,80 @@ pnpm run test
 
 ---
 
+## AI features (local, via Ollama)
+
+Xacta GRC ships with optional AI assistance that runs **entirely on your own
+infrastructure** using [Ollama](https://ollama.com). No data leaves the
+deployment; there are no external API calls.
+
+### What you get
+
+- **Risk AI Assistant** — on the Risk Scenario create/edit form, click
+  *Analyze Risk* to expand a short title into a structured description,
+  threat scenario, likelihood justification, suggested mitigations, and
+  security domains.
+- **Smart Auto-Fill** — an *Expand with AI* button on Risk, Applied
+  Control / Policy, Reference Control, and Finding forms rewrites short
+  input into professional prose.
+- **Generate Controls from Risk** — on the Applied Controls list page,
+  generate 3–6 candidate controls from a risk description; each result has
+  a one-click "Add to form" that opens the standard create modal pre-filled.
+- **Generate Finding** — inside the Finding form, turn a raw observation
+  into a structured finding (title, description, severity, recommendation).
+- **Dashboard Insights** — at the top of `/analytics`, click *Generate
+  insights* to get top risks, compliance gaps, recommended actions and an
+  executive summary based on your scoped data.
+
+### Enabling
+
+The provided `docker-compose.yml` / `docker-compose-build.yml` already
+include an `ollama` service and a one-shot `ollama-pull` sidecar that pulls
+the selected model on first boot.
+
+```bash
+docker compose up -d
+# First boot only: wait for ollama-pull to finish (~4 GB for llama3)
+docker logs -f ollama-pull
+```
+
+Relevant environment variables (all have sensible defaults):
+
+| Var            | Default                     | Purpose                                   |
+|----------------|-----------------------------|-------------------------------------------|
+| `AI_ENABLED`   | `True`                      | Master switch. Set `False` to return 503. |
+| `OLLAMA_URL`   | `http://ollama:11434`       | Ollama HTTP endpoint used by the backend. |
+| `OLLAMA_MODEL` | `llama3`                    | Any model tag from `ollama pull`.         |
+| `AI_RATE_LIMIT`| `30/min`                    | DRF throttle per-user on `/api/ai/*`.     |
+
+To use a smaller model (faster on CPU-only hosts):
+
+```bash
+OLLAMA_MODEL=phi3 docker compose up -d
+```
+
+### Endpoints
+
+All endpoints live under `/api/ai/` and require authentication
+(Knox token). They respond with `{ data, raw, parse_error }`:
+
+- `POST /api/ai/analyze-risk` — `{ input }`
+- `POST /api/ai/expand-text` — `{ text, field_type, context? }`
+- `POST /api/ai/generate-controls` — `{ risk_description }`
+- `POST /api/ai/generate-finding` — `{ observation }`
+- `POST /api/ai/dashboard-insights` — no body; uses the caller's
+  accessible folders to build context.
+
+### Security notes
+
+- Prompts are sent **only** to the in-cluster Ollama service. Do not expose
+  port `11434` publicly.
+- The backend never logs full prompt bodies — only duration, model name,
+  and prompt length.
+- When the model returns non-JSON, the API surfaces `parse_error: true` and
+  the frontend shows a retry-friendly toast instead of auto-filling fields.
+
+---
+
 ## License
 
 This project is a fork of [intuitem/ciso-assistant-community](https://github.com/intuitem/ciso-assistant-community) and is distributed under its original AGPL-3.0 license. See [LICENSE.md](./LICENSE.md) and [LICENSE-AGPL.txt](./LICENSE-AGPL.txt).

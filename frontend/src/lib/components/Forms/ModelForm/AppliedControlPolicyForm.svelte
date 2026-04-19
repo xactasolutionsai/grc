@@ -12,6 +12,7 @@
 	import { m } from '$paraglide/messages';
 	import { onMount } from 'svelte';
 	import { run } from 'svelte/legacy';
+	import AIExpandFieldButton from '$lib/components/AI/AIExpandFieldButton.svelte';
 
 	let displayCurrency = $state('€'); // Default to Euro
 
@@ -67,6 +68,10 @@
 		}
 	});
 </script>
+
+<div class="-mt-2 mb-2">
+	<AIExpandFieldButton {form} field="description" contextField="name" fieldType="control" />
+</div>
 
 {#if !duplicate}
 	<AutocompleteSelect

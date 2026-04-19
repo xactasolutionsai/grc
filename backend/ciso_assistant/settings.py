@@ -199,6 +199,7 @@ INSTALLED_APPS = [
     "django_filters",
     "library",
     "serdes",
+    "ai",
     "rest_framework",
     "knox",
     "drf_spectacular",
@@ -276,7 +277,15 @@ REST_FRAMEWORK = {
     "PAGE_SIZE": PAGINATE_BY,
     "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
     "EXCEPTION_HANDLER": "core.helpers.handle",
+    "DEFAULT_THROTTLE_RATES": {
+        "ai": os.environ.get("AI_RATE_LIMIT", "30/min"),
+    },
 }
+
+# AI / Ollama integration
+AI_ENABLED = os.environ.get("AI_ENABLED", "True") == "True"
+OLLAMA_URL = os.environ.get("OLLAMA_URL", "http://ollama:11434")
+OLLAMA_MODEL = os.environ.get("OLLAMA_MODEL", "llama3")
 
 REST_KNOX = {
     "SECURE_HASH_ALGORITHM": "hashlib.sha512",

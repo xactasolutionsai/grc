@@ -4,6 +4,12 @@
 	import type { SuperValidated } from 'sveltekit-superforms';
 	import type { ModelInfo, CacheLock } from '$lib/utils/types';
 	import { m } from '$paraglide/messages';
+	import AIAssistButton from '$lib/components/AI/AIAssistButton.svelte';
+	import AIExpandFieldButton from '$lib/components/AI/AIExpandFieldButton.svelte';
+	import AISuggestionsPanel from '$lib/components/AI/AISuggestionsPanel.svelte';
+	import { callAI, AIClientError, type AnalyzeRiskResult } from '$lib/utils/ai';
+	import { getToastStore } from '$lib/components/Toast/stores';
+	import { get } from 'svelte/store';
 
 	interface Props {
 		form: SuperValidated<any>;
@@ -29,6 +35,47 @@
 
 	let isParentLocked = $derived(object?.risk_assessment?.is_locked || false);
 
+	const toastStore = getToastStore();
+	let aiLoading = $state(false);
+	let aiResult = $state<AnalyzeRiskResult | null>(null);
+
+	async function analyzeRisk() {
+		const snapshot = (form?.form ? get(form.form) : {}) as Record<string, any>;
+		const current = (snapshot.name ?? '') as string;
+		const fallback = (snapshot.description ?? '') as string;
+		const input = current.trim() || fallback.trim();
+		if (!input) {
+			toastStore.trigger({
+				message: m.analyzeRisk() + ': ' + m.name(),
+				background: 'variant-filled-warning'
+			});
+			return;
+		}
+		aiLoading = true;
+		try {
+			const result = await callAI<AnalyzeRiskResult>('analyze-risk', { input });
+			aiResult = result;
+			form.form.update((data: Record<string, any>) => {
+				const next = { ...data };
+				if (!next.description || next.description.length < 5) {
+					next.description = result.description;
+					updated_fields.add('description');
+				}
+				return next;
+			});
+		} catch (err) {
+			const msg =
+				err instanceof AIClientError && err.code === 'parse_error'
+					? m.aiParseError()
+					: err instanceof Error
+						? err.message
+						: m.aiError();
+			toastStore.trigger({ message: msg, background: 'variant-filled-error' });
+		} finally {
+			aiLoading = false;
+		}
+	}
+
 	async function fetchDefaultRefId(riskAssessmentId: string) {
 		try {
 			const response = await fetch(
@@ -50,6 +97,28 @@
 
 	const scopeFolder = $derived(rest?.scopeFolder || { id: '' });
 </script>
+
+<div class="flex flex-wrap items-center gap-2 -mt-2 mb-2">
+	<AIAssistButton
+		label={m.analyzeRisk()}
+		title={m.analyzeRisk()}
+		loading={aiLoading}
+		onclick={analyzeRisk}
+		size="sm"
+	/>
+	<AIExpandFieldButton
+		{form}
+		field="description"
+		contextField="name"
+		fieldType="risk"
+		{updated_fields}
+	/>
+	<span class="text-xs text-gray-500">{aiLoading ? m.aiThinking() : ''}</span>
+</div>
+
+{#if aiResult}
+	<AISuggestionsPanel result={aiResult} onClose={() => (aiResult = null)} />
+{/if}
 
 <AutocompleteSelect
 	{form}

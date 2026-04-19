@@ -6,6 +6,7 @@
 	import type { SuperValidated } from 'sveltekit-superforms';
 	import type { ModelInfo, CacheLock } from '$lib/utils/types';
 	import { m } from '$paraglide/messages';
+	import AIExpandFieldButton from '$lib/components/AI/AIExpandFieldButton.svelte';
 
 	interface Props {
 		form: SuperValidated<any>;
@@ -23,6 +24,10 @@
 		initialData = {}
 	}: Props = $props();
 </script>
+
+<div class="-mt-2 mb-2">
+	<AIExpandFieldButton {form} field="description" contextField="name" fieldType="control" />
+</div>
 
 <TextField
 	{form}

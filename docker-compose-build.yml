@@ -9,6 +9,9 @@ services:
       - ALLOWED_HOSTS=backend,localhost
       - CISO_ASSISTANT_URL=http://localhost:8080
       - DJANGO_DEBUG=True
+      - AI_ENABLED=${AI_ENABLED:-True}
+      - OLLAMA_URL=${OLLAMA_URL:-http://ollama:11434}
+      - OLLAMA_MODEL=${OLLAMA_MODEL:-llama3}
     volumes:
       - ./db:/code/db
 
@@ -24,6 +27,9 @@ services:
       - ALLOWED_HOSTS=backend,localhost
       - CISO_ASSISTANT_URL=http://localhost:8080
       - DJANGO_DEBUG=False
+      - AI_ENABLED=${AI_ENABLED:-True}
+      - OLLAMA_URL=${OLLAMA_URL:-http://ollama:11434}
+      - OLLAMA_MODEL=${OLLAMA_MODEL:-llama3}
     volumes:
       - ./db:/code/db
     entrypoint:
@@ -31,6 +37,34 @@ services:
       - -c
       - |
         poetry run python manage.py run_huey -w 2 --scheduler-interval 60
+
+  ollama:
+    container_name: ollama
+    image: ollama/ollama:latest
+    restart: unless-stopped
+    volumes:
+      - ./ollama:/root/.ollama
+    ports:
+      - "11434:11434"
+
+  ollama-pull:
+    container_name: ollama-pull
+    image: ollama/ollama:latest
+    depends_on:
+      - ollama
+    environment:
+      - OLLAMA_HOST=ollama:11434
+      - OLLAMA_MODEL=${OLLAMA_MODEL:-llama3}
+    entrypoint:
+      - /bin/sh
+      - -c
+      - |
+        echo "Waiting for Ollama to be ready..." && \
+        until ollama list >/dev/null 2>&1; do sleep 2; done && \
+        echo "Pulling model $$OLLAMA_MODEL..." && \
+        ollama pull "$$OLLAMA_MODEL" && \
+        echo "Model $$OLLAMA_MODEL is ready."
+    restart: "no"
 
   frontend:
     container_name: frontend

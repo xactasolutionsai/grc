@@ -19,6 +19,7 @@
 	import { Tabs } from '@skeletonlabs/skeleton-svelte';
 	import type { PageData } from './$types';
 	import CounterCard from './CounterCard.svelte';
+	import AIInsightsPanel from '$lib/components/AI/AIInsightsPanel.svelte';
 
 	interface Props {
 		data: PageData;
@@ -79,6 +80,10 @@
 		goto(page.url);
 	}
 </script>
+
+<div class="px-4 pt-4">
+	<AIInsightsPanel />
+</div>
 
 <Tabs value={group} onValueChange={(e) => handleTabChange(e.value)}>
 	{#snippet list()}

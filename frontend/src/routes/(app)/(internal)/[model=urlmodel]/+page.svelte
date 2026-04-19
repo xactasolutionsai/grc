@@ -8,6 +8,12 @@
 	import { m } from '$paraglide/messages';
 	import type { ActionData, PageData } from './$types';
 	import Anchor from '$lib/components/Anchor/Anchor.svelte';
+	import AIGenerateControlsModal from '$lib/components/AI/AIGenerateControlsModal.svelte';
+	import type { GeneratedControl } from '$lib/utils/ai';
+	import { defaults } from 'sveltekit-superforms';
+	import { zod } from 'sveltekit-superforms/adapters';
+	import { AppliedControlSchema } from '$lib/utils/schemas';
+	import { getModelInfo } from '$lib/utils/crud';
 
 	import { onMount } from 'svelte';
 	import {
@@ -40,6 +46,51 @@
 			component: modalComponent,
 			// Data
 			title: safeTranslate('add-' + data.model.localName)
+		};
+		modalStore.trigger(modal);
+	}
+
+	function openGeneratedControlInCreateForm(control: GeneratedControl): void {
+		const appliedControlModel = getModelInfo('applied-controls');
+		const prefilled = defaults(
+			{
+				name: control.name,
+				description: [control.description, control.implementation_guidance]
+					.filter(Boolean)
+					.join('\n\n')
+			},
+			zod(AppliedControlSchema)
+		);
+		const modalComponent: ModalComponent = {
+			ref: CreateModal,
+			props: {
+				form: prefilled,
+				model: appliedControlModel,
+				formAction: '/applied-controls?/create'
+			}
+		};
+		const modal: ModalSettings = {
+			type: 'component',
+			component: modalComponent,
+			title: safeTranslate('add-' + appliedControlModel.localName)
+		};
+		modalStore.trigger(modal);
+	}
+
+	function modalGenerateControls(): void {
+		const modalComponent: ModalComponent = {
+			ref: AIGenerateControlsModal,
+			props: {
+				onApply: (control: GeneratedControl) => {
+					modalStore.close();
+					openGeneratedControlInCreateForm(control);
+				}
+			}
+		};
+		const modal: ModalSettings = {
+			type: 'component',
+			component: modalComponent,
+			title: m.generateControlsFromRisk()
 		};
 		modalStore.trigger(modal);
 	}
@@ -132,6 +183,18 @@
 										title={m.exportButton()}
 										data-testid="export-button"><i class="fa-solid fa-download mr-2"></i></a
 									>
+								{/if}
+								{#if URLModel === 'applied-controls'}
+									<button
+										class="inline-block p-3 btn-mini-secondary w-12 focus:relative"
+										data-testid="ai-generate-controls-button"
+										title={m.generateControlsFromRisk()}
+										aria-label={m.generateControlsFromRisk()}
+										onclick={modalGenerateControls}
+										type="button"
+									>
+										<i class="fa-solid fa-wand-magic-sparkles"></i>
+									</button>
 								{/if}
 								{#if ['threats', 'reference-controls'].includes(URLModel)}
 									{@const title =
