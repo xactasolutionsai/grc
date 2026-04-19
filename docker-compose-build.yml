@@ -7,7 +7,7 @@ services:
     restart: always
     environment:
       - ALLOWED_HOSTS=backend,localhost
-      - CISO_ASSISTANT_URL=https://localhost:8443
+      - CISO_ASSISTANT_URL=http://localhost:8080
       - DJANGO_DEBUG=True
     volumes:
       - ./db:/code/db
@@ -22,7 +22,7 @@ services:
     restart: always
     environment:
       - ALLOWED_HOSTS=backend,localhost
-      - CISO_ASSISTANT_URL=https://localhost:8443
+      - CISO_ASSISTANT_URL=http://localhost:8080
       - DJANGO_DEBUG=False
     volumes:
       - ./db:/code/db
@@ -36,13 +36,15 @@ services:
     container_name: frontend
     environment:
       - PUBLIC_BACKEND_API_URL=http://backend:8000/api
-      - PUBLIC_BACKEND_API_EXPOSED_URL=https://localhost:8443/api
+      - PUBLIC_BACKEND_API_EXPOSED_URL=http://localhost:8080/api
       - PROTOCOL_HEADER=x-forwarded-proto
       - HOST_HEADER=x-forwarded-host
 
     build:
       context: ./frontend
       dockerfile: Dockerfile
+    ports:
+      - 3000:3000
     depends_on:
       - backend
 
@@ -50,14 +52,14 @@ services:
     container_name: caddy
     image: caddy:2.10.0
     environment:
-      - CISO_ASSISTANT_URL=https://localhost:8443
+      - CISO_ASSISTANT_URL=http://localhost:8080
     restart: unless-stopped
     ports:
-      - 8443:8443
+      - 8080:8080
     volumes:
       - ./db:/data
     command: |
-      sh -c 'echo $$CISO_ASSISTANT_URL "{
+      sh -c 'echo ":8080 {
       reverse_proxy /api/* backend:8000
       reverse_proxy /* frontend:3000
       }" > Caddyfile && caddy run'

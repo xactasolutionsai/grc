@@ -20,7 +20,7 @@
 	}
 
 	// Base Classes
-	const cBase = 'card bg-surface-50 p-4 w-modal shadow-xl space-y-4';
+	const cBase = 'card bg-surface-50 p-4 w-full max-w-3xl shadow-xl space-y-4';
 	const cHeader = 'text-2xl font-bold';
 </script>
 

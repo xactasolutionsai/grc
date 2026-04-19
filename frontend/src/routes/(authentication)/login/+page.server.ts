@@ -83,7 +83,7 @@ export const actions: Actions = {
 							httpOnly: true,
 							sameSite: 'lax',
 							path: '/',
-							secure: true
+							secure: false
 						});
 					}
 
@@ -103,21 +103,21 @@ export const actions: Actions = {
 			httpOnly: true,
 			sameSite: 'lax',
 			path: '/',
-			secure: true
+			secure: false
 		});
 
 		cookies.set('allauth_session_token', res.meta.session_token, {
 			httpOnly: true,
 			sameSite: 'lax',
 			path: '/',
-			secure: true
+			secure: false
 		});
 
 		cookies.set('show_first_login_modal', 'true', {
 			httpOnly: false,
 			sameSite: 'lax',
 			path: '/',
-			secure: true
+			secure: false
 		});
 		const next = url.searchParams.get('next');
 		const secureNext = getSecureRedirect(next) || '/';
@@ -152,14 +152,14 @@ export const actions: Actions = {
 			httpOnly: true,
 			sameSite: 'lax',
 			path: '/',
-			secure: true
+			secure: false
 		});
 
 		event.cookies.set('allauth_session_token', response.meta.session_token, {
 			httpOnly: true,
 			sameSite: 'lax',
 			path: '/',
-			secure: true
+			secure: false
 		});
 
 		return { form };

@@ -170,7 +170,7 @@ if USE_S3:
 
 else:
     MEDIA_ROOT = LOCAL_STORAGE_DIRECTORY
-    MEDIA_URL = ""
+    MEDIA_URL = "/media/"
 
 PAGINATE_BY = int(os.environ.get("PAGINATE_BY", default=5000))
 
@@ -194,6 +194,8 @@ INSTALLED_APPS = [
     "crq",
     "core",
     "cal",
+    "audits",
+    "workpapers",
     "django_filters",
     "library",
     "serdes",
@@ -457,6 +459,21 @@ ACCOUNT_REAUTHENTICATION_TIMEOUT = 24 * 60 * 60  # 24 hours
 
 SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 
+# In certain development setups (port-forwarding / plain HTTP), proxies may set
+# X-Forwarded-Proto=https which makes Django mark cookies as Secure. This
+# prevents browsers from storing them over HTTP and causes auth loops.
+# When FORCE_HTTP=True is set in the environment, explicitly disable trusting
+# the proxy SSL header and force non-secure cookies.
+if os.environ.get("FORCE_HTTP", "False") == "True":
+    SECURE_PROXY_SSL_HEADER = None
+    SESSION_COOKIE_SECURE = False
+    CSRF_COOKIE_SECURE = False
+
+# Explicitly ensure non-secure cookies in this environment
+# WARNING: This disables Secure cookies globally; keep only for non-HTTPS/dev setups
+SESSION_COOKIE_SECURE = False
+CSRF_COOKIE_SECURE = False
+
 ACCOUNT_ADAPTER = "iam.adapter.AccountAdapter"
 SOCIALACCOUNT_ADAPTER = "iam.adapter.SocialAccountAdapter"
 
@@ -497,3 +514,4 @@ HUEY = {
 
 AUDITLOG_RETENTION_DAYS = int(os.environ.get("AUDITLOG_RETENTION_DAYS", 90))
 AUDITLOG_MAX_RECORDS = int(os.environ.get("AUDITLOG_MAX_RECORDS", 50000))
+

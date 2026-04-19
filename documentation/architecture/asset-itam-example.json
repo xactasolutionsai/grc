@@ -1,0 +1,193 @@
+{
+  "name": "Production Database Server",
+  "description": "Primary database server for customer data management system",
+  "business_value": "Critical - Core business operations depend on this system",
+  "type": "PR",
+  "reference_link": "https://internal-wiki.company.com/servers/db-prod-01",
+  
+  "asset_class": "Database Servers",
+  "ref_id": "DB-PROD-01",
+  "owner": ["admin@company.com"],
+  "filtering_labels": ["production", "database", "critical"],
+  "observation": "Regular monitoring and maintenance required due to high business criticality",
+  
+  "security_objectives": {
+    "objectives": {
+      "confidentiality": {
+        "value": 3,
+        "is_enabled": true
+      },
+      "integrity": {
+        "value": 3,
+        "is_enabled": true
+      },
+      "availability": {
+        "value": 3,
+        "is_enabled": true
+      }
+    }
+  },
+  
+  "disaster_recovery_objectives": {
+    "objectives": {
+      "rto": {
+        "value": 3600
+      },
+      "rpo": {
+        "value": 300
+      },
+      "mtd": {
+        "value": 7200
+      }
+    }
+  },
+  
+  "parent_assets": [],
+  "ebios_rm_studies": [],
+  "security_exceptions": [],
+  
+  "_itam_fields": {
+    "inventory": {
+      "asset_type": "hardware",
+      "specifications": "Dell PowerEdge R750, Intel Xeon Gold 6338, 128GB RAM, 4x 1TB NVMe SSD RAID 10, Dual 10GbE NIC",
+      "serial_number": "DL123456789",
+      "license_key": "WIN-SRV-2022-STD-XXXX-XXXX-XXXX"
+    },
+    
+    "ownership_location": {
+      "assigned_user": "john.doe@company.com",
+      "department": "IT Infrastructure",
+      "physical_location": "Data Center A, Rack 15, Unit 42",
+      "virtual_location": "VMware vSphere Cluster 1"
+    },
+    
+    "lifecycle": {
+      "acquisition_date": "2023-03-15",
+      "deployment_details": "Deployed in production environment after 2 weeks of testing. Configured with high availability clustering.",
+      "maintenance_schedule": "Monthly security patches, quarterly hardware inspection, annual full system review",
+      "upgrade_history": [
+        {
+          "version": "1.0",
+          "date": "2023-03-15",
+          "description": "Initial deployment and configuration"
+        },
+        {
+          "version": "1.1",
+          "date": "2023-06-15",
+          "description": "Security patches and performance optimization"
+        },
+        {
+          "version": "1.2",
+          "date": "2023-09-15",
+          "description": "Database engine upgrade to latest version"
+        }
+      ],
+      "end_of_life_date": "2026-03-15"
+    },
+    
+    "licensing_compliance": {
+      "license_number": "LIC-DB-2023-001",
+      "license_type": "Enterprise",
+      "license_expiry_date": "2024-03-15",
+      "compliance_status": "Compliant",
+      "audit_logs": [
+        {
+          "date": "2023-03-15",
+          "action": "Created",
+          "user": "admin@company.com",
+          "details": "Asset created during server deployment"
+        },
+        {
+          "date": "2023-06-15",
+          "action": "Updated",
+          "user": "john.doe@company.com",
+          "details": "Updated maintenance schedule and specifications"
+        },
+        {
+          "date": "2023-09-15",
+          "action": "Maintenance",
+          "user": "maintenance@company.com",
+          "details": "Scheduled maintenance completed successfully"
+        }
+      ]
+    },
+    
+    "financials": {
+      "purchase_cost": 15000.00,
+      "depreciation_value": 3000.00,
+      "total_cost_of_ownership": 25000.00,
+      "vendor": "Dell Technologies",
+      "warranty": "3 years ProSupport Plus with 4-hour on-site response"
+    },
+    
+    "operations": {
+      "service_history": [
+        {
+          "date": "2023-04-15",
+          "type": "maintenance",
+          "description": "Routine security patch installation",
+          "technician": "IT Support Team",
+          "duration_hours": 2
+        },
+        {
+          "date": "2023-07-20",
+          "type": "repair",
+          "description": "Replaced failed cooling fan",
+          "technician": "Dell Field Service",
+          "duration_hours": 4
+        },
+        {
+          "date": "2023-10-10",
+          "type": "upgrade",
+          "description": "Memory upgrade from 64GB to 128GB",
+          "technician": "Internal IT Team",
+          "duration_hours": 6
+        }
+      ],
+      "preventive_maintenance": "Monthly: Check system logs, verify backup status, test failover procedures. Quarterly: Physical inspection, performance analysis, security scan. Annually: Full hardware diagnostics, capacity planning review.",
+      "sla_details": "99.9% uptime SLA, 4-hour response time for critical issues, 24/7 monitoring via NOC",
+      "spare_parts": "2x cooling fans, 1x power supply unit, 2x 1TB NVMe drives, 1x network card"
+    },
+    
+    "security_risk": {
+      "security_config": {
+        "encryption": true,
+        "firewall": "enabled",
+        "antivirus": "active",
+        "intrusion_detection": "enabled",
+        "access_control": "multi-factor_authentication",
+        "network_segmentation": "isolated_vlan"
+      },
+      "known_vulnerabilities": [
+        {
+          "cve": "CVE-2023-12345",
+          "severity": "high",
+          "status": "patched",
+          "patch_date": "2023-06-15",
+          "description": "Remote code execution vulnerability in database engine"
+        },
+        {
+          "cve": "CVE-2023-67890",
+          "severity": "medium",
+          "status": "pending",
+          "description": "Information disclosure vulnerability in logging system"
+        }
+      ],
+      "incident_records": [
+        {
+          "date": "2023-05-20",
+          "severity": "medium",
+          "description": "Unauthorized access attempt detected and blocked",
+          "resolution": "Additional access controls implemented",
+          "status": "resolved"
+        }
+      ],
+      "compliance_standards": [
+        "ISO27001",
+        "SOC2",
+        "PCI-DSS",
+        "GDPR"
+      ]
+    }
+  }
+}

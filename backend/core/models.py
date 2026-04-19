@@ -1904,6 +1904,219 @@ class Asset(
     is_published = models.BooleanField(_("published"), default=True)
     observation = models.TextField(null=True, blank=True, verbose_name=_("Observation"))
 
+    # ITAM (IT Asset Management) fields
+    class AssetType(models.TextChoices):
+        """Asset type choices for ITAM classification"""
+        HARDWARE = "hardware", _("Hardware")
+        SOFTWARE = "software", _("Software")
+        CLOUD = "cloud", _("Cloud")
+        DIGITAL = "digital", _("Digital")
+
+    asset_type = models.CharField(
+        max_length=20,
+        choices=AssetType.choices,
+        null=True,
+        blank=True,
+        verbose_name=_("Asset Type"),
+        help_text=_("ITAM classification of the asset")
+    )
+    specifications = models.TextField(
+        null=True,
+        blank=True,
+        verbose_name=_("Specifications"),
+        help_text=_("Technical specifications and details")
+    )
+    serial_number = models.CharField(
+        max_length=100,
+        null=True,
+        blank=True,
+        unique=True,
+        verbose_name=_("Serial Number"),
+        help_text=_("Unique serial number of the asset")
+    )
+    license_key = models.TextField(
+        null=True,
+        blank=True,
+        verbose_name=_("License Key"),
+        help_text=_("Software license key or activation code")
+    )
+    assigned_user = models.CharField(
+        max_length=200,
+        null=True,
+        blank=True,
+        verbose_name=_("Assigned User"),
+        help_text=_("User currently assigned to this asset")
+    )
+    department = models.CharField(
+        max_length=200,
+        null=True,
+        blank=True,
+        verbose_name=_("Department"),
+        help_text=_("Department or organizational unit")
+    )
+    physical_location = models.CharField(
+        max_length=200,
+        null=True,
+        blank=True,
+        verbose_name=_("Physical Location"),
+        help_text=_("Physical location of the asset")
+    )
+    virtual_location = models.CharField(
+        max_length=200,
+        null=True,
+        blank=True,
+        verbose_name=_("Virtual Location"),
+        help_text=_("Virtual or cloud location of the asset")
+    )
+    acquisition_date = models.DateField(
+        null=True,
+        blank=True,
+        verbose_name=_("Acquisition Date"),
+        help_text=_("Date when the asset was acquired")
+    )
+    deployment_details = models.TextField(
+        null=True,
+        blank=True,
+        verbose_name=_("Deployment Details"),
+        help_text=_("Details about asset deployment and configuration")
+    )
+    maintenance_schedule = models.TextField(
+        null=True,
+        blank=True,
+        verbose_name=_("Maintenance Schedule"),
+        help_text=_("Scheduled maintenance activities and timeline")
+    )
+    upgrade_history = models.JSONField(
+        null=True,
+        blank=True,
+        verbose_name=_("Upgrade History"),
+        help_text=_("History of upgrades and version changes")
+    )
+    end_of_life_date = models.DateField(
+        null=True,
+        blank=True,
+        verbose_name=_("End of Life Date"),
+        help_text=_("Expected end of life or retirement date")
+    )
+    license_number = models.CharField(
+        max_length=200,
+        null=True,
+        blank=True,
+        verbose_name=_("License Number"),
+        help_text=_("Official license number or identifier")
+    )
+    license_type = models.CharField(
+        max_length=100,
+        null=True,
+        blank=True,
+        verbose_name=_("License Type"),
+        help_text=_("Type of license (perpetual, subscription, etc.)")
+    )
+    license_expiry_date = models.DateField(
+        null=True,
+        blank=True,
+        verbose_name=_("License Expiry Date"),
+        help_text=_("Date when the license expires")
+    )
+    compliance_status = models.CharField(
+        max_length=200,
+        null=True,
+        blank=True,
+        verbose_name=_("Compliance Status"),
+        help_text=_("Current compliance status and certifications")
+    )
+    audit_logs = models.JSONField(
+        null=True,
+        blank=True,
+        verbose_name=_("Audit Logs"),
+        help_text=_("Audit trail and change logs")
+    )
+    purchase_cost = models.DecimalField(
+        max_digits=12,
+        decimal_places=2,
+        null=True,
+        blank=True,
+        verbose_name=_("Purchase Cost"),
+        help_text=_("Original purchase cost of the asset")
+    )
+    depreciation_value = models.DecimalField(
+        max_digits=12,
+        decimal_places=2,
+        null=True,
+        blank=True,
+        verbose_name=_("Depreciation Value"),
+        help_text=_("Current depreciated value of the asset")
+    )
+    total_cost_of_ownership = models.DecimalField(
+        max_digits=12,
+        decimal_places=2,
+        null=True,
+        blank=True,
+        verbose_name=_("Total Cost of Ownership"),
+        help_text=_("Total cost of ownership including all expenses")
+    )
+    vendor = models.CharField(
+        max_length=200,
+        null=True,
+        blank=True,
+        verbose_name=_("Vendor"),
+        help_text=_("Vendor or supplier of the asset")
+    )
+    warranty = models.TextField(
+        null=True,
+        blank=True,
+        verbose_name=_("Warranty"),
+        help_text=_("Warranty information and terms")
+    )
+    service_history = models.JSONField(
+        null=True,
+        blank=True,
+        verbose_name=_("Service History"),
+        help_text=_("History of service requests and maintenance")
+    )
+    preventive_maintenance = models.TextField(
+        null=True,
+        blank=True,
+        verbose_name=_("Preventive Maintenance"),
+        help_text=_("Preventive maintenance schedule and procedures")
+    )
+    sla_details = models.TextField(
+        null=True,
+        blank=True,
+        verbose_name=_("SLA Details"),
+        help_text=_("Service Level Agreement details and requirements")
+    )
+    spare_parts = models.TextField(
+        null=True,
+        blank=True,
+        verbose_name=_("Spare Parts"),
+        help_text=_("Available spare parts and inventory")
+    )
+    security_config = models.JSONField(
+        null=True,
+        blank=True,
+        verbose_name=_("Security Configuration"),
+        help_text=_("Security configuration settings and policies")
+    )
+    known_vulnerabilities = models.JSONField(
+        null=True,
+        blank=True,
+        verbose_name=_("Known Vulnerabilities"),
+        help_text=_("Known security vulnerabilities and patches")
+    )
+    incident_records = models.JSONField(
+        null=True,
+        blank=True,
+        verbose_name=_("Incident Records"),
+        help_text=_("Records of security incidents and responses")
+    )
+    compliance_standards = models.JSONField(
+        null=True,
+        blank=True,
+        verbose_name=_("Compliance Standards"),
+        help_text=_("Applicable compliance standards and requirements")
+    )
+
     fields_to_check = ["name"]
 
     class Meta:

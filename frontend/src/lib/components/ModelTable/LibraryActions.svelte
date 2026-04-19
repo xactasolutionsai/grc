@@ -4,6 +4,7 @@
 	import { page } from '$app/state';
 	import type { DataHandler } from '@vincjo/datatables/remote';
 	import { tableHandlers } from '$lib/utils/stores';
+	import { Download, ArrowUpCircle } from 'lucide-svelte';
 
 	interface Props {
 		meta: any;
@@ -60,7 +61,7 @@
 					id="tablerow-import-button"
 					onclick={(e) => e.stopPropagation()}
 				>
-					<i class="fa-solid fa-file-import"></i>
+					<Download size={18} />
 				</button>
 			</form>
 		</span>
@@ -107,7 +108,7 @@
 				}}
 			>
 				<button title={m.updateThisLibrary()} onclick={(e) => e.stopPropagation()}>
-					<i class="fa-solid fa-circle-up"></i>
+					<ArrowUpCircle size={18} />
 				</button>
 			</form>
 		</span>

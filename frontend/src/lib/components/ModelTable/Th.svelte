@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { ChevronUp, ChevronDown } from 'lucide-svelte';
 	import type { DataHandler } from '@vincjo/datatables/remote';
 	interface Props {
 		handler: DataHandler;
@@ -49,11 +50,11 @@
 			class:desc={$sort?.direction === 'desc'}
 			aria-hidden="true"
 		>
-			{#if isActive && $sort?.direction === 'asc'}
-				<i class="fa-solid fa-sort-up"></i>
-			{:else if isActive && $sort?.direction === 'desc'}
-				<i class="fa-solid fa-sort-down"></i>
-			{/if}
+		{#if isActive && $sort?.direction === 'asc'}
+			<ChevronUp size={14} />
+		{:else if isActive && $sort?.direction === 'desc'}
+			<ChevronDown size={14} />
+		{/if}
 		</span>
 	</div>
 </th>

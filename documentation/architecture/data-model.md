@@ -351,6 +351,52 @@ erDiagram
         int    rto
         int    rpo
         int    mtd
+        
+        # ITAM (IT Asset Management) fields
+        # Inventory
+        enum   asset_type "hardware/software/cloud/digital"
+        text   specifications
+        string serial_number
+        text   license_key
+        
+        # Ownership & Location
+        string assigned_user
+        string department
+        string physical_location
+        string virtual_location
+        
+        # Lifecycle
+        date   acquisition_date
+        text   deployment_details
+        text   maintenance_schedule
+        json   upgrade_history
+        date   end_of_life_date
+        
+        # Licensing & Compliance
+        string license_number
+        string license_type
+        date   license_expiry_date
+        string compliance_status
+        json   audit_logs
+        
+        # Financials
+        decimal purchase_cost
+        decimal depreciation_value
+        decimal total_cost_of_ownership
+        string vendor
+        text   warranty
+        
+        # Operations
+        json   service_history
+        text   preventive_maintenance
+        text   sla_details
+        text   spare_parts
+        
+        # Security & Risk
+        json   security_config
+        json   known_vulnerabilities
+        json   incident_records
+        json   compliance_standards
     }
 
     RISK_SCENARIO {

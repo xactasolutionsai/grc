@@ -37,7 +37,12 @@ export const navData = {
 						'view_assessment',
 						'view_riskassessment'
 					]
-				}
+				},
+				{
+					name: 'auditDashboard',
+					fa_icon: 'fa-solid fa-chart-line',
+					href: '/audits/overview'
+				},
 			]
 		},
 		{
@@ -150,6 +155,41 @@ export const navData = {
 					name: 'tasks',
 					fa_icon: 'fa-solid fa-note-sticky',
 					href: '/task-templates'
+				}
+			]
+		},
+		{
+			name: 'workpapers',
+			items: [
+				{
+					name: 'Workpapers & Evidence',
+					fa_icon: 'fa-solid fa-folder-open',
+					href: '/workpapers'
+				}
+			]
+		},
+		{
+			name: 'audits',
+			items: [
+				{
+					name: 'auditUniverse',
+					fa_icon: 'fa-solid fa-search',
+					href: '/audits/universe'
+				},
+				{
+					name: 'Audit Planning',
+					fa_icon: 'fa-solid fa-calendar-check',
+					href: '/audits/planning'
+				},
+				{
+					name: 'Audit Checklists',
+					fa_icon: 'fa-solid fa-list-check',
+					href: '/audits/checklists'
+				},
+				{
+					name: 'Audit Engagements',
+					fa_icon: 'fa-solid fa-clipboard-list',
+					href: '/audits/engagements'
 				}
 			]
 		},

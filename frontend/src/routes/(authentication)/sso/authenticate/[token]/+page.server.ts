@@ -11,7 +11,7 @@ export const load: PageServerLoad = async ({ fetch, locals, params, cookies }) =
 		httpOnly: true,
 		sameSite: 'lax',
 		path: '/',
-		secure: true
+		secure: false
 	});
 
 	// User is logged in, now we need to fetch allauth's session token
@@ -30,7 +30,7 @@ export const load: PageServerLoad = async ({ fetch, locals, params, cookies }) =
 		httpOnly: true,
 		sameSite: 'lax',
 		path: '/',
-		secure: true
+		secure: false
 	});
 
 	redirect(302, '/analytics');

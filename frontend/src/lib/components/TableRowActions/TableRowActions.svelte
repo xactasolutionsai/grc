@@ -10,6 +10,7 @@
 	import { m } from '$paraglide/messages';
 	import Anchor from '$lib/components/Anchor/Anchor.svelte';
 	import { canPerformAction } from '$lib/utils/access-control';
+	import { Eye, Pencil, Trash2, GitBranch } from 'lucide-svelte';
 	import {
 		getModalStore,
 		type ModalStore,
@@ -179,7 +180,7 @@
 				breadcrumbAction="push"
 				href={detailURL}
 				class="unstyled cursor-pointer hover:text-primary-500"
-				data-testid="tablerow-detail-button"><i class="fa-solid fa-eye"></i></Anchor
+				data-testid="tablerow-detail-button"><Eye size={18} /></Anchor
 			>
 		{/if}
 		{#if URLModel === 'operating-modes'}
@@ -189,7 +190,7 @@
 				href={`/operating-modes/${row.meta.id}/graph/`}
 				stopPropagation
 				class="unstyled cursor-pointer hover:text-primary-500"
-				data-testid="tablerow-edit-button"><i class="fa-solid fa-project-diagram"></i></Anchor
+				data-testid="tablerow-edit-button"><GitBranch size={18} /></Anchor
 			>
 		{/if}
 		{#if displayEdit}
@@ -199,7 +200,7 @@
 				href={editURL}
 				stopPropagation
 				class="unstyled cursor-pointer hover:text-primary-500"
-				data-testid="tablerow-edit-button"><i class="fa-solid fa-pen-to-square"></i></Anchor
+				data-testid="tablerow-edit-button"><Pencil size={18} /></Anchor
 			>
 		{/if}
 		{#if displayDelete}
@@ -210,18 +211,18 @@
 						stopPropagation(_);
 					}}
 					onkeydown={() => promptModalConfirmDelete(row.meta.id, row)}
-					class="cursor-pointer hover:text-primary-500"
-					data-testid="tablerow-delete-button"><i class="fa-solid fa-trash"></i></button
-				>
-			{:else}
-				<button
-					onclick={(_) => {
-						modalConfirmDelete(row.meta[identifierField], row);
-						stopPropagation(_);
-					}}
-					onkeydown={() => modalConfirmDelete(row.meta.id, row)}
-					class="cursor-pointer hover:text-primary-500"
-					data-testid="tablerow-delete-button"><i class="fa-solid fa-trash"></i></button
+				class="cursor-pointer hover:text-primary-500"
+				data-testid="tablerow-delete-button"><Trash2 size={18} /></button
+			>
+		{:else}
+			<button
+				onclick={(_) => {
+					modalConfirmDelete(row.meta[identifierField], row);
+					stopPropagation(_);
+				}}
+				onkeydown={() => modalConfirmDelete(row.meta.id, row)}
+				class="cursor-pointer hover:text-primary-500"
+				data-testid="tablerow-delete-button"><Trash2 size={18} /></button
 				>
 			{/if}
 		{/if}

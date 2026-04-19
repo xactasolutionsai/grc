@@ -30,6 +30,7 @@
 	import { defaults, superForm, type SuperValidated } from 'sveltekit-superforms';
 	import { zod } from 'sveltekit-superforms/adapters';
 	import { z, type AnyZodObject } from 'zod';
+	import { Filter } from 'lucide-svelte';
 	import { loadTableData } from './handler';
 	import Pagination from './Pagination.svelte';
 	import RowCount from './RowCount.svelte';
@@ -425,8 +426,8 @@
 				closeOnInteractOutside={false}
 			>
 				{#snippet trigger()}
-					<i class="fa-solid fa-filter mr-2"></i>
-					{m.filters()}
+				<Filter size={16} class="mr-2 inline-block" />
+				{m.filters()}
 					{#if filterCount}
 						<span class="text-sm">{filterCount}</span>
 					{/if}

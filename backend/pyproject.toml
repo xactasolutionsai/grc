@@ -10,7 +10,6 @@ package-mode = false
 python = "^3.11"
 django = "^5.2.6"
 weasyprint = "62.3"
-psycopg2-binary = "2.9.9"
 gunicorn = "23.0.0"
 django-filter = "24.3"
 whitenoise = "6.7.0"
@@ -47,6 +46,7 @@ django-storages = "^1.14.6"
 icecream = "^2.1.4"
 regex = "^2024.11.6"
 prometheus-client = "^0.22.1"
+psycopg = {extras = ["binary"], version = "^3.2.10"}
 
 [tool.poetry.group.dev.dependencies]
 pytest-django = "4.8.0"

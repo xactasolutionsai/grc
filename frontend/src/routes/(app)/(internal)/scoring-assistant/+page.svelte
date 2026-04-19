@@ -5,14 +5,14 @@
 	import Selector from './selector.svelte';
 	import { average, forms } from './utils';
 	import { m } from '$paraglide/messages';
+	import { ChevronRight, ChevronLeft } from 'lucide-svelte';
 
 	let { data, risk_matrices = data.risk_matrices } = $props();
 
+	let risk_matrix_index = $state(0);
 	let risk_matrix_select: Element = $state();
 	let risk_matrix: RiskMatrixJsonDefinition = $derived(risk_matrices[risk_matrix_index] ?? null);
 	let is_business_impact_ignored = $state(false);
-
-	let risk_matrix_index = $state(0);
 
 	let vector: number[] = $state();
 	let vector_string: string = $state();
@@ -71,29 +71,39 @@
 	let labels = $derived(update_scores(risk_score, risk_matrix));
 </script>
 
-<main class="text-sm h-full flex flex-col">
+<main class="h-full flex flex-col">
 	{#if risk_matrix}
-		<div class="mx-auto">
-			<div class="flex flex-col">
-				<p class="text-sm">{m.riskMatrix()}</p>
+		<div class="max-w-7xl mx-auto w-full p-6 space-y-5">
+			<!-- Matrix selector bar -->
+			<div class="flex items-center gap-3 bg-white border border-surface-200 rounded-lg px-4 py-3">
+				<span class="text-sm font-medium text-surface-500">{m.riskMatrix()}</span>
 				<select
-					class="select form-input w-fit pr-8"
+					id="risk-matrix-select"
+					class="select form-input text-sm border border-surface-300 rounded-md px-3 py-1.5 w-auto"
 					bind:value={risk_matrix_index}
 					bind:this={risk_matrix_select}
 				>
-					{#each risk_matrices as risk_matrix, index}
-						<option value={index}>{risk_matrix.name}</option>
+					{#each risk_matrices as rm, index}
+						<option value={index}>{rm.name}</option>
 					{/each}
 				</select>
 			</div>
-			<div class="grid lg:grid-cols-2">
-				<div class="">
-					<!--Threat Agent Factors-->
-					<div
-						id="ta_div"
-						class="px-4 py-2 mx-1 my-2 bg-white shadow-sm rounded-sm h-1/2 grid grid-cols-5"
-					>
-						<div class="col-span-4 p-2">
+
+			<!-- Two-column scoring grid -->
+			<div class="grid lg:grid-cols-2 gap-5">
+				<!-- LEFT: Likelihood -->
+				<div class="space-y-4">
+					<div class="text-[11px] font-bold uppercase tracking-widest text-surface-400 px-1">{m.probability()}</div>
+
+					<!-- Threat Agent Factors -->
+					<div id="ta_div" class="bg-white border border-surface-200 rounded-lg overflow-hidden">
+						<div class="flex items-center justify-between bg-surface-50 border-b border-surface-200 px-4 py-2.5">
+							<span class="text-sm font-semibold text-surface-700">{m.threatAgentFactors()}</span>
+							<span class="bg-primary-500 text-white text-xs font-bold rounded-full px-3 py-0.5 min-w-[36px] text-center" id="threat_agent_score">
+								{threat_agent_score}
+							</span>
+						</div>
+						<div class="p-4 space-y-2.5">
 							{#each forms.threat_agent as selector_data, index}
 								<Selector
 									{...selector_data}
@@ -103,21 +113,17 @@
 								/>
 							{/each}
 						</div>
-						<div class="my-auto ml-2 col-span 1 w-full">
-							<div class="shadow-lg bg-indigo-700 px-2 py-4 rounded-xl">
-								<div class="text-gray-100 text-xs">{m.threatAgentFactors()}</div>
-								<div class="font-bold text-white text-lg" id="threat_agent_score">
-									{threat_agent_score}
-								</div>
-							</div>
-						</div>
 					</div>
-					<!--Vulnerability Factors-->
-					<div
-						id="vf_div"
-						class="px-4 py-2 mx-1 my-2 bg-white shadow-sm rounded-sm h-1/2 grid grid-cols-5"
-					>
-						<div class="col-span-4 p-2">
+
+					<!-- Vulnerability Factors -->
+					<div id="vf_div" class="bg-white border border-surface-200 rounded-lg overflow-hidden">
+						<div class="flex items-center justify-between bg-surface-50 border-b border-surface-200 px-4 py-2.5">
+							<span class="text-sm font-semibold text-surface-700">{m.vulnerabilityFactors()}</span>
+							<span class="bg-primary-500 text-white text-xs font-bold rounded-full px-3 py-0.5 min-w-[36px] text-center" id="vulnerability_score">
+								{vulnerability_score}
+							</span>
+						</div>
+						<div class="p-4 space-y-2.5">
 							{#each forms.vulnerability as selector_data, index}
 								<Selector
 									{...selector_data}
@@ -127,26 +133,33 @@
 								/>
 							{/each}
 						</div>
-						<div class="my-auto ml-2 col-span 1 w-full">
-							<div class="shadow-lg bg-indigo-700 px-2 py-4 rounded-xl">
-								<div class="text-gray-100 text-xs">{m.vulnerabilityFactors()}</div>
-								<div class="font-bold text-white text-lg" id="vulnerability_score">
-									{vulnerability_score}
-								</div>
-							</div>
-						</div>
 					</div>
 				</div>
 
-				<div class="my-4 lg:my-0">
-					<!--Business Impact Factors-->
-					<div
-						id="bi_div"
-						class="px-4 py-2 mx-1 my-2 shadow rounded h-1/2 grid grid-cols-5 bg-white {is_business_impact_ignored
-							? 'bg-gray-100 text-gray-400'
-							: 'bg-white text-black'}"
-					>
-						<div class="col-span-4 p-2">
+				<!-- RIGHT: Impact -->
+				<div class="space-y-4">
+					<div class="text-[11px] font-bold uppercase tracking-widest text-surface-400 px-1">{m.impact()}</div>
+
+					<!-- Business Impact Factors -->
+					<div id="bi_div" class="border rounded-lg overflow-hidden transition-colors {is_business_impact_ignored ? 'bg-surface-50 border-surface-100' : 'bg-white border-surface-200'}">
+						<div class="flex items-center justify-between border-b px-4 py-2.5 {is_business_impact_ignored ? 'bg-surface-100 border-surface-100' : 'bg-surface-50 border-surface-200'}">
+							<span class="text-sm font-semibold {is_business_impact_ignored ? 'text-surface-400' : 'text-surface-700'}">{m.businessImpactFactors()}</span>
+							<div class="flex items-center gap-3">
+								<label class="flex items-center gap-1.5 cursor-pointer">
+									<input
+										id="ignore_business_impact"
+										type="checkbox"
+										class="w-3.5 h-3.5 rounded border-surface-300 accent-primary-500"
+										bind:checked={is_business_impact_ignored}
+									/>
+									<span class="text-xs text-surface-500">{m.ignore()}</span>
+								</label>
+								<span class="text-white text-xs font-bold rounded-full px-3 py-0.5 min-w-[36px] text-center {is_business_impact_ignored ? 'bg-surface-300' : 'bg-primary-500'}" id="business_impact_score">
+									{is_business_impact_ignored ? '--' : business_impact_score}
+								</span>
+							</div>
+						</div>
+						<div class="p-4 space-y-2.5 {is_business_impact_ignored ? 'opacity-50 pointer-events-none' : ''}">
 							{#each forms.business_impact as selector_data, index}
 								<Selector
 									{...selector_data}
@@ -157,38 +170,17 @@
 								/>
 							{/each}
 						</div>
-						<div class="my-auto ml-2 col-span 1 w-full">
-							<div class="shadow-lg bg-indigo-700 px-2 py-4 rounded-xl">
-								<div class="text-gray-100 text-xs">{m.businessImpactFactors()}</div>
-								<div class="font-bold text-white text-lg" id="business_impact_score">
-									{is_business_impact_ignored ? '--' : business_impact_score}
-								</div>
-								<div class="flex flex-row space-x-2 items-center">
-									<input
-										id="ignore_business_impact"
-										type="checkbox"
-										class="w-4 h-4 bg-gray-100 border-gray-300 rounded
-                focus:ring-2"
-										bind:checked={is_business_impact_ignored}
-									/>
-									<label
-										class="ml-2 text-sm font-medium text-gray-100"
-										for="ignore_business_impact"
-									>
-										{m.ignore()}
-									</label>
-								</div>
-							</div>
-						</div>
 					</div>
-					<!--Technical Impact Factors-->
-					<div
-						id="ti_div"
-						class="px-4 py-2 mx-1 my-2 bg-white shadow rounded h-1/2 grid grid-cols-5 {is_business_impact_ignored
-							? 'bg-white text-black'
-							: 'bg-gray-100 text-gray-400'}"
-					>
-						<div class="col-span-4 p-2">
+
+					<!-- Technical Impact Factors -->
+					<div id="ti_div" class="border rounded-lg overflow-hidden transition-colors {is_business_impact_ignored ? 'bg-white border-surface-200' : 'bg-surface-50 border-surface-100'}">
+						<div class="flex items-center justify-between border-b px-4 py-2.5 {is_business_impact_ignored ? 'bg-surface-50 border-surface-200' : 'bg-surface-100 border-surface-100'}">
+							<span class="text-sm font-semibold {is_business_impact_ignored ? 'text-surface-700' : 'text-surface-400'}">{m.technicalImpactFactors()}</span>
+							<span class="text-white text-xs font-bold rounded-full px-3 py-0.5 min-w-[36px] text-center {is_business_impact_ignored ? 'bg-primary-500' : 'bg-surface-300'}" id="technical_impact_score">
+								{is_business_impact_ignored ? technical_impact_score : '--'}
+							</span>
+						</div>
+						<div class="p-4 space-y-2.5 {is_business_impact_ignored ? '' : 'opacity-50 pointer-events-none'}">
 							{#each forms.technical_impact as selector_data, index}
 								<Selector
 									{...selector_data}
@@ -199,60 +191,56 @@
 								/>
 							{/each}
 						</div>
-						<div class="my-auto ml-2 col-span 1 w-full">
-							<div class="shadow-lg bg-indigo-700 px-2 py-4 rounded-xl mx-auto">
-								<div class="text-gray-100 text-xs">{m.technicalImpactFactors()}</div>
-								<div class="font-bold text-white text-lg" id="technical_impact_score">
-									{is_business_impact_ignored ? technical_impact_score : '--'}
-								</div>
-							</div>
-						</div>
 					</div>
 				</div>
 			</div>
 
-			<div class="p-2 my-8 bg-white rounded-sm shadow-sm">
-				<div class="p-1 m-1 text-xs">
-					{m.assessmentVector()}: <span id="vector">{vector_string}</span>
+			<!-- Results section -->
+			<div class="bg-white border border-surface-200 rounded-lg overflow-hidden">
+				<div class="px-5 py-3 bg-surface-50 border-b border-surface-200">
+					<span class="font-mono text-xs text-surface-500">
+						{m.assessmentVector()}:
+						<span id="vector" class="bg-surface-200 rounded px-2 py-0.5 text-surface-700 font-semibold ml-1">{vector_string}</span>
+					</span>
 				</div>
-				<div class="grid grid-cols-3 grid-rows-1 items-center justify-center">
-					<div class="mx-auto w-full">
-						<div class="bg-cyan-600 p-4 m-2 rounded-lg shadow-lg lg:mx-4">
-							<div class="text-gray-100 font-semibold">{m.probability()}</div>
-							<div>
-								<span class="text-xl text-white font-bold" id="probability_label"
-									>{labels.probability.name}
-									{probability_score === 0 ? '--' : probability_score}</span
-								>
-								<span class="text-white text-xs" id="probability_score"></span>
+
+				<div class="p-5">
+					<div class="grid grid-cols-[1fr_auto_1fr] items-center gap-4">
+						<!-- Probability -->
+						<div class="border-l-4 border-l-primary-500 bg-surface-50 rounded-r-lg p-4">
+							<div class="text-[11px] font-bold uppercase tracking-widest text-surface-400">{m.probability()}</div>
+							<div class="text-xl font-bold text-surface-800 mt-1" id="probability_label">
+								{labels.probability.name}
+							</div>
+							<div class="text-sm text-surface-500 mt-0.5">
+								{probability_score === 0 ? '--' : probability_score}
 							</div>
 						</div>
-					</div>
 
-					<div
-						class="text-2xl p-2 grid grid-rows-2 grid-cols-3 items-center text-center w-full mb-4"
-						id="score"
-					>
-						<div class="text-lg p-1 col-span-3">{m.riskLevel()}</div>
-						<i class="fas fa-arrow-alt-circle-right"></i>
-						<span
-							class="py-2 px-0 font-semibold rounded-sm shadow-sm"
-							id="risk_label"
-							style="background-color: {labels.risk.hexcolor}"
-						>
-							<p class="overflow-clip">{labels.risk.name}</p></span
-						>
-						<i class="fas fa-arrow-alt-circle-left"></i>
-					</div>
-
-					<div class="mx-auto w-full">
-						<div class="bg-cyan-600 p-4 m-2 rounded-lg shadow-lg lg:mx-4">
-							<div class="text-gray-100 font-semibold">{m.impact()}</div>
-							<div>
-								<span class="text-xl text-white font-bold" id="impact_label"
-									>{labels.impact.name} {impact_score === 0 ? '--' : impact_score}</span
+						<!-- Risk Level -->
+						<div class="flex flex-col items-center gap-2 px-2" id="score">
+							<div class="text-[11px] font-bold uppercase tracking-widest text-surface-400">{m.riskLevel()}</div>
+							<div class="flex items-center gap-2">
+								<ChevronRight size={18} class="text-surface-300" />
+								<span
+									class="px-6 py-3 text-center font-bold text-xl rounded-lg shadow-md min-w-[120px]"
+									id="risk_label"
+									style="background-color: {labels.risk.hexcolor}"
 								>
-								<span class="text-white text-xs" id="impact_score"></span>
+									{labels.risk.name}
+								</span>
+								<ChevronLeft size={18} class="text-surface-300" />
+							</div>
+						</div>
+
+						<!-- Impact -->
+						<div class="border-l-4 border-l-secondary-500 bg-surface-50 rounded-r-lg p-4">
+							<div class="text-[11px] font-bold uppercase tracking-widest text-surface-400">{m.impact()}</div>
+							<div class="text-xl font-bold text-surface-800 mt-1" id="impact_label">
+								{labels.impact.name}
+							</div>
+							<div class="text-sm text-surface-500 mt-0.5">
+								{impact_score === 0 ? '--' : impact_score}
 							</div>
 						</div>
 					</div>
@@ -260,8 +248,10 @@
 			</div>
 		</div>
 	{:else}
-		<div class="mx-auto w-full font-bold text-2xl text-center">
-			{m.scoringAssistantNoMatrixError()}
+		<div class="flex items-center justify-center h-full">
+			<div class="text-xl font-semibold text-surface-400">
+				{m.scoringAssistantNoMatrixError()}
+			</div>
 		</div>
 	{/if}
 </main>

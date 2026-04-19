@@ -16,7 +16,7 @@ export const load = loadFlash(async ({ locals, url, cookies, request }) => {
 				httpOnly: false,
 				sameSite: 'lax',
 				path: '/',
-				secure: true
+				secure: false
 			});
 		}
 	}

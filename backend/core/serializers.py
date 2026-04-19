@@ -5,6 +5,7 @@ import structlog
 from django.contrib.auth import get_user_model
 from django.db import models
 from django.db.models import F
+from django.utils import timezone
 
 from ciso_assistant.settings import EMAIL_HOST, EMAIL_HOST_RESCUE
 from core.models import *
@@ -394,6 +395,74 @@ class AssetWriteSerializer(BaseModelSerializer):
                     )
         return parent_assets
 
+    def validate_purchase_cost(self, value):
+        """Validate that purchase cost is non-negative"""
+        if value is not None and value < 0:
+            raise serializers.ValidationError("Purchase cost cannot be negative")
+        return value
+
+    def validate_depreciation_value(self, value):
+        """Validate that depreciation value is non-negative"""
+        if value is not None and value < 0:
+            raise serializers.ValidationError("Depreciation value cannot be negative")
+        return value
+
+    def validate_total_cost_of_ownership(self, value):
+        """Validate that total cost of ownership is non-negative"""
+        if value is not None and value < 0:
+            raise serializers.ValidationError("Total cost of ownership cannot be negative")
+        return value
+
+    def validate_acquisition_date(self, value):
+        """Validate acquisition date is not in the future"""
+        if value is not None and value > timezone.now().date():
+            raise serializers.ValidationError("Acquisition date cannot be in the future")
+        return value
+
+    def validate_end_of_life_date(self, value):
+        """Validate end of life date is not in the past"""
+        # Only validate if this is an update and we don't have acquisition_date in the data
+        if value is not None and value < timezone.now().date():
+            # Check if this is part of a cross-field validation
+            if hasattr(self, 'initial_data') and 'acquisition_date' in self.initial_data:
+                # Let cross-field validation handle this
+                return value
+            raise serializers.ValidationError("End of life date cannot be in the past")
+        return value
+
+    def validate_license_expiry_date(self, value):
+        """Validate license expiry date is not in the past"""
+        if value is not None and value < timezone.now().date():
+            raise serializers.ValidationError("License expiry date cannot be in the past")
+        return value
+
+    def validate(self, data):
+        """Cross-field validation for ITAM fields"""
+        # Validate that end_of_life_date is after acquisition_date
+        acquisition_date = data.get('acquisition_date')
+        end_of_life_date = data.get('end_of_life_date')
+        
+        if acquisition_date and end_of_life_date and end_of_life_date <= acquisition_date:
+            raise serializers.ValidationError({
+                'end_of_life_date': 'End of life date must be after acquisition date'
+            })
+        
+        # Validate that license_expiry_date is after acquisition_date
+        license_expiry_date = data.get('license_expiry_date')
+        if acquisition_date and license_expiry_date and license_expiry_date <= acquisition_date:
+            raise serializers.ValidationError({
+                'license_expiry_date': 'License expiry date must be after acquisition date'
+            })
+        
+        # Additional validation for end_of_life_date if it's in the past but we have acquisition_date
+        if end_of_life_date and end_of_life_date < timezone.now().date():
+            if not acquisition_date or end_of_life_date <= acquisition_date:
+                raise serializers.ValidationError({
+                    'end_of_life_date': 'End of life date cannot be in the past'
+                })
+        
+        return data
+
 
 class AssetReadSerializer(AssetWriteSerializer):
     path = serializers.SerializerMethodField()
@@ -409,6 +478,9 @@ class AssetReadSerializer(AssetWriteSerializer):
     children_assets = serializers.SerializerMethodField()
     security_objectives = serializers.SerializerMethodField()
     disaster_recovery_objectives = serializers.SerializerMethodField()
+    
+    # ITAM fields display
+    asset_type = serializers.CharField(source="get_asset_type_display")
 
     def get_children_assets(self, obj):
         """
@@ -464,6 +536,38 @@ class AssetImportExportSerializer(BaseModelSerializer):
             "folder",
             "created_at",
             "updated_at",
+            # ITAM fields for import/export
+            "asset_type",
+            "specifications",
+            "serial_number",
+            "license_key",
+            "assigned_user",
+            "department",
+            "physical_location",
+            "virtual_location",
+            "acquisition_date",
+            "deployment_details",
+            "maintenance_schedule",
+            "upgrade_history",
+            "end_of_life_date",
+            "license_number",
+            "license_type",
+            "license_expiry_date",
+            "compliance_status",
+            "audit_logs",
+            "purchase_cost",
+            "depreciation_value",
+            "total_cost_of_ownership",
+            "vendor",
+            "warranty",
+            "service_history",
+            "preventive_maintenance",
+            "sla_details",
+            "spare_parts",
+            "security_config",
+            "known_vulnerabilities",
+            "incident_records",
+            "compliance_standards",
         ]
 
 
@@ -966,11 +1070,13 @@ class PolicyReadSerializer(AppliedControlReadSerializer):
 
 class UserReadSerializer(BaseModelSerializer):
     user_groups = FieldsRelatedField(many=True)
+    username = serializers.CharField(source='email', read_only=True)
 
     class Meta:
         model = User
         fields = [
             "id",
+            "username",
             "email",
             "first_name",
             "last_name",

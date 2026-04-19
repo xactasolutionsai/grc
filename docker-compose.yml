@@ -10,6 +10,8 @@ services:
       - DJANGO_DEBUG=True
       - AUTH_TOKEN_TTL=7200
 
+    ports:
+      - 8000:8000
     volumes:
       - ./db:/code/db
     healthcheck:
@@ -51,6 +53,8 @@ services:
     image: ghcr.io/intuitem/ciso-assistant-community/frontend:latest
     pull_policy: always
     restart: always
+    ports:
+      - 3000:3000
     depends_on:
       backend:
         condition: service_healthy

@@ -666,6 +666,17 @@ export const URL_MODEL_MAP: ModelMap = {
 			{ field: 'library', urlModel: 'libraries' }
 		]
 	},
+	'audits': {
+		name: 'auditentity',
+		localName: 'auditEntity',
+		localNamePlural: 'auditEntities',
+		verboseName: 'Audit Entity',
+		verboseNamePlural: 'Audit Entities',
+		foreignKeyFields: [
+			{ field: 'parent', urlModel: 'audits' },
+			{ field: 'owner', urlModel: 'users' }
+		]
+	},
 	entities: {
 		name: 'entity',
 		localName: 'entity',
@@ -1616,18 +1627,18 @@ export const FIELD_COLORED_TAG_MAP: FieldColoredTagMap = {
 		name: {
 			keys: {
 				status: {
-					to_do: { text: 'toDo', cssClasses: 'badge bg-blue-200' },
-					in_progress: { text: 'inProgress', cssClasses: 'badge bg-yellow-300' },
-					active: { text: 'active', cssClasses: 'badge bg-green-200' },
-					on_hold: { text: 'onHold', cssClasses: 'badge bg-gray-300' },
-					deprecated: { text: 'deprecated', cssClasses: 'badge bg-red-300' },
-					'--': { text: 'undefined', cssClasses: 'badge bg-gray-300' }
+					to_do: { text: 'toDo', cssClasses: 'badge bg-primary-200' },
+					in_progress: { text: 'inProgress', cssClasses: 'badge bg-warning-200' },
+					active: { text: 'active', cssClasses: 'badge bg-success-200' },
+					on_hold: { text: 'onHold', cssClasses: 'badge bg-surface-300' },
+					deprecated: { text: 'deprecated', cssClasses: 'badge bg-error-200' },
+					'--': { text: 'undefined', cssClasses: 'badge bg-surface-300' }
 				},
 				priority: {
-					P1: { text: '', cssClasses: 'fa-solid fa-flag text-red-500' },
-					P2: { text: '', cssClasses: 'fa-solid fa-flag text-orange-500' },
-					P3: { text: '', cssClasses: 'fa-solid fa-flag text-blue-500' },
-					P4: { text: '', cssClasses: 'fa-solid fa-flag text-gray-500' },
+					P1: { text: '', cssClasses: 'fa-solid fa-flag text-error-600' },
+					P2: { text: '', cssClasses: 'fa-solid fa-flag text-warning-700' },
+					P3: { text: '', cssClasses: 'fa-solid fa-flag text-secondary-600' },
+					P4: { text: '', cssClasses: 'fa-solid fa-flag text-surface-500' },
 					'--': { text: '', cssClasses: '' }
 				}
 			}
@@ -1637,11 +1648,11 @@ export const FIELD_COLORED_TAG_MAP: FieldColoredTagMap = {
 		name: {
 			keys: {
 				status: {
-					planned: { text: 'planned', cssClasses: 'badge bg-indigo-300' },
-					in_progress: { text: 'inProgress', cssClasses: 'badge bg-yellow-300' },
-					in_review: { text: 'inReview', cssClasses: 'badge bg-cyan-300' },
-					done: { text: 'done', cssClasses: 'badge bg-lime-300' },
-					deprecated: { text: 'deprecated', cssClasses: 'badge bg-orange-300' }
+					planned: { text: 'planned', cssClasses: 'badge bg-primary-200' },
+					in_progress: { text: 'inProgress', cssClasses: 'badge bg-warning-200' },
+					in_review: { text: 'inReview', cssClasses: 'badge bg-secondary-200' },
+					done: { text: 'done', cssClasses: 'badge bg-success-200' },
+					deprecated: { text: 'deprecated', cssClasses: 'badge bg-error-200' }
 				}
 			}
 		}
@@ -1650,11 +1661,11 @@ export const FIELD_COLORED_TAG_MAP: FieldColoredTagMap = {
 		name: {
 			keys: {
 				treatment: {
-					open: { text: 'open', cssClasses: 'badge bg-green-300' },
-					mitigate: { text: 'mitigate', cssClasses: 'badge bg-lime-200' },
-					accept: { text: 'accept', cssClasses: 'badge bg-green-200' },
-					avoid: { text: 'avoid', cssClasses: 'badge bg-red-200' },
-					transfer: { text: 'transfer', cssClasses: 'badge bg-yellow-300' }
+					open: { text: 'open', cssClasses: 'badge bg-success-200' },
+					mitigate: { text: 'mitigate', cssClasses: 'badge bg-success-200' },
+					accept: { text: 'accept', cssClasses: 'badge bg-success-200' },
+					avoid: { text: 'avoid', cssClasses: 'badge bg-error-200' },
+					transfer: { text: 'transfer', cssClasses: 'badge bg-warning-200' }
 				}
 			}
 		}
@@ -1663,11 +1674,11 @@ export const FIELD_COLORED_TAG_MAP: FieldColoredTagMap = {
 		name: {
 			keys: {
 				status: {
-					planned: { text: 'planned', cssClasses: 'badge bg-indigo-300' },
-					in_progress: { text: 'inProgress', cssClasses: 'badge bg-yellow-300' },
-					in_review: { text: 'inReview', cssClasses: 'badge bg-cyan-300' },
-					done: { text: 'done', cssClasses: 'badge bg-lime-300' },
-					deprecated: { text: 'deprecated', cssClasses: 'badge bg-orange-300' }
+					planned: { text: 'planned', cssClasses: 'badge bg-primary-200' },
+					in_progress: { text: 'inProgress', cssClasses: 'badge bg-warning-200' },
+					in_review: { text: 'inReview', cssClasses: 'badge bg-secondary-200' },
+					done: { text: 'done', cssClasses: 'badge bg-success-200' },
+					deprecated: { text: 'deprecated', cssClasses: 'badge bg-error-200' }
 				}
 			}
 		}
@@ -1676,7 +1687,7 @@ export const FIELD_COLORED_TAG_MAP: FieldColoredTagMap = {
 		name: {
 			keys: {
 				type: {
-					Primary: { text: 'primary', cssClasses: 'badge bg-blue-200' }
+					Primary: { text: 'primary', cssClasses: 'badge bg-primary-200' }
 				}
 			}
 		}
@@ -1685,18 +1696,18 @@ export const FIELD_COLORED_TAG_MAP: FieldColoredTagMap = {
 		name: {
 			keys: {
 				status: {
-					to_do: { text: 'toDo', cssClasses: 'badge bg-blue-200' },
-					in_progress: { text: 'inProgress', cssClasses: 'badge bg-yellow-300' },
-					active: { text: 'active', cssClasses: 'badge bg-green-200' },
-					on_hold: { text: 'onHold', cssClasses: 'badge bg-gray-300' },
-					deprecated: { text: 'deprecated', cssClasses: 'badge bg-red-300' },
-					'--': { text: 'undefined', cssClasses: 'badge bg-gray-300' }
+					to_do: { text: 'toDo', cssClasses: 'badge bg-primary-200' },
+					in_progress: { text: 'inProgress', cssClasses: 'badge bg-warning-200' },
+					active: { text: 'active', cssClasses: 'badge bg-success-200' },
+					on_hold: { text: 'onHold', cssClasses: 'badge bg-surface-300' },
+					deprecated: { text: 'deprecated', cssClasses: 'badge bg-error-200' },
+					'--': { text: 'undefined', cssClasses: 'badge bg-surface-300' }
 				},
 				priority: {
-					P1: { text: '', cssClasses: 'fa-solid fa-flag text-red-500' },
-					P2: { text: '', cssClasses: 'fa-solid fa-flag text-orange-500' },
-					P3: { text: '', cssClasses: 'fa-solid fa-flag text-blue-500' },
-					P4: { text: '', cssClasses: 'fa-solid fa-flag text-gray-500' },
+					P1: { text: '', cssClasses: 'fa-solid fa-flag text-error-600' },
+					P2: { text: '', cssClasses: 'fa-solid fa-flag text-warning-700' },
+					P3: { text: '', cssClasses: 'fa-solid fa-flag text-secondary-600' },
+					P4: { text: '', cssClasses: 'fa-solid fa-flag text-surface-500' },
 					'--': { text: '', cssClasses: '' }
 				}
 			}
@@ -1706,7 +1717,7 @@ export const FIELD_COLORED_TAG_MAP: FieldColoredTagMap = {
 		name: {
 			keys: {
 				lc_status: {
-					Dropped: { text: 'dropped', cssClasses: 'badge bg-red-200' }
+					Dropped: { text: 'dropped', cssClasses: 'badge bg-error-200' }
 				}
 			}
 		}
@@ -1715,10 +1726,10 @@ export const FIELD_COLORED_TAG_MAP: FieldColoredTagMap = {
 		email: {
 			keys: {
 				keep_local_login: {
-					true: { text: 'Local', cssClasses: 'badge bg-violet-200' }
+					true: { text: 'Local', cssClasses: 'badge bg-tertiary-200' }
 				},
 				is_third_party: {
-					true: { text: 'Third party', cssClasses: 'badge bg-stone-200' }
+					true: { text: 'Third party', cssClasses: 'badge bg-surface-200' }
 				}
 			}
 		}

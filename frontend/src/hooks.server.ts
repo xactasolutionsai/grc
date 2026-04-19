@@ -20,7 +20,7 @@ async function ensureCsrfToken(event: RequestEvent): Promise<string> {
 			httpOnly: false,
 			sameSite: 'lax',
 			path: '/',
-			secure: true
+			secure: false
 		});
 	}
 	return csrfToken;

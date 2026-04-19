@@ -3,6 +3,18 @@
 	import { m } from '$paraglide/messages';
 	import ModelTable from '$lib/components/ModelTable/ModelTable.svelte';
 	import ActivityTracker from '$lib/components/DataViz/ActivityTracker.svelte';
+	import {
+		Shield,
+		CheckSquare,
+		ClipboardCheck,
+		BarChart3,
+		AlertTriangle,
+		Siren,
+		ShieldOff,
+		Search,
+		Flag
+	} from 'lucide-svelte';
+
 	interface Props {
 		data: PageData;
 	}
@@ -10,10 +22,11 @@
 	let { data }: Props = $props();
 </script>
 
-<div class="grid grid-cols-12 gap-4 p-2">
-	<div class="col-span-7 bg-linear-to-br from-pink-200 to-pink-50 p-2 rounded">
-		<div class="font-bold mb-2">
-			<i class="fa-solid fa-fire-extinguisher mr-2" />{m.appliedControls()}
+<div class="grid grid-cols-12 gap-5 p-4">
+	<div class="col-span-12 lg:col-span-6 bg-white border border-surface-200 border-l-4 border-l-primary-400 rounded-lg shadow-sm p-4">
+		<div class="flex items-center gap-2 mb-3">
+			<Shield size={16} class="text-primary-500" />
+			<span class="text-sm font-semibold uppercase tracking-wide text-surface-700">{m.appliedControls()}</span>
 		</div>
 		<ModelTable
 			source={{
@@ -32,12 +45,14 @@
 			baseEndpoint="/applied-controls?owner={data.user.id}"
 		/>
 	</div>
-	<div class="col-span-5 p-2 flex items-center justify-center">
+	<div class="col-span-12 lg:col-span-6 flex items-center justify-center p-4">
 		<ActivityTracker metrics={data.data.metrics} />
 	</div>
-	<div class="col-span-6 bg-linear-to-br from-violet-200 to-violet-50 p-2 rounded">
-		<div class="font-bold mb-2">
-			<i class="fa-solid fa-note-sticky mr-2" />{m.tasks()}
+
+	<div class="col-span-12 lg:col-span-6 bg-white border border-surface-200 border-l-4 border-l-secondary-400 rounded-lg shadow-sm p-4">
+		<div class="flex items-center gap-2 mb-3">
+			<CheckSquare size={16} class="text-secondary-500" />
+			<span class="text-sm font-semibold uppercase tracking-wide text-surface-700">{m.tasks()}</span>
 		</div>
 		<ModelTable
 			source={{
@@ -54,9 +69,10 @@
 			baseEndpoint="/task-templates?assigned_to={data.user.id}"
 		/>
 	</div>
-	<div class="col-span-6 bg-linear-to-br from-blue-200 to-blue-50 p-2 rounded">
-		<div class="font-bold mb-2">
-			<i class="fa-solid fa-certificate mr-2" />{m.complianceAssessments()}
+	<div class="col-span-12 lg:col-span-6 bg-white border border-surface-200 border-l-4 border-l-primary-400 rounded-lg shadow-sm p-4">
+		<div class="flex items-center gap-2 mb-3">
+			<ClipboardCheck size={16} class="text-primary-500" />
+			<span class="text-sm font-semibold uppercase tracking-wide text-surface-700">{m.complianceAssessments()}</span>
 		</div>
 		<ModelTable
 			source={{
@@ -74,9 +90,11 @@
 			baseEndpoint="/compliance-assessments?authors={data.user.id}"
 		/>
 	</div>
-	<div class="col-span-6 bg-linear-to-br from-blue-200 to-blue-50 p-2 rounded">
-		<div class="font-bold mb-2">
-			<i class="fa-solid fa-magnifying-glass-chart mr-2" />{m.riskAssessments()}
+
+	<div class="col-span-12 lg:col-span-6 bg-white border border-surface-200 border-l-4 border-l-tertiary-400 rounded-lg shadow-sm p-4">
+		<div class="flex items-center gap-2 mb-3">
+			<BarChart3 size={16} class="text-tertiary-500" />
+			<span class="text-sm font-semibold uppercase tracking-wide text-surface-700">{m.riskAssessments()}</span>
 		</div>
 		<ModelTable
 			source={{
@@ -93,9 +111,10 @@
 			baseEndpoint="/risk-assessments?authors={data.user.id}"
 		/>
 	</div>
-	<div class="col-span-6 bg-linear-to-br from-violet-200 to-violet-50 p-2 rounded">
-		<div class="font-bold mb-2">
-			<i class="fa-solid fa-clone mr-2" />{m.riskScenarios()}
+	<div class="col-span-12 lg:col-span-6 bg-white border border-surface-200 border-l-4 border-l-tertiary-400 rounded-lg shadow-sm p-4">
+		<div class="flex items-center gap-2 mb-3">
+			<AlertTriangle size={16} class="text-tertiary-500" />
+			<span class="text-sm font-semibold uppercase tracking-wide text-surface-700">{m.riskScenarios()}</span>
 		</div>
 		<ModelTable
 			source={{
@@ -113,9 +132,11 @@
 			baseEndpoint="/risk-scenarios?owner={data.user.id}"
 		/>
 	</div>
-	<div class="col-span-6 bg-linear-to-br from-violet-200 to-violet-50 p-2 rounded">
-		<div class="font-bold mb-2">
-			<i class="fa-solid fa-bug mr-2" />{m.incidents()}
+
+	<div class="col-span-12 lg:col-span-6 bg-white border border-surface-200 border-l-4 border-l-error-400 rounded-lg shadow-sm p-4">
+		<div class="flex items-center gap-2 mb-3">
+			<Siren size={16} class="text-error-500" />
+			<span class="text-sm font-semibold uppercase tracking-wide text-surface-700">{m.incidents()}</span>
 		</div>
 		<ModelTable
 			source={{
@@ -133,9 +154,10 @@
 			baseEndpoint="/incidents?owners={data.user.id}"
 		/>
 	</div>
-	<div class="col-span-6 bg-linear-to-br from-blue-200 to-blue-50 p-2 rounded">
-		<div class="font-bold mb-2">
-			<i class="fa-solid fa-circle-exclamation mr-2" />{m.securityExceptions()}
+	<div class="col-span-12 lg:col-span-6 bg-white border border-surface-200 border-l-4 border-l-warning-400 rounded-lg shadow-sm p-4">
+		<div class="flex items-center gap-2 mb-3">
+			<ShieldOff size={16} class="text-warning-500" />
+			<span class="text-sm font-semibold uppercase tracking-wide text-surface-700">{m.securityExceptions()}</span>
 		</div>
 		<ModelTable
 			source={{
@@ -153,9 +175,11 @@
 			baseEndpoint="/security-exceptions?owners={data.user.id}"
 		/>
 	</div>
-	<div class="col-span-6 bg-linear-to-br from-blue-200 to-blue-50 p-2 rounded">
-		<div class="font-bold mb-2">
-			<i class="fa-solid fa-clipboard-list mr-2" />{m.findingsAssessments()}
+
+	<div class="col-span-12 lg:col-span-6 bg-white border border-surface-200 border-l-4 border-l-secondary-400 rounded-lg shadow-sm p-4">
+		<div class="flex items-center gap-2 mb-3">
+			<Search size={16} class="text-secondary-500" />
+			<span class="text-sm font-semibold uppercase tracking-wide text-surface-700">{m.findingsAssessments()}</span>
 		</div>
 		<ModelTable
 			source={{
@@ -172,9 +196,10 @@
 			baseEndpoint="/findings-assessments?authors={data.user.id}"
 		/>
 	</div>
-	<div class="col-span-6 bg-linear-to-br from-violet-200 to-violet-50 p-2 rounded">
-		<div class="font-bold mb-2">
-			<i class="fa-solid fa-triangle-exclamation mr-2" />{m.findings()}
+	<div class="col-span-12 lg:col-span-6 bg-white border border-surface-200 border-l-4 border-l-error-400 rounded-lg shadow-sm p-4">
+		<div class="flex items-center gap-2 mb-3">
+			<Flag size={16} class="text-error-500" />
+			<span class="text-sm font-semibold uppercase tracking-wide text-surface-700">{m.findings()}</span>
 		</div>
 		<ModelTable
 			source={{

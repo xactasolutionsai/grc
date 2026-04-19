@@ -20,6 +20,12 @@
 					return subItem.permissions?.some(
 						(permission) => user?.permissions && Object.hasOwn(user.permissions, permission)
 					);
+				} else if (subItem.href.startsWith('/audits/')) {
+					// Special case for audits - allow access without specific permissions for now
+					return true;
+				} else if (subItem.href.startsWith('/workpapers')) {
+					// Special case for workpapers - allow access without specific permissions for now
+					return true;
 				} else if (Object.hasOwn(URL_MODEL_MAP, subItem.href.split('/')[1])) {
 					const model = URL_MODEL_MAP[subItem.href.split('/')[1]];
 					const canViewObject =

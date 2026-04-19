@@ -21,12 +21,18 @@
 	});
 </script>
 
-<div>{safeTranslate(text)}</div>
-<select class="select w-full" {id} bind:value {disabled}>
-	{#each choices as text, i}
-		<option class="text-{i}" value={i}
-			>{i}{#if text}
-				- {safeTranslate(text)}{/if}</option
-		>
-	{/each}
-</select>
+<div class="flex items-center justify-between gap-4">
+	<label for={id} class="text-sm text-surface-700 flex-1 leading-tight {disabled ? 'text-surface-400' : ''}">{safeTranslate(text)}</label>
+	<select
+		class="w-52 shrink-0 text-sm border border-surface-300 rounded-md px-2.5 py-1.5 bg-white
+			disabled:bg-surface-50 disabled:text-surface-400 disabled:border-surface-200 disabled:cursor-not-allowed
+			focus:border-primary-400 focus:ring-1 focus:ring-primary-400 transition-colors"
+		{id}
+		bind:value
+		{disabled}
+	>
+		{#each choices as text, i}
+			<option value={i}>{i}{#if text} - {safeTranslate(text)}{/if}</option>
+		{/each}
+	</select>
+</div>

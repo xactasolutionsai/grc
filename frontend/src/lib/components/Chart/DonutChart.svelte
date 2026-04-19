@@ -11,6 +11,7 @@
 		orientation?: string;
 		values: any[]; // Set the types for these variables later on
 		colors?: string[];
+		onSegmentClick?: (label: string, value: number, index: number) => void;
 	}
 
 	let {
@@ -22,7 +23,8 @@
 		title = '',
 		orientation = 'vertical',
 		values = $bindable(),
-		colors = []
+		colors = [],
+		onSegmentClick
 	}: Props = $props();
 	for (const index in values) {
 		if (values[index].localName) {
@@ -36,13 +38,13 @@
 		const filteredValues = values.filter((item) => item.value > 0);
 		// specify chart configuration item and data
 		let option = {
-			tooltip: {
-				trigger: 'item',
-				formatter: function (params) {
-					// Return formatted tooltip content with just the name and value
-					return `${params.data.name}: ${params.data.value}`;
-				}
-			},
+		tooltip: {
+			trigger: 'item',
+			formatter: function (params: any) {
+				// Return formatted tooltip content with just the name and value
+				return `${params.data.name}: ${params.data.value}`;
+			}
+		},
 			title: {
 				text: title,
 				textStyle: {
@@ -84,7 +86,7 @@
 							show: true,
 							fontSize: 20,
 							fontWeight: 'bold',
-							formatter: function (params) {
+							formatter: function (params: any) {
 								// Calculate the total value
 								const total =
 									params.data.value +
@@ -122,6 +124,17 @@
 		// console.debug(option);
 		// use configuration item and data specified to show chart
 		chart.setOption(option);
+		
+		// Add click event if onSegmentClick is provided
+		if (onSegmentClick) {
+			chart.on('click', (params: any) => {
+				if (params.componentType === 'series') {
+					const value = typeof params.value === 'number' ? params.value : 0;
+					onSegmentClick(params.name, value, params.dataIndex);
+				}
+			});
+		}
+		
 		window.addEventListener('resize', function () {
 			chart.resize();
 		});

@@ -9,9 +9,9 @@
 
 	let closeModal = true;
 
-	// Base Classes
-	const cBase = 'card bg-surface-50 p-4 w-modal shadow-xl space-y-4';
-	const cHeader = 'text-2xl font-bold';
+	// Base Classes - Enhanced
+	const cBase = 'card bg-surface-50 dark:bg-surface-900 w-full max-w-3xl shadow-2xl overflow-hidden rounded-xl';
+	const cHeader = 'text-2xl font-bold text-surface-900 dark:text-surface-50';
 
 	interface Props {
 		/** Exposes parent props to this component. */
@@ -43,21 +43,25 @@
 
 {#if $modalStore[0]}
 	<div class="modal-example-form {cBase}">
-		<div class="flex items-center justify-between">
+		<!-- Modal Header -->
+		<div class="flex items-center justify-between border-b border-surface-200 dark:border-surface-700 px-6 py-5">
 			<header class={cHeader} data-testid="modal-title">
 				{$modalStore[0].title ?? '(title missing)'}
 			</header>
-			<div
-				role="button"
-				tabindex="0"
-				class="flex items-center hover:text-primary-500 cursor-pointer"
+			<button
+				type="button"
+				class="text-surface-400 hover:text-surface-600 dark:hover:text-surface-200 focus:outline-none focus:ring-2 focus:ring-primary-500 rounded-full p-1.5 transition-colors duration-200 hover:bg-surface-100 dark:hover:bg-surface-800"
 				onclick={parent.onClose}
-				onkeydown={parent.onClose}
+				aria-label="Close modal"
 			>
-				<i class="fa-solid fa-xmark"></i>
-			</div>
+				<svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+					<path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+				</svg>
+			</button>
 		</div>
-		<ModelForm
+		<!-- Modal Body -->
+		<div class="px-6 py-6">
+			<ModelForm
 			customNameDescription
 			{form}
 			{object}
@@ -69,8 +73,9 @@
 			{closeModal}
 			{context}
 			caching={true}
-			{selectOptions}
-			{debug}
-		/>
+				{selectOptions}
+				{debug}
+			/>
+		</div>
 	</div>
 {/if}

@@ -65,13 +65,13 @@
 	let {
 		components = {},
 		position = 'items-center',
-		background = 'bg-surface-100-900',
-		width = 'w-modal',
+		background = 'bg-surface-50 dark:bg-surface-900',
+		width = 'w-full max-w-3xl',
 		height = 'h-auto',
-		padding = 'p-4',
+		padding = 'p-6',
 		spacing = 'space-y-4',
-		rounded = 'rounded-container',
-		shadow = 'shadow-xl',
+		rounded = 'rounded-xl',
+		shadow = 'shadow-2xl',
 		zIndex = 'z-999',
 		buttonNeutral = 'preset-tonal-surface border border-surface-500',
 		buttonPositive = 'preset-filled',
@@ -79,30 +79,30 @@
 		buttonTextConfirm = $bindable('Confirm'),
 		buttonTextSubmit = $bindable('Submit'),
 		regionBackdrop = '',
-		regionHeader = 'text-2xl font-bold',
-		regionBody = 'max-h-[200px] overflow-hidden',
-		regionFooter = 'flex justify-end space-x-2',
+		regionHeader = 'text-2xl font-bold text-surface-900 dark:text-surface-50 border-b border-surface-200 dark:border-surface-700 px-6 py-5',
+		regionBody = 'max-h-[calc(100vh-300px)] overflow-y-auto px-6 py-6',
+		regionFooter = 'flex justify-end gap-3 border-t border-surface-200 dark:border-surface-700 px-6 py-4',
 		transitions = true,
 		transitionIn = fly as TransitionIn,
 		transitionInParams = {
-			duration: 150,
+			duration: 300,
 			opacity: 0,
 			x: 0,
-			y: 100
+			y: 20
 		},
 		transitionOut = fly as TransitionOut,
 		transitionOutParams = {
-			duration: 150,
+			duration: 200,
 			opacity: 0,
 			x: 0,
-			y: 100
+			y: 10
 		}
 	}: Props = $props();
 
-	// Base Styles
-	const cBackdrop = 'fixed top-0 left-0 right-0 bottom-0 bg-surface-950/50 p-4';
+	// Base Styles - Enhanced
+	const cBackdrop = 'fixed top-0 left-0 right-0 bottom-0 bg-black/60 backdrop-blur-sm p-4';
 	const cTransitionLayer = 'w-full h-fit min-h-full overflow-y-auto flex justify-center';
-	const cModal = 'block overflow-y-auto';
+	const cModal = 'block overflow-hidden';
 	const cModalImage = 'w-full h-auto';
 
 	// Local
